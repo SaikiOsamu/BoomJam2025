@@ -10,6 +10,7 @@ public class Enemy
     public Vector2 position = Vector2.zero;
     public float speed = 50;
     public float life = 1;
+    public int exp = 1;
     public bool is_alive { get { return life > 0; } }
     public float attack_cooldown = 0;
     public float attack_cooldown_when_attacked = 1;
@@ -27,6 +28,13 @@ public class Projection
     public bool is_alive = true;
     public bool is_player_projected = true;
 }
+public class Tower
+{
+    public Vector2 position = Vector2.zero;
+    public float attack_value = 1;
+    public float attack_cooldown = 0;
+    public float attack_cooldown_when_attacked = 5;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -34,12 +42,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     float speed = 100;
     public float life = 100;
+    public int level = 1;
+    public int exp = 0;
+    public int exp_to_upgrade = 10;
     public Vector2 player_position = Vector2.zero;
     List<Enemy> enemies = new List<Enemy>();
     List<Projection> projections = new List<Projection>();
+    List<Tower> towers = new List<Tower>();
     public float attack_cooldown = 0;
     public float attack_cooldown_when_attacked = 1;
     public float enemy_spawn_cooldown = 0;
+    public bool upgrading = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -92,7 +105,7 @@ public class GameManager : MonoBehaviour
         proj.direction = direction.normalized;
         projections.Add(proj);
 
-        // Add enemy component
+        // Add proj component
         GameObject proj_object = new GameObject();
         proj_object.transform.parent = transform;
         proj_object.AddComponent<CanvasRenderer>();
@@ -102,10 +115,37 @@ public class GameManager : MonoBehaviour
         ProjPositionUpdate pos = proj_object.AddComponent<ProjPositionUpdate>();
         pos.proj = proj;
     }
+    void AddTower()
+    {
+        Tower tower = new Tower();
+        tower.position = new Vector2(Random.Range(-700, 700), Random.Range(-300, 300));
+        towers.Add(tower);
+
+        // Add tower component
+        GameObject tower_object = new GameObject();
+        tower_object.transform.parent = transform;
+        tower_object.AddComponent<CanvasRenderer>();
+        tower_object.AddComponent<RectTransform>();
+        Image image = tower_object.AddComponent<Image>();
+        image.color = Color.green;
+        TowerPositionUpdate pos = tower_object.AddComponent<TowerPositionUpdate>();
+        pos.tower = tower;
+    }
+
+    public void Upgrade()
+    {
+        if (!upgrading) { return; }
+        AddTower();
+        upgrading = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (upgrading)
+        {
+            return;
+        }
         float delta = Time.deltaTime;
         // Player move
         Vector2 moveValue = moveAction.ReadValue<Vector2>() * delta * speed;
@@ -155,6 +195,27 @@ public class GameManager : MonoBehaviour
             AddProjection(player_position, to_attack - player_position);
             attack_cooldown = attack_cooldown_when_attacked;
         }
+        // Tower Attack
+        foreach (Tower tower in towers)
+        {
+            if (tower.attack_cooldown > 0)
+            {
+                tower.attack_cooldown -= delta;
+            }
+            else if (enemies.Count > 0)
+            {
+                Vector2 to_attack = enemies.First().position;
+                foreach (Enemy enemy in enemies)
+                {
+                    if ((to_attack - tower.position).magnitude > (enemy.position - tower.position).magnitude)
+                    {
+                        to_attack = enemy.position;
+                    }
+                }
+                AddProjection(tower.position, to_attack - tower.position);
+                tower.attack_cooldown = tower.attack_cooldown_when_attacked;
+            }
+        }
         // Proj Attack
         foreach (Projection proj in projections)
         {
@@ -162,9 +223,14 @@ public class GameManager : MonoBehaviour
             {
                 foreach (Enemy enemy in enemies)
                 {
+                    if (!enemy.is_alive) { continue; }
                     if ((proj.position - enemy.position).magnitude < proj.range)
                     {
                         enemy.life -= proj.attack_value;
+                        if (!enemy.is_alive)
+                        {
+                            exp += enemy.exp;
+                        }
                         proj.is_alive = false;
                     }
                     if (!proj.is_alive) { break; }
@@ -191,6 +257,13 @@ public class GameManager : MonoBehaviour
         {
             AddEnemy();
             enemy_spawn_cooldown = 5;
+        }
+        // Upgrade
+        if (exp >= exp_to_upgrade)
+        {
+            level += 1;
+            exp -= exp_to_upgrade;
+            upgrading = true;
         }
     }
 }
