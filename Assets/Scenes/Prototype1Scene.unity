@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 380539447}
   - component: {fileID: 380539446}
   - component: {fileID: 380539445}
+  - component: {fileID: 380539448}
   m_Layer: 5
   m_Name: Upgrade - 1
   m_TagString: Untagged
@@ -240,6 +241,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380539443}
   m_CullTransparentMesh: 1
+--- !u!114 &380539448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380539443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76ed22c1f7596a44885abf1f72a2abb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &862451754
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +522,7 @@ GameObject:
   - component: {fileID: 940258803}
   - component: {fileID: 940258802}
   - component: {fileID: 940258801}
+  - component: {fileID: 940258804}
   m_Layer: 5
   m_Name: Upgrade
   m_TagString: Untagged
@@ -647,6 +661,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940258799}
   m_CullTransparentMesh: 1
+--- !u!114 &940258804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940258799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c921e55b7e343e842a515db9e96f8835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1504891804
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,6 +930,7 @@ MonoBehaviour:
   attack_cooldown: 0
   attack_cooldown_when_attacked: 1
   enemy_spawn_cooldown: 0
+  upgrading: 0
 --- !u!114 &1813807741
 MonoBehaviour:
   m_ObjectHideFlags: 0
