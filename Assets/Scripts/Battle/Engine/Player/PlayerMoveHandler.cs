@@ -22,7 +22,10 @@ public class PlayerMoveHandler
         Vector2 moveValue = moveAction.ReadValue<Vector2>() * param.timeDiff * speed;
         moveValue.y = 0;
         param.entity.position += moveValue;
-        param.entity.facingEast = moveValue.x > 0;
+        if (moveValue.x != 0)
+        {
+            param.entity.facingEast = moveValue.x > 0;
+        }
     }
 }
 

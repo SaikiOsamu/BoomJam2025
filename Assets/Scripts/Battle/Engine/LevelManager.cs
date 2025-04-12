@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
 
     bool Collided(BattleEntity entity, BattleEntity entity2)
     {
-        return (entity.position - entity2.position).magnitude / 2 < (entity.radius + entity2.radius);
+        return (entity.position - entity2.position).magnitude * 2 < (entity.radius + entity2.radius);
     }
     void AddEnemy()
     {
@@ -97,6 +97,10 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!player.isAlive)
+        {
+            return;
+        }
         float delta = Time.deltaTime;
         // Objects Move
         foreach (BattleEntity entity in enemies.Concat(projectors).Prepend(player))
@@ -147,7 +151,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 1000 / player.position.x : 10, 10);
+            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 1000 / Mathf.Abs(player.position.x) : 10, 10);
         }
     }
 }
