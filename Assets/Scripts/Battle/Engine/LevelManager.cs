@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour
     public List<BattleEntity> enemies = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public float enemySpawnCooldown = 0;
+    [SerializeField] Sprite img;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,6 +56,8 @@ public class LevelManager : MonoBehaviour
         obj.AddComponent<RectTransform>().sizeDelta = new Vector2(entity.radius, entity.radius);
         Image image = obj.AddComponent<Image>();
         image.color = color;
+        if(image.color == Color.yellow)
+        image.sprite = img;
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
@@ -126,6 +129,13 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (BattleEntity project in projectors)
         {
+            if(player.facingEast){
+                project.position.x += 1;
+                project.facingEast = true;
+            }else{
+                project.facingEast = false;
+                project.position.x -= 1;
+            }
             foreach (BattleEntity entity in enemies.Prepend(player))
             {
                 if (Collided(project, entity))
@@ -134,6 +144,7 @@ public class LevelManager : MonoBehaviour
                     p.entity = project;
                     p.timeDiff = delta;
                     project.collideHandler(p, entity);
+
                 }
             }
         }

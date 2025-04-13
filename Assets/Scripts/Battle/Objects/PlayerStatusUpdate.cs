@@ -17,11 +17,11 @@ public class PlayerStatusUpdate : MonoBehaviour
         {
             if (player.facingEast)
             {
-                gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             }
             else
             {
-                gameObject.GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
+                GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
             }
         }
     }
