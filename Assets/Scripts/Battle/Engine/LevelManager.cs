@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,6 +17,8 @@ public class BattleEntity
     public class EntityUpdateParams
     {
         public BattleEntity entity;
+        public ReadOnlyCollection<BattleEntity> entities;
+        public BattleEntity player;
         public float timeDiff;
     }
 
@@ -51,6 +54,14 @@ public class LevelManager : MonoBehaviour
         player.attackHandler = new PlayerAttackHandler(InputSystem.actions.FindAction("Attack"),
             InputSystem.actions.FindAction("Skill 1")).Attack;
         player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
+
+        // Add a bomb bird.
+        BattleEntity bombBird = new BattleEntity();
+        bombBird.color = Color.green;
+        bombBird.moveHandler = new BombBirdMoveHandler().Move;
+        bombBird.attackHandler = new BombBirdAttackHandler().Attack;
+        entities.Add(bombBird);
+        RegisterObject(bombBird);
     }
 
     void RegisterObject(BattleEntity entity)
@@ -130,17 +141,23 @@ public class LevelManager : MonoBehaviour
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
+            p.entities = entities.AsReadOnly();
+            p.player = player;
             p.timeDiff = delta;
             HandleMoveResult(entity, entity.moveHandler(p));
         }
         // Objects Attack
+        List<BattleEntity> attackResults = new List<BattleEntity>();
         foreach (BattleEntity entity in entities.Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
+            p.entities = entities.AsReadOnly();
+            p.player = player;
             p.timeDiff = delta;
-            HandleAttackResult(entity.attackHandler(p));
+            attackResults.AddRange(entity.attackHandler(p));
         }
+        HandleAttackResult(attackResults);
         // Projects Collide
         foreach (BattleEntity project in projectors)
         {
@@ -150,6 +167,8 @@ public class LevelManager : MonoBehaviour
                 {
                     BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                     p.entity = project;
+                    p.entities = entities.AsReadOnly();
+                    p.player = player;
                     p.timeDiff = delta;
                     project.collideHandler(p, entity);
 
@@ -161,6 +180,8 @@ public class LevelManager : MonoBehaviour
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
+            p.entities = entities.AsReadOnly();
+            p.player = player;
             p.timeDiff = delta;
             entity.selfDestruct(p);
         }
