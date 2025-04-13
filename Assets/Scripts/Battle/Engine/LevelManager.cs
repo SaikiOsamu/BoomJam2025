@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class BattleEntity
 {
-    public delegate void MoveDelegate(EntityUpdateParams param);
+    public delegate Vector2 MoveDelegate(EntityUpdateParams param);
     public delegate List<BattleEntity> AttackDelegate(EntityUpdateParams param);
     public delegate void CollideDelegate(EntityUpdateParams param, BattleEntity theOtherEntity);
     public delegate void SelfDestructDelegate(EntityUpdateParams param);
@@ -25,7 +25,7 @@ public class BattleEntity
     public bool facingEast = true;
     public bool isAlive = true;
     public bool isEnemy = false;
-    public MoveDelegate moveHandler = _ => { };
+    public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };
     public SelfDestructDelegate selfDestruct = _ => { };
@@ -58,6 +58,11 @@ public class LevelManager : MonoBehaviour
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
+    }
+
+    void HandleMoveResult(BattleEntity entity, Vector2 moveResult)
+    {
+        entity.position += moveResult;
     }
 
     void HandleAttackResult(List<BattleEntity> newProjectors)
@@ -108,7 +113,7 @@ public class LevelManager : MonoBehaviour
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
             p.timeDiff = delta;
-            entity.moveHandler(p);
+            HandleMoveResult(entity, entity.moveHandler(p));
         }
         // Objects Attack
         foreach (BattleEntity entity in enemies.Prepend(player))

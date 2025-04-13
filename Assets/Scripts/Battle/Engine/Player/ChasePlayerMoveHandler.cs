@@ -18,11 +18,11 @@ public class ChasePlayerMoveHandler
         this.player = player;
     }
 
-    public void Move(EntityUpdateParams param)
+    public Vector2 Move(EntityUpdateParams param)
     {
         Vector2 moveValue = (player.position - param.entity.position).normalized * param.timeDiff * speed;
-        param.entity.position += moveValue;
         param.entity.facingEast = moveValue.x > 0;
+        return moveValue;
     }
 }
 
