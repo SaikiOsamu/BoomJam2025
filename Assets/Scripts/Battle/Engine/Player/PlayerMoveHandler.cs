@@ -17,15 +17,15 @@ public class PlayerMoveHandler
         this.moveAction = moveAction;
     }
 
-    public void Move(EntityUpdateParams param)
+    public Vector2 Move(EntityUpdateParams param)
     {
         Vector2 moveValue = moveAction.ReadValue<Vector2>() * param.timeDiff * speed;
         moveValue.y = 0;
-        param.entity.position += moveValue;
         if (moveValue.x != 0)
         {
             param.entity.facingEast = moveValue.x > 0;
         }
+        return moveValue;
     }
 }
 
