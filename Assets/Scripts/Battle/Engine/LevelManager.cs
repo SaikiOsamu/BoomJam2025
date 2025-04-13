@@ -22,6 +22,8 @@ public class BattleEntity
     public Vector2 position = Vector2.zero;
     public float radius = 100;
     public int life = 100;
+    public int shield = 0;
+    public int shieldMax = 200;
     public bool facingEast = true;
     public bool isAlive = true;
     public bool isEnemy = false;
@@ -129,13 +131,6 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (BattleEntity project in projectors)
         {
-            if(player.facingEast){
-                project.position.x += 1;
-                project.facingEast = true;
-            }else{
-                project.facingEast = false;
-                project.position.x -= 1;
-            }
             foreach (BattleEntity entity in enemies.Prepend(player))
             {
                 if (Collided(project, entity))
