@@ -29,6 +29,7 @@ public class BattleEntity
     public bool facingEast = true;
     public bool isAlive = true;
     public bool isEnemy = false;
+    public bool isProjector = false;
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };

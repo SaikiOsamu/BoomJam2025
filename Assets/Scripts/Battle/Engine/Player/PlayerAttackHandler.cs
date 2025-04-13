@@ -48,6 +48,7 @@ class PlayerAttackHandler
             attackCooldown = attackCooldownWhenAttacked;
             projection.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
             projection.collideHandler = new AttackCollideHandler(false, 5000).Update;
+            projection.isProjector = true;
             result.Add(projection);
         }
         if (skillAction.triggered)
@@ -68,6 +69,7 @@ class PlayerAttackHandler
             flyingSword.moveHandler = new FlyingSwordMoveHandler(param.entity).Move;
             flyingSword.selfDestruct = new TimedProjectionSelfDestructHandler(15.0f).Update;
             flyingSword.collideHandler = new AttackCollideHandler(false, 5000).Update;
+            flyingSword.isProjector = true;
             result.Add(flyingSword);
         }
         return result;
