@@ -58,8 +58,19 @@ public class LevelManager : MonoBehaviour
         obj.AddComponent<RectTransform>().sizeDelta = new Vector2(entity.radius, entity.radius);
         Image image = obj.AddComponent<Image>();
         image.color = color;
-        if(image.color == Color.yellow)
-        image.sprite = img;
+        ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
+        update.player = player;
+        update.entity = entity;
+    }
+
+    void RegisterObject(BattleEntity entity, Sprite sprite)
+    {
+        GameObject obj = new GameObject();
+        obj.transform.parent = transform;
+        obj.AddComponent<CanvasRenderer>();
+        obj.AddComponent<RectTransform>().sizeDelta = new Vector2(entity.radius, entity.radius);
+        Image image = obj.AddComponent<Image>();
+        image.sprite = sprite;
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
