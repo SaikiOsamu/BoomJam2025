@@ -39,7 +39,7 @@ public class BattleEntity
 public class LevelManager : MonoBehaviour
 {
     public BattleEntity player;
-    public List<BattleEntity> enemies = new List<BattleEntity>();
+    public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public float enemySpawnCooldown = 0;
 
@@ -53,27 +53,18 @@ public class LevelManager : MonoBehaviour
         player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
     }
 
-    void RegisterObject(BattleEntity entity, Color color)
+    void RegisterObject(BattleEntity entity)
     {
         GameObject obj = new GameObject();
         obj.transform.parent = transform;
         obj.AddComponent<CanvasRenderer>();
         obj.AddComponent<RectTransform>().sizeDelta = new Vector2(entity.radius, entity.radius);
         Image image = obj.AddComponent<Image>();
-        image.color = color;
-        ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
-        update.player = player;
-        update.entity = entity;
-    }
-
-    void RegisterObject(BattleEntity entity, Sprite sprite)
-    {
-        GameObject obj = new GameObject();
-        obj.transform.parent = transform;
-        obj.AddComponent<CanvasRenderer>();
-        obj.AddComponent<RectTransform>().sizeDelta = new Vector2(entity.radius, entity.radius);
-        Image image = obj.AddComponent<Image>();
-        image.sprite = sprite;
+        if (entity.sprite != null)
+        {
+            image.sprite = entity.sprite;
+        }
+        image.color = entity.color;
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
@@ -88,15 +79,15 @@ public class LevelManager : MonoBehaviour
     {
         foreach (BattleEntity entity in newProjectors)
         {
-            if (entity.sprite != null)
+            RegisterObject(entity);
+            if (entity.isProjector)
             {
-                RegisterObject(entity, entity.sprite);
+                projectors.Add(entity);
             }
             else
             {
-                RegisterObject(entity, entity.color);
+                entities.Add(entity);
             }
-            projectors.Add(entity);
         }
     }
 
@@ -112,6 +103,7 @@ public class LevelManager : MonoBehaviour
         enemy.moveHandler = new ChasePlayerMoveHandler(player, 50).Move;
         enemy.attackHandler = new NearPlayerAttackHandler(player).Attack;
         enemy.selfDestruct = new LifeBasedSelfDestructHandler().Update;
+        enemy.color = Color.red;
         float position = Random.value;
         if (position > 0.5)
         {
@@ -121,8 +113,8 @@ public class LevelManager : MonoBehaviour
         {
             enemy.position = new Vector2(-700, 0);
         }
-        enemies.Add(enemy);
-        RegisterObject(enemy, Color.red);
+        entities.Add(enemy);
+        RegisterObject(enemy);
     }
 
     // Update is called once per frame
@@ -134,7 +126,7 @@ public class LevelManager : MonoBehaviour
         }
         float delta = Time.deltaTime;
         // Objects Move
-        foreach (BattleEntity entity in enemies.Concat(projectors).Prepend(player))
+        foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
@@ -142,7 +134,7 @@ public class LevelManager : MonoBehaviour
             HandleMoveResult(entity, entity.moveHandler(p));
         }
         // Objects Attack
-        foreach (BattleEntity entity in enemies.Prepend(player))
+        foreach (BattleEntity entity in entities.Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
@@ -152,7 +144,7 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (BattleEntity project in projectors)
         {
-            foreach (BattleEntity entity in enemies.Prepend(player))
+            foreach (BattleEntity entity in entities.Prepend(player))
             {
                 if (Collided(project, entity))
                 {
@@ -165,7 +157,7 @@ public class LevelManager : MonoBehaviour
             }
         }
         // Maybe mark dead
-        foreach (BattleEntity entity in enemies.Concat(projectors).Prepend(player))
+        foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
@@ -173,7 +165,7 @@ public class LevelManager : MonoBehaviour
             entity.selfDestruct(p);
         }
         // Remove dead objects
-        enemies.RemoveAll(enemy => !enemy.isAlive);
+        entities.RemoveAll(enemy => !enemy.isAlive);
         projectors.RemoveAll(proj => !proj.isAlive);
         // Add enemy
         if (enemySpawnCooldown > 0)
