@@ -20,6 +20,8 @@ public class BattleEntity
     }
 
     public Vector2 position = Vector2.zero;
+    public Color color = Color.white;
+    public Sprite sprite = null;
     public float radius = 100;
     public int life = 100;
     public int shield = 0;
@@ -39,14 +41,14 @@ public class LevelManager : MonoBehaviour
     public List<BattleEntity> enemies = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public float enemySpawnCooldown = 0;
-    [SerializeField] Sprite img;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = new BattleEntity();
         player.moveHandler = new PlayerMoveHandler(InputSystem.actions.FindAction("Move")).Move;
-        player.attackHandler = new PlayerAttackHandler(InputSystem.actions.FindAction("Attack")).Attack;
+        player.attackHandler = new PlayerAttackHandler(InputSystem.actions.FindAction("Attack"),
+            InputSystem.actions.FindAction("Skill 1")).Attack;
         player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
     }
 
@@ -85,7 +87,14 @@ public class LevelManager : MonoBehaviour
     {
         foreach (BattleEntity entity in newProjectors)
         {
-            RegisterObject(entity, Color.yellow);
+            if (entity.sprite != null)
+            {
+                RegisterObject(entity, entity.sprite);
+            }
+            else
+            {
+                RegisterObject(entity, entity.color);
+            }
             projectors.Add(entity);
         }
     }
