@@ -121,6 +121,11 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (BattleEntity project in projectors)
         {
+            if(player.facingEast){
+                project.position.x += 1;
+            }else{
+                project.position.x -= 1;
+            }
             foreach (BattleEntity entity in enemies.Prepend(player))
             {
                 if (Collided(project, entity))
@@ -129,6 +134,7 @@ public class LevelManager : MonoBehaviour
                     p.entity = project;
                     p.timeDiff = delta;
                     project.collideHandler(p, entity);
+
                 }
             }
         }

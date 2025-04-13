@@ -40,7 +40,7 @@ class PlayerAttackHandler
             projection.radius = 70;
             projection.isEnemy = false;
             attackCooldown = attackCooldownWhenAttacked;
-            projection.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
+            projection.selfDestruct = new TimedProjectionSelfDestructHandler(1.0f).Update;
             projection.collideHandler = new AttackCollideHandler(false, 5000).Update;
             result.Add(projection);
         }
