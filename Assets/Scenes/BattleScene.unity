@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnCooldown: 0
+  img: {fileID: 21300000, guid: c9642de5f0c61468dbac17f5cff3da0e, type: 3}
 --- !u!114 &820459473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,6 +585,7 @@ GameObject:
   - component: {fileID: 1100689602}
   - component: {fileID: 1100689604}
   - component: {fileID: 1100689603}
+  - component: {fileID: 1100689605}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -648,6 +650,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100689601}
   m_CullTransparentMesh: 1
+--- !u!114 &1100689605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100689601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41545055ef58ccf4b93a8d0dc48abeff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2017366873
 GameObject:
   m_ObjectHideFlags: 0

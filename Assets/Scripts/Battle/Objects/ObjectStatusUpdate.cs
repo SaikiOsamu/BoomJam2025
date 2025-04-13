@@ -24,6 +24,16 @@ public class ObjectStatusUpdate : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+
+            if (player.facingEast)
+            {
+                GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            }
+        
         }
     }
 }
