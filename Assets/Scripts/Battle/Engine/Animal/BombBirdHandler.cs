@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
-using static UnityEngine.EventSystems.EventTrigger;
 
 class BombMoveHandler
 {
@@ -26,6 +25,15 @@ class BombBirdHandler
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 1;
     public float birdMoveSpeed = 300;
+
+    public enum State
+    {
+        BIRD_STATE_IDLE,
+        BIRD_STATE_CHASING_ENEMY,
+        BIRD_STATE_RETURNING,
+    }
+
+    public State birdState = State.BIRD_STATE_IDLE;
 
     BattleEntity FindNearestEnemy(ReadOnlyCollection<BattleEntity> entities, Vector2 relativeTo)
     {
@@ -65,25 +73,33 @@ class BombBirdHandler
         return false;
     }
 
-    public List<BattleEntity> Attack(BattleEntity.EntityUpdateParams param)
+    public List<BattleEntity> Attack(EntityUpdateParams param)
     {
         List<BattleEntity> result = new List<BattleEntity>();
-
-        if (attackCooldown > 0)
+        switch (birdState)
         {
-            attackCooldown -= param.timeDiff;
-        }
-        else if (IsNearEnemy(param.entities, param.entity))
-        {
-            BattleEntity bomb = new BattleEntity();
-            bomb.position = param.entity.position * 1;
-            bomb.color = Color.black;
-            bomb.radius = 30;
-            bomb.isEnemy = false;
-            attackCooldown = attackCooldownWhenAttacked;
-            bomb.moveHandler = new BombMoveHandler().Move;
-            bomb.attackHandler = BombAttack;
-            result.Add(bomb);
+            case State.BIRD_STATE_IDLE:
+            case State.BIRD_STATE_RETURNING:
+                break;
+            case State.BIRD_STATE_CHASING_ENEMY:
+                if (attackCooldown > 0)
+                {
+                    attackCooldown -= param.timeDiff;
+                }
+                else if (IsNearEnemy(param.entities, param.entity))
+                {
+                    BattleEntity bomb = new BattleEntity();
+                    bomb.position = param.entity.position * 1;
+                    bomb.color = Color.black;
+                    bomb.radius = 30;
+                    bomb.isEnemy = false;
+                    attackCooldown = attackCooldownWhenAttacked;
+                    bomb.moveHandler = new BombMoveHandler().Move;
+                    bomb.attackHandler = BombAttack;
+                    result.Add(bomb);
+                    birdState = State.BIRD_STATE_RETURNING;
+                }
+                break;
         }
         return result;
     }
@@ -114,13 +130,38 @@ class BombBirdHandler
     public Vector2 Move(EntityUpdateParams param)
     {
         BattleEntity nearestEntity = FindNearestEnemy(param.entities, param.entity.position);
-        if (nearestEntity == null)
+        Vector2 moveValue = Vector2.zero;
+        switch (birdState)
         {
-            nearestEntity = param.player;
+            case State.BIRD_STATE_IDLE:
+                if (nearestEntity == null)
+                {
+                    break;
+                }
+                birdState = State.BIRD_STATE_CHASING_ENEMY;
+                break;
+            case State.BIRD_STATE_CHASING_ENEMY:
+                if (nearestEntity == null)
+                {
+                    birdState = State.BIRD_STATE_RETURNING;
+                }
+                else
+                {
+                    moveValue = (nearestEntity.position + new Vector2(0, 300) - param.entity.position).normalized
+                        * param.timeDiff * birdMoveSpeed;
+                }
+                break;
+            case State.BIRD_STATE_RETURNING:
+                if (Mathf.Abs(param.player.position.x - param.entity.position.x) < 20)
+                {
+                    birdState = State.BIRD_STATE_IDLE;
+                    break;
+                }
+                moveValue = (param.player.position + new Vector2(0, 300) - param.entity.position).normalized
+                    * param.timeDiff * birdMoveSpeed;
+                break;
         }
 
-        Vector2 moveValue = (nearestEntity.position + new Vector2(0, 300) - param.entity.position).normalized
-            * param.timeDiff * birdMoveSpeed;
         if (moveValue.x != 0)
         {
             param.entity.facingEast = moveValue.x > 0;
