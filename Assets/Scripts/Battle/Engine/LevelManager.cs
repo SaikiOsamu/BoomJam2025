@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -39,11 +40,19 @@ public class BattleEntity
     public SelfDestructDelegate selfDestruct = _ => { };
 }
 
+public class CollisionBattleEntity
+{
+    public BattleEntity projector;
+    public List<BattleEntity> victims;
+}
+
 public class LevelManager : MonoBehaviour
 {
     public BattleEntity player;
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
+    public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
+        new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
     public float enemySpawnCooldown = 0;
 
     [SerializeField]
@@ -90,6 +99,7 @@ public class LevelManager : MonoBehaviour
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
+        update.levelManager = this;
     }
 
     void HandleMoveResult(BattleEntity entity, Vector2 moveResult)
@@ -113,10 +123,21 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    bool Collided(BattleEntity entity, BattleEntity entity2)
+    public void RegisterCollision(BattleEntity projectile, BattleEntity victim)
     {
-        return (entity.position - entity2.position).magnitude * 2 < (entity.radius + entity2.radius);
+        if (!collisionBattleEntities.ContainsKey(projectile))
+        {
+            CollisionBattleEntity collisionBattleEntity = new CollisionBattleEntity();
+            collisionBattleEntity.projector = projectile;
+            collisionBattleEntity.victims = new List<BattleEntity> { victim };
+            collisionBattleEntities.Add(projectile, collisionBattleEntity);
+        }
+        else
+        {
+            collisionBattleEntities[projectile].victims.Add(victim);
+        }
     }
+
     void AddEnemy()
     {
         BattleEntity enemy = new BattleEntity();
@@ -170,20 +191,17 @@ public class LevelManager : MonoBehaviour
         }
         HandleAttackResult(attackResults);
         // Projects Collide
-        foreach (BattleEntity project in projectors)
+        foreach (CollisionBattleEntity collisionBattleEntity in collisionBattleEntities.Values)
         {
-            foreach (BattleEntity entity in entities.Prepend(player))
+            // TODO: Sort the victims to support shield.
+            foreach (BattleEntity victim in collisionBattleEntity.victims)
             {
-                if (Collided(project, entity))
-                {
-                    BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
-                    p.entity = project;
-                    p.entities = entities.AsReadOnly();
-                    p.player = player;
-                    p.timeDiff = delta;
-                    project.collideHandler(p, entity);
-
-                }
+                BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
+                p.entity = collisionBattleEntity.projector;
+                p.entities = entities.AsReadOnly();
+                p.player = player;
+                p.timeDiff = delta;
+                collisionBattleEntity.projector.collideHandler(p, victim);
             }
         }
         // Maybe mark dead
