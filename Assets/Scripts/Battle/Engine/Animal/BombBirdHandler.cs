@@ -21,11 +21,33 @@ class BombMoveHandler
     }
 }
 
-class BombBirdAttackHandler
+class BombBirdHandler
 {
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 1;
+    public float birdMoveSpeed = 300;
 
+    BattleEntity FindNearestEnemy(ReadOnlyCollection<BattleEntity> entities, Vector2 relativeTo)
+    {
+        BattleEntity battleEntity = null;
+        foreach (BattleEntity entity in entities)
+        {
+            if (!entity.isEnemy)
+            {
+                continue;
+            }
+            if (battleEntity == null)
+            {
+                battleEntity = entity;
+                continue;
+            }
+            if ((battleEntity.position - relativeTo).magnitude > (entity.position - relativeTo).magnitude)
+            {
+                battleEntity = entity;
+            }
+        }
+        return battleEntity;
+    }
 
     public bool IsNearEnemy(ReadOnlyCollection<BattleEntity> entities, BattleEntity entity)
     {
@@ -88,5 +110,21 @@ class BombBirdAttackHandler
         param.entity.isAlive = false;
 
         return result;
+    }
+    public Vector2 Move(EntityUpdateParams param)
+    {
+        BattleEntity nearestEntity = FindNearestEnemy(param.entities, param.entity.position);
+        if (nearestEntity == null)
+        {
+            nearestEntity = param.player;
+        }
+
+        Vector2 moveValue = (nearestEntity.position + new Vector2(0, 300) - param.entity.position).normalized
+            * param.timeDiff * birdMoveSpeed;
+        if (moveValue.x != 0)
+        {
+            param.entity.facingEast = moveValue.x > 0;
+        }
+        return moveValue;
     }
 }

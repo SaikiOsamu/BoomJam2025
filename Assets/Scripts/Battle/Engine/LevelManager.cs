@@ -58,8 +58,9 @@ public class LevelManager : MonoBehaviour
         // Add a bomb bird.
         BattleEntity bombBird = new BattleEntity();
         bombBird.color = Color.green;
-        bombBird.moveHandler = new BombBirdMoveHandler().Move;
-        bombBird.attackHandler = new BombBirdAttackHandler().Attack;
+        BombBirdHandler bombBirdHandler = new BombBirdHandler();
+        bombBird.moveHandler = bombBirdHandler.Move;
+        bombBird.attackHandler = bombBirdHandler.Attack;
         entities.Add(bombBird);
         RegisterObject(bombBird);
     }
