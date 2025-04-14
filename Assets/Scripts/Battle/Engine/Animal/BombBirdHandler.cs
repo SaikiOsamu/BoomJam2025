@@ -88,15 +88,13 @@ class BombBirdHandler
                 }
                 else if (IsNearEnemy(param.entities, param.entity))
                 {
-                    BattleEntity bomb = new BattleEntity();
-                    bomb.position = param.entity.position * 1;
-                    bomb.color = Color.black;
-                    bomb.radius = 0.3f;
-                    bomb.isEnemy = false;
+                    foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0))
+                    {
+                        toSummon.moveHandler = new BombMoveHandler().Move;
+                        toSummon.attackHandler = BombAttack;
+                        result.Add(toSummon);
+                    }
                     attackCooldown = attackCooldownWhenAttacked;
-                    bomb.moveHandler = new BombMoveHandler().Move;
-                    bomb.attackHandler = BombAttack;
-                    result.Add(bomb);
                     birdState = State.BIRD_STATE_RETURNING;
                 }
                 break;
@@ -112,15 +110,12 @@ class BombBirdHandler
         {
             return result;
         }
-        BattleEntity bombExplosion = new BattleEntity();
-        bombExplosion.position = param.entity.position * 1;
-        bombExplosion.color = Color.cyan;
-        bombExplosion.radius = 5;
-        bombExplosion.isEnemy = param.entity.isEnemy;
-        bombExplosion.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
-        bombExplosion.collideHandler = new AttackCollideHandler(false, 5000).Update;
-        bombExplosion.isProjector = true;
-        result.Add(bombExplosion);
+        foreach (BattleEntity bombExplosion in param.entity.GetSkillSummon(0))
+        {
+            bombExplosion.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
+            bombExplosion.collideHandler = new AttackCollideHandler(false, 5000).Update;
+            result.Add(bombExplosion);
+        }
 
         // Self destruct here.
         param.entity.isAlive = false;

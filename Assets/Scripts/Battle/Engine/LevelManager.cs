@@ -22,12 +22,14 @@ public class BattleEntity
         public BattleEntity player;
         public float timeDiff;
     }
-
+    public Character prefabCharacter = null;
     public Vector2 position = Vector2.zero;
     public Color color = Color.white;
     public Sprite sprite = null;
     public float radius = 1;
     public int life = 100;
+    public int resilience = 0;
+    public int resilienceMax = 0;
     public int shield = 0;
     public int shieldMax = 200;
     public bool facingEast = true;
@@ -38,6 +40,40 @@ public class BattleEntity
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };
     public SelfDestructDelegate selfDestruct = _ => { };
+
+    public static BattleEntity FromPrefab(Character prefabCharacter)
+    {
+        BattleEntity battleEntity = new BattleEntity();
+        battleEntity.prefabCharacter = prefabCharacter;
+        battleEntity.isProjector = prefabCharacter.isProjector;
+        battleEntity.life = prefabCharacter.life;
+        battleEntity.resilience = prefabCharacter.resilience;
+        battleEntity.resilienceMax = prefabCharacter.resilienceMax;
+        battleEntity.shield = prefabCharacter.shield;
+        battleEntity.shieldMax = prefabCharacter.shieldMax;
+        return battleEntity;
+    }
+
+    public List<BattleEntity> GetSkillSummon(int skillIndex)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (prefabCharacter == null)
+        {
+            return result;
+        }
+        if (prefabCharacter.skills.Count <= skillIndex)
+        {
+            return result;
+        }
+        foreach (Character summoning in prefabCharacter.skills[skillIndex].summoning)
+        {
+            BattleEntity toSummon = FromPrefab(summoning);
+            toSummon.position = position * 1;
+            toSummon.isEnemy = isEnemy;
+            result.Add(toSummon);
+        }
+        return result;
+    }
 }
 
 public class CollisionBattleEntity
@@ -59,6 +95,8 @@ public class LevelManager : MonoBehaviour
     private GameObject entityPrefab;
     [SerializeField]
     private GameObject projectilePrefab;
+    [SerializeField]
+    private Character birdPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -71,8 +109,7 @@ public class LevelManager : MonoBehaviour
         player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
 
         // Add a bomb bird.
-        BattleEntity bombBird = new BattleEntity();
-        bombBird.color = Color.green;
+        BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
         BombBirdHandler bombBirdHandler = new BombBirdHandler();
         bombBird.moveHandler = bombBirdHandler.Move;
         bombBird.attackHandler = bombBirdHandler.Attack;
@@ -83,20 +120,27 @@ public class LevelManager : MonoBehaviour
     void RegisterObject(BattleEntity entity)
     {
         GameObject obj;
-        if (entity.isProjector)
+        if (entity.prefabCharacter != null)
         {
-            obj = Instantiate(projectilePrefab);
+            obj = Instantiate(entity.prefabCharacter.prefab);
         }
         else
         {
-            obj = Instantiate(entityPrefab);
+            if (entity.isProjector)
+            {
+                obj = Instantiate(projectilePrefab);
+            }
+            else
+            {
+                obj = Instantiate(entityPrefab);
+            }
+            obj.transform.localScale = Vector3.one * entity.radius;
+            if (entity.sprite != null)
+            {
+                obj.GetComponent<SpriteRenderer>().sprite = entity.sprite;
+            }
+            obj.GetComponent<SpriteRenderer>().color = entity.color;
         }
-        obj.transform.localScale = Vector3.one * entity.radius;
-        if (entity.sprite != null)
-        {
-            obj.GetComponent<SpriteRenderer>().sprite = entity.sprite;
-        }
-        obj.GetComponent<SpriteRenderer>().color = entity.color;
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
