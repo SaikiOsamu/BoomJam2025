@@ -16,24 +16,15 @@ public class ObjectStatusUpdate : MonoBehaviour
     {
         if (entity != null)
         {
+            gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             if (player != null)
             {
-                gameObject.transform.localPosition = entity.position - player.position;
+                gameObject.transform.localPosition = entity.position;
             }
             if (!entity.isAlive)
             {
                 Destroy(gameObject);
             }
-
-            if (player.facingEast)
-            {
-                GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
-            }
-            else
-            {
-                GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-            }
-        
         }
     }
 }

@@ -10,7 +10,7 @@ using static BattleEntity;
 public class PlayerMoveHandler
 {
     InputAction moveAction;
-    public float speed = 100;
+    public float speed = 1;
 
     public PlayerMoveHandler(InputAction moveAction)
     {

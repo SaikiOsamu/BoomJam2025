@@ -25,7 +25,7 @@ public class BattleEntity
     public Vector2 position = Vector2.zero;
     public Color color = Color.white;
     public Sprite sprite = null;
-    public float radius = 100;
+    public float radius = 1;
     public int life = 100;
     public int shield = 0;
     public int shieldMax = 200;
@@ -45,6 +45,11 @@ public class LevelManager : MonoBehaviour
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public float enemySpawnCooldown = 0;
+
+    [SerializeField]
+    private GameObject entityPrefab;
+    [SerializeField]
+    private GameObject projectilePrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -67,16 +72,21 @@ public class LevelManager : MonoBehaviour
 
     void RegisterObject(BattleEntity entity)
     {
-        GameObject obj = new GameObject();
-        obj.transform.parent = transform;
-        obj.AddComponent<CanvasRenderer>();
-        obj.AddComponent<RectTransform>().sizeDelta = new Vector2(entity.radius, entity.radius);
-        Image image = obj.AddComponent<Image>();
+        GameObject obj;
+        if (entity.isProjector)
+        {
+            obj = Instantiate(projectilePrefab);
+        }
+        else
+        {
+            obj = Instantiate(entityPrefab);
+        }
+        obj.transform.localScale = Vector3.one * entity.radius;
         if (entity.sprite != null)
         {
-            image.sprite = entity.sprite;
+            obj.GetComponent<SpriteRenderer>().sprite = entity.sprite;
         }
-        image.color = entity.color;
+        obj.GetComponent<SpriteRenderer>().color = entity.color;
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
@@ -110,20 +120,20 @@ public class LevelManager : MonoBehaviour
     void AddEnemy()
     {
         BattleEntity enemy = new BattleEntity();
-        enemy.radius = 100;
+        enemy.radius = 1;
         enemy.isEnemy = true;
-        enemy.moveHandler = new ChasePlayerMoveHandler(player, 50).Move;
+        enemy.moveHandler = new ChasePlayerMoveHandler(player, 0.5f).Move;
         enemy.attackHandler = new NearPlayerAttackHandler(player).Attack;
         enemy.selfDestruct = new LifeBasedSelfDestructHandler().Update;
         enemy.color = Color.red;
         float position = Random.value;
         if (position > 0.5)
         {
-            enemy.position = new Vector2(700, 0);
+            enemy.position = new Vector2(7, 0);
         }
         else
         {
-            enemy.position = new Vector2(-700, 0);
+            enemy.position = new Vector2(-7, 0);
         }
         entities.Add(enemy);
         RegisterObject(enemy);
@@ -197,7 +207,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 1000 / Mathf.Abs(player.position.x) : 10, 10);
+            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 10 / Mathf.Abs(player.position.x) : 10, 10);
         }
     }
 }

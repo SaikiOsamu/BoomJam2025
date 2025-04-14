@@ -10,7 +10,7 @@ using static BattleEntity;
 
 class BombMoveHandler
 {
-    float a = 98f;
+    float a = 9.8f;
     float v = 0;
 
     public Vector2 Move(EntityUpdateParams param)
@@ -24,7 +24,7 @@ class BombBirdHandler
 {
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 1;
-    public float birdMoveSpeed = 300;
+    public float birdMoveSpeed = 3;
 
     public enum State
     {
@@ -65,7 +65,7 @@ class BombBirdHandler
             {
                 continue;
             }
-            if (Mathf.Abs(e.position.x - entity.position.x) < 50)
+            if (Mathf.Abs(e.position.x - entity.position.x) < 0.5)
             {
                 return true;
             }
@@ -91,7 +91,7 @@ class BombBirdHandler
                     BattleEntity bomb = new BattleEntity();
                     bomb.position = param.entity.position * 1;
                     bomb.color = Color.black;
-                    bomb.radius = 30;
+                    bomb.radius = 0.3f;
                     bomb.isEnemy = false;
                     attackCooldown = attackCooldownWhenAttacked;
                     bomb.moveHandler = new BombMoveHandler().Move;
@@ -115,7 +115,7 @@ class BombBirdHandler
         BattleEntity bombExplosion = new BattleEntity();
         bombExplosion.position = param.entity.position * 1;
         bombExplosion.color = Color.cyan;
-        bombExplosion.radius = 500;
+        bombExplosion.radius = 5;
         bombExplosion.isEnemy = param.entity.isEnemy;
         bombExplosion.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
         bombExplosion.collideHandler = new AttackCollideHandler(false, 5000).Update;
@@ -147,17 +147,17 @@ class BombBirdHandler
                 }
                 else
                 {
-                    moveValue = (nearestEntity.position + new Vector2(0, 300) - param.entity.position).normalized
+                    moveValue = (nearestEntity.position + new Vector2(0, 3) - param.entity.position).normalized
                         * param.timeDiff * birdMoveSpeed;
                 }
                 break;
             case State.BIRD_STATE_RETURNING:
-                if (Mathf.Abs(param.player.position.x - param.entity.position.x) < 20)
+                if (Mathf.Abs(param.player.position.x - param.entity.position.x) < 0.2f)
                 {
                     birdState = State.BIRD_STATE_IDLE;
                     break;
                 }
-                moveValue = (param.player.position + new Vector2(0, 300) - param.entity.position).normalized
+                moveValue = (param.player.position + new Vector2(0, 3) - param.entity.position).normalized
                     * param.timeDiff * birdMoveSpeed;
                 break;
         }

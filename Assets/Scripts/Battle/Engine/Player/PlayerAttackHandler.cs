@@ -36,14 +36,14 @@ class PlayerAttackHandler
             projection.position = param.entity.position * 1;
             if (param.entity.facingEast)
             {
-                projection.position.x += 40;
+                projection.position.x += 0.4f;
             }
             else
             {
-                projection.position.x -= 40;
+                projection.position.x -= 0.4f;
             }
             projection.color = Color.yellow;
-            projection.radius = 70;
+            projection.radius = 0.7f;
             projection.isEnemy = false;
             attackCooldown = attackCooldownWhenAttacked;
             projection.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
@@ -57,14 +57,14 @@ class PlayerAttackHandler
             flyingSword.position = param.entity.position * 1;
             if (param.entity.facingEast)
             {
-                flyingSword.position.x += 40;
+                flyingSword.position.x += 0.4f;
             }
             else
             {
-                flyingSword.position.x -= 40;
+                flyingSword.position.x -= 0.4f;
             }
             flyingSword.sprite = flyingSwordSprite;
-            flyingSword.radius = 70;
+            flyingSword.radius = 0.7f;
             flyingSword.isEnemy = false;
             flyingSword.moveHandler = new FlyingSwordMoveHandler(param.entity).Move;
             flyingSword.selfDestruct = new TimedProjectionSelfDestructHandler(15.0f).Update;
