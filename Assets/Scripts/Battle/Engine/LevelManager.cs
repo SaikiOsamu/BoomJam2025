@@ -64,7 +64,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         player = new BattleEntity();
-        player.moveHandler = new PlayerMoveHandler(InputSystem.actions.FindAction("Move")).Move;
+        player.moveHandler = new PlayerMoveHandler(InputSystem.actions.FindAction("Move"),
+            InputSystem.actions.FindAction("Jump")).Move;
         player.attackHandler = new PlayerAttackHandler(InputSystem.actions.FindAction("Attack"),
             InputSystem.actions.FindAction("Skill 1")).Attack;
         player.selfDestruct = new LifeBasedSelfDestructHandler().Update;

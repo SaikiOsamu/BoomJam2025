@@ -136,6 +136,8 @@ class BombBirdHandler
             case State.BIRD_STATE_IDLE:
                 if (nearestEntity == null)
                 {
+                    moveValue = (param.player.position + new Vector2(0, 3) - param.entity.position).normalized
+                        * param.timeDiff * birdMoveSpeed;
                     break;
                 }
                 birdState = State.BIRD_STATE_CHASING_ENEMY;
