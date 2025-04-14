@@ -10,7 +10,7 @@ using static BattleEntity;
 public class FlyingSwordMoveHandler
 {
     BattleEntity player;
-    public float speed = 200;
+    public float speed = 2;
 
     public FlyingSwordMoveHandler(BattleEntity player)
     {

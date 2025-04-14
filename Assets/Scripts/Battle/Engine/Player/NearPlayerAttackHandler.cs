@@ -25,22 +25,23 @@ class NearPlayerAttackHandler
         {
             attackCooldown -= param.timeDiff;
         }
-        else if ((player.position - param.entity.position).magnitude < 40)
+        else if ((player.position - param.entity.position).magnitude < 0.4f)
         {
             BattleEntity projection = new BattleEntity();
             projection.position = param.entity.position * 1;
             if (player.position.x > param.entity.position.x)
             {
-                projection.position.x += 40;
+                projection.position.x += 0.4f;
             } else
             {
-                projection.position.x -= 40;
+                projection.position.x -= 0.4f;
             }
-            projection.radius = 70;
+            projection.radius = 0.7f;
             projection.isEnemy = true;
             attackCooldown = attackCooldownWhenAttacked;
             projection.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
             projection.collideHandler = new AttackCollideHandler(false).Update;
+            projection.isProjector = true;
             result.Add(projection);
         }
         return result;

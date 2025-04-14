@@ -10,7 +10,7 @@ using static BattleEntity;
 public class ChasePlayerMoveHandler
 {
     public BattleEntity player;
-    public float speed = 50;
+    public float speed = 0.5f;
 
     public ChasePlayerMoveHandler(BattleEntity player, float speed)
     {
