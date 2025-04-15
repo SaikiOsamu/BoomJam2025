@@ -6,6 +6,6 @@ using UnityEngine;
 public enum BehaviorType
 {
     Unknown = 0,
-    PlayerControlled = 1,
+    Enemy = 1,
     Bird = 2,
 }
