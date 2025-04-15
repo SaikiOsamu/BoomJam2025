@@ -8,4 +8,5 @@ public enum BehaviorType
     Unknown = 0,
     Enemy = 1,
     Bird = 2,
+    Naofu = 100,
 }

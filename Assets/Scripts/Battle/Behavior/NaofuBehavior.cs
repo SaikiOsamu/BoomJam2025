@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-public class NaofuHandler
+public class NaofuBehavior : BaseBehavior
 {
     public enum State
     {
         STATE_IDLE = 0,
         STATE_CHASING_ENEMY = 1,
         STATE_RETURNING = 2,
-        STATE_ATTACKING = 3
+        STATE_INITIALIZE_ATTACKING = 3,
+        STATE_ATTACKING = 4,
     }
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 5;
-    public float moveSpeed = 1;
+    public float defaultMoveSpeed = 1;
     public float attackingSpeed = 3;
     public State state = State.STATE_IDLE;
     private bool moveRight = true;
@@ -24,7 +25,10 @@ public class NaofuHandler
     private Vector2 pounceTarget;
     float randomFactor = UnityEngine.Random.Range(0.9f, 1.1f);
 
-
+    public NaofuBehavior(BehaviorDefinitions definitions)
+    {
+        defaultMoveSpeed = definitions.moveSpeed;
+    }
 
     public bool IsNearEnemy(ReadOnlyCollection<BattleEntity> entities, BattleEntity entity)
     {
@@ -81,6 +85,7 @@ public class NaofuHandler
         return battleEntity;
     }
 
+    public override BattleEntity.AttackDelegate AttackDelegate => Attack;
     public List<BattleEntity> Attack(BattleEntity.EntityUpdateParams param)
     {
         List<BattleEntity> result = new List<BattleEntity>();
@@ -90,14 +95,20 @@ public class NaofuHandler
             case State.STATE_RETURNING:
                 break;
             case State.STATE_CHASING_ENEMY:
-                // if (attackCooldown > 0){
-                //     attackCooldown -= param.timeDiff;
-                // }
-                // else if (IsNearEnemy(param.entities, param.entity)){
-                //     target = returnTarget(param.entities, param.entity);
-                //     isAttacking = true;
-                //     state = State.STATE_ATTACKING;
-                // }
+                break;
+            case State.STATE_INITIALIZE_ATTACKING:
+                foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0))
+                {
+                    toSummon.moveHandler = bangding =>
+                    {
+                        float offset = param.entity.facingEast ? 0.1f : -0.1f;
+                        return param.entity.position - bangding.entity.position + new Vector2(offset, 0);
+                    };
+                    toSummon.selfDestruct = new TimedProjectionSelfDestructHandler(0.5f).Update;
+                    toSummon.collideHandler = new AttackCollideHandler(false).Update;
+                    result.Add(toSummon);
+                }
+                state = State.STATE_ATTACKING;
                 break;
             case State.STATE_ATTACKING:
                 // if (target!=null && target.isAlive) {
@@ -113,11 +124,12 @@ public class NaofuHandler
         return result;
     }
 
+    public override BattleEntity.MoveDelegate MoveDelegate => Move;
     public Vector2 Move(BattleEntity.EntityUpdateParams param)
     {
         BattleEntity nearestEntity = FindNearestEnemy(param.entities, param.entity.position);
         Vector2 moveValue = Vector2.zero;
-        moveSpeed = attackCooldown > 0 ? 0.2f : 1;
+        float moveSpeed = attackCooldown > 0 ? 0.2f : defaultMoveSpeed;
         if (attackCooldown > 0){
             attackCooldown -= param.timeDiff;
         }
@@ -157,7 +169,7 @@ public class NaofuHandler
                 {
                     target = returnTarget(param.entities, param.entity);
                     attackCooldown = 3;
-                    state = State.STATE_ATTACKING;
+                    state = State.STATE_INITIALIZE_ATTACKING;
                 }
                 break;
             case State.STATE_ATTACKING:
@@ -168,7 +180,7 @@ public class NaofuHandler
                 }
                 else if (attackCooldown>2.5f)
                 {
-                    float offset = param.entity.position.x < nearestEntity.position.x ? 1f : -1f;
+                    float offset = param.entity.position.x < nearestEntity.position.x ? 0.5f : -0.5f;
                     Vector2 pounceTarget = new Vector2(nearestEntity.position.x + offset, nearestEntity.position.y);
                     moveValue = pounceTarget - param.entity.position;
                     state = State.STATE_CHASING_ENEMY;
