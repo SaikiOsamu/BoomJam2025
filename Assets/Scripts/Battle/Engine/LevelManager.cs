@@ -207,7 +207,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 10 / Mathf.Abs(player.position.x) : 10, 10);
+            enemySpawnCooldown = 0.2f;
         }
     }
 }
