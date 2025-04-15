@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class PlayerStatusUpdate : MonoBehaviour
+public class CameraPlayerStatusReverseUpdate : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -12,8 +12,7 @@ public class PlayerStatusUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var player = GetComponentInParent<LevelManager>().player;
-        transform.position = player.position;
-        GetComponent<SpriteRenderer>().flipX = !player.facingEast;
+        var player = transform.parent.gameObject.GetComponentInParent<LevelManager>().player;
+        transform.localPosition = new Vector3(0, -player.position.y, -10);
     }
 }
