@@ -9,13 +9,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 class NearPlayerAttackHandler
 {
-    public BattleEntity player;
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 1;
-    public NearPlayerAttackHandler(BattleEntity player)
-    {
-        this.player = player;
-    }
 
     public List<BattleEntity> Attack(BattleEntity.EntityUpdateParams param)
     {
@@ -25,14 +20,15 @@ class NearPlayerAttackHandler
         {
             attackCooldown -= param.timeDiff;
         }
-        else if ((player.position - param.entity.position).magnitude < 0.4f)
+        else if ((param.player.position - param.entity.position).magnitude < 0.4f)
         {
             BattleEntity projection = new BattleEntity();
             projection.position = param.entity.position * 1;
-            if (player.position.x > param.entity.position.x)
+            if (param.player.position.x > param.entity.position.x)
             {
                 projection.position.x += 0.4f;
-            } else
+            }
+            else
             {
                 projection.position.x -= 0.4f;
             }
