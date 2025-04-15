@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface Behavior
 {
-    BattleEntity.MoveDelegate MoveDelegate { get; }
+     BattleEntity.MoveDelegate MoveDelegate { get; }
      BattleEntity.AttackDelegate AttackDelegate { get; }
      BattleEntity.CollideDelegate CollideDelegate { get;}
      BattleEntity.SelfDestructDelegate SelfDestructDelegate { get; }
@@ -28,6 +28,8 @@ public class BehaviorFactory
                 return new GeneralEnemyBehavior(definitions);
             case BehaviorType.Bird:
                 return new BombBirdBehavior(definitions);
+            case BehaviorType.FloatingCannon:
+                return new FloatingCannonBehavior(definitions);
             case BehaviorType.Unknown:
             default:
                 return new BaseBehavior();
