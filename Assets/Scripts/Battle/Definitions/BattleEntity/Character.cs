@@ -14,4 +14,5 @@ public class Character : ScriptableObject
     public int resilienceMax = 0;
     public int shield = 0;
     public int shieldMax = 200;
+    public BehaviorType behavior = BehaviorType.Unknown;
 }
