@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     private GameObject projectilePrefab;
     [SerializeField]
     private Character birdPrefab;
+    [SerializeField]
+    private Character enemyPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,9 +43,6 @@ public class LevelManager : MonoBehaviour
 
         // Add a bomb bird.
         BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
-        BombBirdHandler bombBirdHandler = new BombBirdHandler();
-        bombBird.moveHandler = bombBirdHandler.Move;
-        bombBird.attackHandler = bombBirdHandler.Attack;
         entities.Add(bombBird);
         RegisterObject(bombBird);
     }
@@ -116,13 +115,8 @@ public class LevelManager : MonoBehaviour
 
     void AddEnemy()
     {
-        BattleEntity enemy = new BattleEntity();
-        enemy.radius = 1;
+        BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefab);
         enemy.isEnemy = true;
-        enemy.moveHandler = new ChasePlayerMoveHandler(player, 0.5f).Move;
-        enemy.attackHandler = new NearPlayerAttackHandler(player).Attack;
-        enemy.selfDestruct = new LifeBasedSelfDestructHandler().Update;
-        enemy.color = Color.red;
         float position = Random.value;
         if (position > 0.5)
         {

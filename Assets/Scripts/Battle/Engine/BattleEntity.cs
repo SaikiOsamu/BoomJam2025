@@ -45,6 +45,14 @@ public class BattleEntity
         battleEntity.resilienceMax = prefabCharacter.resilienceMax;
         battleEntity.shield = prefabCharacter.shield;
         battleEntity.shieldMax = prefabCharacter.shieldMax;
+        if (prefabCharacter.behavior != null)
+        {
+            Behavior behavior = BehaviorFactory.GetBehavior(prefabCharacter.behavior);
+            battleEntity.moveHandler = behavior.MoveDelegate;
+            battleEntity.attackHandler = behavior.AttackDelegate;
+            battleEntity.collideHandler = behavior.CollideDelegate;
+            battleEntity.selfDestruct = behavior.SelfDestructDelegate;
+        }
         return battleEntity;
     }
 
