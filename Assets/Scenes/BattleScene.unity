@@ -625,6 +625,7 @@ MonoBehaviour:
   entityPrefab: {fileID: 5095337469806169938, guid: c4d3c19f39e3ad14685fac2f23cb8258, type: 3}
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
   birdPrefab: {fileID: 11400000, guid: 02f8d397d206e6940a1d1938980918c2, type: 2}
+  enemyPrefab: {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
 --- !u!4 &1532566957
 Transform:
   m_ObjectHideFlags: 0
