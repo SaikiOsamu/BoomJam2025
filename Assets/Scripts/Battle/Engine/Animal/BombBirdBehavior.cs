@@ -20,8 +20,11 @@ class BombMoveHandler
     }
 }
 
-class BombBirdHandler
+class BombBirdBehavior : Behavior
 {
+    MoveDelegate MoveDelegate => Move;
+    AttackDelegate AttackDelegate => Attack;
+
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 1;
     public float birdMoveSpeed = 3;
