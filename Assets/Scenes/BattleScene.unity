@@ -626,6 +626,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
   birdPrefab: {fileID: 11400000, guid: 02f8d397d206e6940a1d1938980918c2, type: 2}
   enemyPrefab: {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
+  naofuPrefab: {fileID: 11400000, guid: bce8ebdb17f1d43f6a8e021086a5a22d, type: 2}
   floatingCannonPrefab: {fileID: 11400000, guid: 495dcc2447425fd4ba06b463feec8c58, type: 2}
 --- !u!4 &1532566957
 Transform:

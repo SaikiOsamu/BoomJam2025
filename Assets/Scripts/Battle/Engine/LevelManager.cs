@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour
     private Character enemyPrefab;
     [SerializeField]
     private Character floatingCannonPrefab;
+    [SerializeField]
+    private Character naofuPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,10 +46,14 @@ public class LevelManager : MonoBehaviour
         player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
 
         // Add a bomb bird.
-        //BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
-        //entities.Add(bombBird);
-        //RegisterObject(bombBird);
-        // Add a Floating cannon object.
+        BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
+        entities.Add(bombBird);
+        RegisterObject(bombBird);
+
+        BattleEntity naofu = BattleEntity.FromPrefab(naofuPrefab);
+        entities.Add(naofu);
+        RegisterObject(naofu);
+
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
         RegisterObject(floatingCannon);

@@ -30,6 +30,8 @@ public class BehaviorFactory
                 return new BombBirdBehavior(definitions);
             case BehaviorType.FloatingCannon:
                 return new FloatingCannonBehavior(definitions);
+            case BehaviorType.Naofu:
+                return new NaofuBehavior(definitions);
             case BehaviorType.Unknown:
             default:
                 return new BaseBehavior();
