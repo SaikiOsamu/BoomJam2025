@@ -28,6 +28,8 @@ public class BehaviorFactory
                 return new GeneralEnemyBehavior(definitions);
             case BehaviorType.Bird:
                 return new BombBirdBehavior(definitions);
+            case BehaviorType.Naofu:
+                return new NaofuBehavior(definitions);
             case BehaviorType.Unknown:
             default:
                 return new BaseBehavior();
