@@ -31,6 +31,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character enemyPrefab;
     [SerializeField]
+    private Character floatingCannonPrefab;
+    [SerializeField]
     private Character naofuPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,6 +53,10 @@ public class LevelManager : MonoBehaviour
         BattleEntity naofu = BattleEntity.FromPrefab(naofuPrefab);
         entities.Add(naofu);
         RegisterObject(naofu);
+
+        BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
+        entities.Add(floatingCannon);
+        RegisterObject(floatingCannon);
     }
 
     void RegisterObject(BattleEntity entity)
@@ -201,7 +207,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 10 / Mathf.Abs(player.position.x) : 10, 10);
+            enemySpawnCooldown = 0.2f;
         }
     }
 }
