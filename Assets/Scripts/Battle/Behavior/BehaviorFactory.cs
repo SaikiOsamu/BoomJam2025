@@ -26,6 +26,8 @@ public class BehaviorFactory
         {
             case BehaviorType.DamagingProjectile:
                 return new DamagingProjectileBehavior(definitions);
+            case BehaviorType.Player:
+                return new PlayerBehavior(definitions);
             case BehaviorType.Enemy:
                 return new GeneralEnemyBehavior(definitions);
             case BehaviorType.Bird:
