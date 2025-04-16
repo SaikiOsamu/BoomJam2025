@@ -13,7 +13,7 @@ class PlayerBehavior : BaseBehavior
 {
     public override MoveDelegate MoveDelegate => Move;
     public override AttackDelegate AttackDelegate => Attack;
-    public override SelfDestructDelegate SelfDestructDelegate => new LifeBasedSelfDestructHandler().Update;
+    public override SelfDestructDelegate SelfDestructDelegate => Update;
 
     public float attackCooldown = 0;
     public float attackCooldownWhenAttacked = 1;
@@ -147,5 +147,26 @@ class PlayerBehavior : BaseBehavior
             moveValue.y = 0;
         }
         return moveValue;
+    }
+
+    public float godPowerRestore = 0;
+    public void Update(EntityUpdateParams param)
+    {
+        if (param.entity.life <= 0)
+        {
+            param.entity.isAlive = false;
+            return;
+        }
+        godPowerRestore += param.timeDiff * param.entity.godPowerRecoveryPerSecond;
+        if (godPowerRestore > 1)
+        {
+            int restored = (int)Math.Floor(godPowerRestore);
+            godPowerRestore -= restored;
+            param.entity.godPower += restored;
+            if (param.entity.godPower > param.entity.godPowerMax)
+            {
+                param.entity.godPower = param.entity.godPowerMax;
+            }
+        }
     }
 }
