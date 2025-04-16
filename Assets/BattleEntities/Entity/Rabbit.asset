@@ -19,8 +19,9 @@ MonoBehaviour:
   skills:
   - {fileID: 0}
   life: 100
+  lifeMax: 100
   resilience: 0
   resilienceMax: 0
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 0}
+  behavior: {fileID: 11400000, guid: 4d504c0ca24e64d8d9a0f59394a0e2ee, type: 2}
