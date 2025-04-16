@@ -183,7 +183,7 @@ public class LevelManager : MonoBehaviour
             foreach (BattleEntity victim in collisionBattleEntity.victims.OrderBy(v => v.position.x * (collisionBattleEntity.projector.facingEast ? 1 : -1)))
             {
                 // Barrier resolution
-                if (victim.isBarrier)
+                if (victim.isBarrier && collisionBattleEntity.projector.isEnemy)
                 {
                     if (collisionBattleEntity.projector.projectorDestroiedOnContactWithBarrier)
                     {
