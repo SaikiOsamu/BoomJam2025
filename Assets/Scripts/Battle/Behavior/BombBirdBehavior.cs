@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
@@ -26,7 +27,6 @@ class BombBirdBehavior : BaseBehavior
     public override AttackDelegate AttackDelegate => Attack;
 
     public float attackCooldown = 0;
-    public float attackCooldownWhenAttacked = 1;
     public float birdMoveSpeed = 3;
 
     public BombBirdBehavior(BehaviorDefinitions definitions)
@@ -96,13 +96,14 @@ class BombBirdBehavior : BaseBehavior
                 }
                 else if (IsNearEnemy(param.entities, param.entity))
                 {
-                    foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0))
+                    var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
+                    foreach (BattleEntity toSummon in entitiesSummoned)
                     {
                         toSummon.moveHandler = new BombMoveHandler().Move;
                         toSummon.attackHandler = BombAttack;
                         result.Add(toSummon);
                     }
-                    attackCooldown = attackCooldownWhenAttacked;
+                    attackCooldown = cooldown;
                     birdState = State.BIRD_STATE_RETURNING;
                 }
                 break;
@@ -118,7 +119,7 @@ class BombBirdBehavior : BaseBehavior
         {
             return result;
         }
-        foreach (BattleEntity bombExplosion in param.entity.GetSkillSummon(0))
+        foreach (BattleEntity bombExplosion in param.entity.GetSkillSummon(0, out _))
         {
             bombExplosion.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
             bombExplosion.collideHandler = new AttackCollideHandler(-1, 5000).Update;
