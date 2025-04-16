@@ -24,6 +24,8 @@ public class BehaviorFactory
     {
         switch (definitions.behaviorType)
         {
+            case BehaviorType.DamagingProjectile:
+                return new DamagingProjectileBehavior(definitions);
             case BehaviorType.Enemy:
                 return new GeneralEnemyBehavior(definitions);
             case BehaviorType.Bird:

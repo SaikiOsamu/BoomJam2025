@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
 
-class DamagingProjectile : BaseBehavior
+class DamagingProjectileBehavior : BaseBehavior
 {
     public override CollideDelegate CollideDelegate => mCollideDelegate;
     public override SelfDestructDelegate SelfDestructDelegate => param =>
@@ -25,7 +25,7 @@ class DamagingProjectile : BaseBehavior
     private CollideDelegate mCollideDelegate;
     private SelfDestructDelegate maybeTimeBasedDelegate = _ => { };
 
-    public DamagingProjectile(BehaviorDefinitions definitions)
+    public DamagingProjectileBehavior(BehaviorDefinitions definitions)
     {
         this.definitions = definitions;
         mCollideDelegate = new AttackCollideHandler(definitions.maxDamageTargets, definitions.projectileDamage).Update;
