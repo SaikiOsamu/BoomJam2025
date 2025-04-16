@@ -18,4 +18,7 @@ public class BehaviorDefinitions : ScriptableObject
     public int projectileDamage = 0;
     // Set this to a negative number to indicate no destruction by ttl.
     public float timeToLive = 1;
+    public float godPowerDrainPerSecond = 0;
+    // For ranged enemy, this is the distance to player for attack etc.
+    public float attackDistance = 0;
 }
