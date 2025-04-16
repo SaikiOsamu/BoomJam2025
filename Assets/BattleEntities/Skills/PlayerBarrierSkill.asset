@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
-  m_Name: MeleeAttackSkill
+  m_Name: PlayerBarrierSkill
   m_EditorClassIdentifier: 
   skillName: 
   description: 
   summoning:
-  - {fileID: 11400000, guid: e0976cc9bcd66624f8a7a942e0b2f68d, type: 2}
+  - {fileID: 11400000, guid: f83f92721a03b084a9351d1bf233df1f, type: 2}
   cooldownSecond: 0
