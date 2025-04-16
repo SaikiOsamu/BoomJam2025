@@ -117,11 +117,6 @@ class PlayerBehavior : BaseBehavior
 
     public Vector2 Move(EntityUpdateParams param)
     {
-        if (barrierAction.IsPressed())
-        {
-            // Player cannot move while holding the barrier.
-            return Vector2.zero;
-        }
         Vector2 moveValue = moveAction.ReadValue<Vector2>() * param.timeDiff * definitions.moveSpeed;
         if (moveValue.x != 0)
         {
@@ -145,6 +140,11 @@ class PlayerBehavior : BaseBehavior
         else
         {
             moveValue.y = 0;
+        }
+        if (barrierAction.IsPressed())
+        {
+            // Player cannot move while holding the barrier.
+            moveValue.x = 0;
         }
         return moveValue;
     }
