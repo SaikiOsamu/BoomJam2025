@@ -9,5 +9,7 @@ public enum BehaviorType
     Enemy = 1,
     Bird = 2,
     FloatingCannon = 3,
+    Player = 4,
+    DamagingProjectile = 5,
     Naofu = 100,
 }
