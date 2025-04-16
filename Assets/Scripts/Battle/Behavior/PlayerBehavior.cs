@@ -122,7 +122,7 @@ class PlayerBehavior : BaseBehavior
         {
             param.entity.facingEast = moveValue.x > 0;
         }
-        if (jumpAction.triggered && onGround)
+        if (jumpAction.triggered && onGround && !barrierAction.IsPressed())
         {
             jumpCurrentSpeed = jumpInitialSpeed;
             onGround = false;
