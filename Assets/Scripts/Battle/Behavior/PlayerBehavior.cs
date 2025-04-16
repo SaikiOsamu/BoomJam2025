@@ -91,6 +91,23 @@ class PlayerBehavior : BaseBehavior
             }
             result.AddRange(flyingSword);
         }
+        if (barrierAction.triggered && onGround)
+        {
+            var barrier = ActivateSkill(2, param.entity);
+            foreach (BattleEntity entity in barrier)
+            {
+                if (param.player.facingEast)
+                {
+                    entity.position.x += 0.2f;
+                }
+                else
+                {
+                    entity.position.x -= 0.2f;
+                    entity.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
+                }
+            }
+            result.AddRange(barrier);
+        }
         return result;
     }
     public bool onGround = true;
@@ -100,6 +117,11 @@ class PlayerBehavior : BaseBehavior
 
     public Vector2 Move(EntityUpdateParams param)
     {
+        if (barrierAction.IsPressed())
+        {
+            // Player cannot move while holding the barrier.
+            return Vector2.zero;
+        }
         Vector2 moveValue = moveAction.ReadValue<Vector2>() * param.timeDiff * definitions.moveSpeed;
         if (moveValue.x != 0)
         {
