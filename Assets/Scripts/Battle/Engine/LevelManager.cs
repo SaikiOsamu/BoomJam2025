@@ -30,9 +30,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character playerPrefab;
     [SerializeField]
-    private Character birdPrefab;
+    private List<Character> enemyPrefabs;
     [SerializeField]
-    private Character enemyPrefab;
+    private Character birdPrefab;
     [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
@@ -132,7 +132,7 @@ public class LevelManager : MonoBehaviour
 
     void AddEnemy()
     {
-        BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefab);
+        BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
         enemy.isEnemy = true;
         float position = Random.value;
         if (position > 0.5)
