@@ -7,6 +7,8 @@ public class Character : ScriptableObject
     public string entityName;
     public string description;
     public bool isProjector;
+    public bool projectorDestroiedOnContactWithBarrier;
+    public bool isBarrier;
     public GameObject prefab;
     public List<Skills> skills;
     public int life = 100;

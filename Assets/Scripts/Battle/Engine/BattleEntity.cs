@@ -31,6 +31,8 @@ public class BattleEntity
     public bool isAlive = true;
     public bool isEnemy = false;
     public bool isProjector = false;
+    public bool projectorDestroiedOnContactWithBarrier = false;
+    public bool isBarrier = false;
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };
@@ -46,6 +48,8 @@ public class BattleEntity
         battleEntity.resilienceMax = prefabCharacter.resilienceMax;
         battleEntity.shield = prefabCharacter.shield;
         battleEntity.shieldMax = prefabCharacter.shieldMax;
+        battleEntity.projectorDestroiedOnContactWithBarrier = prefabCharacter.projectorDestroiedOnContactWithBarrier;
+        battleEntity.isBarrier = prefabCharacter.isBarrier;
         if (prefabCharacter.behavior != null)
         {
             Behavior behavior = BehaviorFactory.GetBehavior(prefabCharacter.behavior);

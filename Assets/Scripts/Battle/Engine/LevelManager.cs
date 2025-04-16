@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -175,9 +176,22 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (CollisionBattleEntity collisionBattleEntity in collisionBattleEntities.Values)
         {
-            // TODO: Sort the victims to support shield.
             foreach (BattleEntity victim in collisionBattleEntity.victims.OrderBy(v => v.position.x * (collisionBattleEntity.projector.facingEast ? 1 : -1)))
             {
+                // Barrier resolution
+                if (victim.isBarrier)
+                {
+                    if (collisionBattleEntity.projector.projectorDestroiedOnContactWithBarrier)
+                    {
+                        // Destroied by barrier.
+                        collisionBattleEntity.projector.isAlive = false;
+                    }
+                    else
+                    {
+                        // Stop resolution for further contacts.
+                        break;
+                    }
+                }
                 BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                 p.entity = collisionBattleEntity.projector;
                 p.entities = entities.AsReadOnly();
