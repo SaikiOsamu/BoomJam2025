@@ -11,6 +11,7 @@ public enum BehaviorType
     FloatingCannon = 3,
     Player = 4,
     DamagingProjectile = 5,
+    Barrier = 6,
     Naofu = 100,
     Rabbit = 200,
 }
