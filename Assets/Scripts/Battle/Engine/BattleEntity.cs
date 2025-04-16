@@ -23,6 +23,7 @@ public class BattleEntity
     public Sprite sprite = null;
     public float radius = 1;
     public int life = 100;
+    public int lifeMax = 100;
     public int resilience = 0;
     public int resilienceMax = 0;
     public int shield = 0;
@@ -42,6 +43,7 @@ public class BattleEntity
         battleEntity.prefabCharacter = prefabCharacter;
         battleEntity.isProjector = prefabCharacter.isProjector;
         battleEntity.life = prefabCharacter.life;
+        battleEntity.lifeMax = prefabCharacter.lifeMax;
         battleEntity.resilience = prefabCharacter.resilience;
         battleEntity.resilienceMax = prefabCharacter.resilienceMax;
         battleEntity.shield = prefabCharacter.shield;

@@ -10,4 +10,5 @@ public enum BehaviorType
     Bird = 2,
     FloatingCannon = 3,
     Naofu = 100,
+    Rabbit = 4,
 }

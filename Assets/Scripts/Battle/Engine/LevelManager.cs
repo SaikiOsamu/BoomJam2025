@@ -34,6 +34,8 @@ public class LevelManager : MonoBehaviour
     private Character floatingCannonPrefab;
     [SerializeField]
     private Character naofuPrefab;
+    [SerializeField]
+    private Character rabbitPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,6 +59,10 @@ public class LevelManager : MonoBehaviour
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
         RegisterObject(floatingCannon);
+
+        BattleEntity rabbit = BattleEntity.FromPrefab(rabbitPrefab);
+        entities.Add(rabbit);
+        RegisterObject(rabbit);
     }
 
     void RegisterObject(BattleEntity entity)

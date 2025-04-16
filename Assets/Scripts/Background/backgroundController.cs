@@ -17,7 +17,7 @@ public class backgroundController : MonoBehaviour
     void FixedUpdate()
     {
         float distance = cam.transform.position.x * parallaxEffect;
-        float movement = cam.transform.position.x * (1 - parallaxEffect)
+        float movement = cam.transform.position.x * (1 - parallaxEffect);
         transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
 
         // infinite scrolling
