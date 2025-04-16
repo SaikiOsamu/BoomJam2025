@@ -13,4 +13,67 @@ MonoBehaviour:
   m_Name: FloatingCannon
   m_EditorClassIdentifier: 
   behaviorType: 3
+  moveAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: bd135607-5830-4009-98d8-c116e0158c47
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  jumpAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Jump
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 02d3f448-a909-4b0b-ba4f-f41eaef15680
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  attackAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Attack
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 99a67fab-fab1-46dd-95b8-60abd385dc65
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  skill1Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 1
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 164ad851-f2af-4991-b558-ec7aa36553a4
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  barrierAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Barrier
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: aa20f975-457c-4be6-9f9b-a5fa3bf615b2
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   moveSpeed: 1
+  maxDamageTargets: -1
+  projectileDamage: 0
+  timeToLive: 1

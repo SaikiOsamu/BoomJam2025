@@ -16,3 +16,6 @@ MonoBehaviour:
   description: 
   summoning:
   - {fileID: 11400000, guid: 244efcd103a61264c9f67010b8028f78, type: 2}
+  damage: 5000
+  cooldownSecond: 0
+  godPowerConsumptionPerSecond: 0

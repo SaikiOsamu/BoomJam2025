@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: NaofuBehavior 1
+  m_Name: PlayerBehavior
   m_EditorClassIdentifier: 
-  behaviorType: 100
+  behaviorType: 4
   moveAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Move
       m_Type: 0
@@ -24,9 +24,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   jumpAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Jump
       m_Type: 0
@@ -36,9 +36,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   attackAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Attack
       m_Type: 0
@@ -48,9 +48,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   skill1Action:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Skill 1
       m_Type: 0
@@ -60,9 +60,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -7681151759399470137, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   barrierAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Barrier
       m_Type: 0
@@ -72,5 +72,8 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
-  moveSpeed: 3
+    m_Reference: {fileID: 714601444611612194, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  moveSpeed: 1
+  maxDamageTargets: -1
+  projectileDamage: 0
+  timeToLive: 1
