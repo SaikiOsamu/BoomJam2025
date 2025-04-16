@@ -25,6 +25,9 @@ public class BattleEntity
     public int life = 100;
     public int resilience = 0;
     public int resilienceMax = 0;
+    public int godPower = 100;
+    public int godPowerMax = 100;
+    public float godPowerRecoveryPerSecond = 0.1f;
     public int shield = 0;
     public int shieldMax = 200;
     public bool facingEast = true;
@@ -46,6 +49,9 @@ public class BattleEntity
         battleEntity.life = prefabCharacter.life;
         battleEntity.resilience = prefabCharacter.resilience;
         battleEntity.resilienceMax = prefabCharacter.resilienceMax;
+        battleEntity.godPower = prefabCharacter.godPower;
+        battleEntity.godPowerMax = prefabCharacter.godPowerMax;
+        battleEntity.godPowerRecoveryPerSecond = prefabCharacter.godPowerRecoveryPerSecond;
         battleEntity.shield = prefabCharacter.shield;
         battleEntity.shieldMax = prefabCharacter.shieldMax;
         battleEntity.projectorDestroiedOnContactWithBarrier = prefabCharacter.projectorDestroiedOnContactWithBarrier;

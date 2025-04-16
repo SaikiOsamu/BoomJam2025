@@ -14,6 +14,9 @@ public class Character : ScriptableObject
     public int life = 100;
     public int resilience = 0;
     public int resilienceMax = 0;
+    public int godPower = 100;
+    public int godPowerMax = 100;
+    public float godPowerRecoveryPerSecond = 0.1f;
     public int shield = 0;
     public int shieldMax = 200;
     public BehaviorDefinitions behavior;
