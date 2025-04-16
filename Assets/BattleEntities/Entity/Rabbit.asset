@@ -15,7 +15,7 @@ MonoBehaviour:
   entityName: 
   description: 
   isProjector: 0
-  prefab: {fileID: 5095337469806169938, guid: c4d3c19f39e3ad14685fac2f23cb8258, type: 3}
+  prefab: {fileID: 6782176509065335048, guid: d20704797be8d47dc89aa92d657e0da0, type: 3}
   skills:
   - {fileID: 0}
   life: 100
