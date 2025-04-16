@@ -176,7 +176,7 @@ public class LevelManager : MonoBehaviour
         foreach (CollisionBattleEntity collisionBattleEntity in collisionBattleEntities.Values)
         {
             // TODO: Sort the victims to support shield.
-            foreach (BattleEntity victim in collisionBattleEntity.victims)
+            foreach (BattleEntity victim in collisionBattleEntity.victims.OrderBy(v => v.position.x * (collisionBattleEntity.projector.facingEast ? 1 : -1)))
             {
                 BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                 p.entity = collisionBattleEntity.projector;
