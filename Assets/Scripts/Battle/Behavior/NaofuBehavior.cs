@@ -97,7 +97,7 @@ public class NaofuBehavior : BaseBehavior
             case State.STATE_CHASING_ENEMY:
                 break;
             case State.STATE_INITIALIZE_ATTACKING:
-                foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0))
+                foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0, out _))
                 {
                     toSummon.moveHandler = bangding =>
                     {

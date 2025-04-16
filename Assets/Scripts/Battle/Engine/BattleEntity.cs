@@ -67,17 +67,20 @@ public class BattleEntity
         return battleEntity;
     }
 
-    public List<BattleEntity> GetSkillSummon(int skillIndex)
+    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown)
     {
         List<BattleEntity> result = new List<BattleEntity>();
         if (prefabCharacter == null)
         {
+            cooldown = 0;
             return result;
         }
         if (prefabCharacter.skills.Count <= skillIndex)
         {
+            cooldown = 0;
             return result;
         }
+        cooldown = prefabCharacter.skills[skillIndex].cooldownSecond;
         foreach (Character summoning in prefabCharacter.skills[skillIndex].summoning)
         {
             BattleEntity toSummon = FromPrefab(summoning);
