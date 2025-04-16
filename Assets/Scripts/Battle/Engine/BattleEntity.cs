@@ -18,6 +18,7 @@ public class BattleEntity
     }
     public Character prefabCharacter = null;
     public Vector2 position = Vector2.zero;
+    public Quaternion rotation = Quaternion.identity;
     public Color color = Color.white;
     public Sprite sprite = null;
     public float radius = 1;
