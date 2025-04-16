@@ -24,8 +24,14 @@ public class BehaviorFactory
     {
         switch (definitions.behaviorType)
         {
+            case BehaviorType.DamagingProjectile:
+                return new DamagingProjectileBehavior(definitions);
+            case BehaviorType.Player:
+                return new PlayerBehavior(definitions);
+            case BehaviorType.Barrier:
+                return new BarrierBehavior(definitions);
             case BehaviorType.Enemy:
-                return new GeneralEnemyBehavior(definitions);
+                return new RangedEnemyBehavior(definitions);
             case BehaviorType.Bird:
                 return new BombBirdBehavior(definitions);
             case BehaviorType.FloatingCannon:

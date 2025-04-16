@@ -55,6 +55,10 @@ public class ObjectStatusUpdate : MonoBehaviour
         {
             return;
         }
+        if (otherEntity.isEnemy == entity.isEnemy)
+        {
+            return;
+        }
         levelManager.RegisterCollision(entity, otherEntity);
     }
 }

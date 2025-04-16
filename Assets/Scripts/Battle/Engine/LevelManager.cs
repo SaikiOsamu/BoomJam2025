@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,9 +28,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject projectilePrefab;
     [SerializeField]
-    private Character birdPrefab;
+    private Character playerPrefab;
     [SerializeField]
-    private Character enemyPrefab;
+    private List<Character> enemyPrefabs;
+    [SerializeField]
+    private Character birdPrefab;
     [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
@@ -40,12 +43,8 @@ public class LevelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = new BattleEntity();
-        player.moveHandler = new PlayerMoveHandler(InputSystem.actions.FindAction("Move"),
-            InputSystem.actions.FindAction("Jump")).Move;
-        player.attackHandler = new PlayerAttackHandler(InputSystem.actions.FindAction("Attack"),
-            InputSystem.actions.FindAction("Skill 1")).Attack;
-        player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
+        player = BattleEntity.FromPrefab(playerPrefab);
+        entities.Add(player);
 
         // Add a bomb bird.
         BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
@@ -133,7 +132,7 @@ public class LevelManager : MonoBehaviour
 
     void AddEnemy()
     {
-        BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefab);
+        BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
         enemy.isEnemy = true;
         float position = Random.value;
         if (position > 0.5)
@@ -181,9 +180,22 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (CollisionBattleEntity collisionBattleEntity in collisionBattleEntities.Values)
         {
-            // TODO: Sort the victims to support shield.
-            foreach (BattleEntity victim in collisionBattleEntity.victims)
+            foreach (BattleEntity victim in collisionBattleEntity.victims.OrderBy(v => v.position.x * (collisionBattleEntity.projector.facingEast ? 1 : -1)))
             {
+                // Barrier resolution
+                if (victim.isBarrier && collisionBattleEntity.projector.isEnemy)
+                {
+                    if (collisionBattleEntity.projector.projectorDestroiedOnContactWithBarrier)
+                    {
+                        // Destroied by barrier.
+                        collisionBattleEntity.projector.isAlive = false;
+                    }
+                    else
+                    {
+                        // Stop resolution for further contacts.
+                        break;
+                    }
+                }
                 BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                 p.entity = collisionBattleEntity.projector;
                 p.entities = entities.AsReadOnly();

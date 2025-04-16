@@ -7,4 +7,5 @@ public class Skills : ScriptableObject
     public string skillName;
     public string description;
     public List<Character> summoning;
+    public float cooldownSecond = 0;
 }

@@ -15,4 +15,5 @@ MonoBehaviour:
   skillName: 
   description: 
   summoning:
-  - {fileID: 11400000, guid: 244efcd103a61264c9f67010b8028f78, type: 2}
+  - {fileID: 11400000, guid: e0976cc9bcd66624f8a7a942e0b2f68d, type: 2}
+  cooldownSecond: 0

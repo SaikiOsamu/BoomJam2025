@@ -15,10 +15,16 @@ MonoBehaviour:
   entityName: 
   description: 
   isProjector: 1
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
   prefab: {fileID: 2757770327938398083, guid: ee5ee830fd5885948ae29ff8003f0736, type: 3}
   skills: []
   life: 100
   resilience: 0
   resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
+  behavior: {fileID: 11400000, guid: a321cf03d1ac6174ab53a2b57acc3dae, type: 2}

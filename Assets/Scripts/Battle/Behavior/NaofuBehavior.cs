@@ -97,7 +97,7 @@ public class NaofuBehavior : BaseBehavior
             case State.STATE_CHASING_ENEMY:
                 break;
             case State.STATE_INITIALIZE_ATTACKING:
-                foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0))
+                foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0, out _))
                 {
                     toSummon.moveHandler = bangding =>
                     {
@@ -105,7 +105,7 @@ public class NaofuBehavior : BaseBehavior
                         return param.entity.position - bangding.entity.position + new Vector2(offset, 0);
                     };
                     toSummon.selfDestruct = new TimedProjectionSelfDestructHandler(0.5f).Update;
-                    toSummon.collideHandler = new AttackCollideHandler(false).Update;
+                    toSummon.collideHandler = new AttackCollideHandler(-1).Update;
                     result.Add(toSummon);
                 }
                 state = State.STATE_ATTACKING;

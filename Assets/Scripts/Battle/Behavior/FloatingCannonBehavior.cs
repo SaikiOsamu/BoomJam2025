@@ -15,7 +15,6 @@ class FloatingCannonBehavior : BaseBehavior
     public override AttackDelegate AttackDelegate => Attack;
 
     public float attackCooldown = 0;
-    public float attackCooldownWhenAttacked = 3;
     public float birdMoveSpeed = 3;
 
     public FloatingCannonBehavior(BehaviorDefinitions definitions)
@@ -63,7 +62,8 @@ class FloatingCannonBehavior : BaseBehavior
             var enemy = FindNearestEnemy(param.entities, param.entity.position);
             if (enemy != null)
             {
-                foreach (BattleEntity toSummon in param.entity.GetSkillSummon(0))
+                var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
+                foreach (BattleEntity toSummon in entitiesSummoned)
                 {
                     float diffx = toSummon.position.x - enemy.position.x;
                     float diffy = toSummon.position.y - enemy.position.y;
@@ -80,7 +80,7 @@ class FloatingCannonBehavior : BaseBehavior
                     collidedObjects.Clear();
                     result.Add(toSummon);
                 }
-                attackCooldown = attackCooldownWhenAttacked;
+                attackCooldown = cooldown;
                 isAttacking = true;
             }
         }

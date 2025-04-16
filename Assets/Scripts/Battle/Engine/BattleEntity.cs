@@ -26,12 +26,17 @@ public class BattleEntity
     public int lifeMax = 100;
     public int resilience = 0;
     public int resilienceMax = 0;
+    public int godPower = 100;
+    public int godPowerMax = 100;
+    public float godPowerRecoveryPerSecond = 0.1f;
     public int shield = 0;
     public int shieldMax = 200;
     public bool facingEast = true;
     public bool isAlive = true;
     public bool isEnemy = false;
     public bool isProjector = false;
+    public bool projectorDestroiedOnContactWithBarrier = false;
+    public bool isBarrier = false;
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };
@@ -46,8 +51,13 @@ public class BattleEntity
         battleEntity.lifeMax = prefabCharacter.lifeMax;
         battleEntity.resilience = prefabCharacter.resilience;
         battleEntity.resilienceMax = prefabCharacter.resilienceMax;
+        battleEntity.godPower = prefabCharacter.godPower;
+        battleEntity.godPowerMax = prefabCharacter.godPowerMax;
+        battleEntity.godPowerRecoveryPerSecond = prefabCharacter.godPowerRecoveryPerSecond;
         battleEntity.shield = prefabCharacter.shield;
         battleEntity.shieldMax = prefabCharacter.shieldMax;
+        battleEntity.projectorDestroiedOnContactWithBarrier = prefabCharacter.projectorDestroiedOnContactWithBarrier;
+        battleEntity.isBarrier = prefabCharacter.isBarrier;
         if (prefabCharacter.behavior != null)
         {
             Behavior behavior = BehaviorFactory.GetBehavior(prefabCharacter.behavior);
@@ -59,17 +69,20 @@ public class BattleEntity
         return battleEntity;
     }
 
-    public List<BattleEntity> GetSkillSummon(int skillIndex)
+    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown)
     {
         List<BattleEntity> result = new List<BattleEntity>();
         if (prefabCharacter == null)
         {
+            cooldown = 0;
             return result;
         }
         if (prefabCharacter.skills.Count <= skillIndex)
         {
+            cooldown = 0;
             return result;
         }
+        cooldown = prefabCharacter.skills[skillIndex].cooldownSecond;
         foreach (Character summoning in prefabCharacter.skills[skillIndex].summoning)
         {
             BattleEntity toSummon = FromPrefab(summoning);

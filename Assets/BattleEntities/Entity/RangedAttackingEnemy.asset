@@ -10,16 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: MeleeAttack
+  m_Name: RangedAttackingEnemy
   m_EditorClassIdentifier: 
   entityName: 
   description: 
-  isProjector: 1
-  prefab: {fileID: 2757770327938398083, guid: 04efbf878144bcc44b6ffcad5049c111, type: 3}
-  skills: []
-  life: 100
+  isProjector: 0
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
+  prefab: {fileID: 5095337469806169938, guid: ffb0f6e284b114540836e75093696dd5, type: 3}
+  skills:
+  - {fileID: 11400000, guid: e866959fba1606049abde155ad7f5b6b, type: 2}
+  life: 5
+  lifeMax: 100
   resilience: 0
   resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 0}
+  behavior: {fileID: 11400000, guid: 83b7827904aab944283e8b42d78d5fb2, type: 2}
