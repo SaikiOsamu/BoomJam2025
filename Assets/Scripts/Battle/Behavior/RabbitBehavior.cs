@@ -79,7 +79,6 @@ public class RabbitBehavior : BaseBehavior
             {
                 int healAmount = Random.Range(minHeal, maxHeal + 1); 
                 player.life = Mathf.Min(player.life + healAmount, player.lifeMax);
-                healed.Add(player);
 
                 Debug.Log($"兔子给玩家加了 {healAmount} 点血！");
             }
