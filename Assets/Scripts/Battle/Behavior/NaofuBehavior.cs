@@ -105,7 +105,7 @@ public class NaofuBehavior : BaseBehavior
                         return param.entity.position - bangding.entity.position + new Vector2(offset, 0);
                     };
                     toSummon.selfDestruct = new TimedProjectionSelfDestructHandler(0.5f).Update;
-                    toSummon.collideHandler = new AttackCollideHandler(false).Update;
+                    toSummon.collideHandler = new AttackCollideHandler(-1).Update;
                     result.Add(toSummon);
                 }
                 state = State.STATE_ATTACKING;

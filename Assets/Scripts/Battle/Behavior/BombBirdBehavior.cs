@@ -121,7 +121,7 @@ class BombBirdBehavior : BaseBehavior
         foreach (BattleEntity bombExplosion in param.entity.GetSkillSummon(0))
         {
             bombExplosion.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
-            bombExplosion.collideHandler = new AttackCollideHandler(false, 5000).Update;
+            bombExplosion.collideHandler = new AttackCollideHandler(-1, 5000).Update;
             result.Add(bombExplosion);
         }
 

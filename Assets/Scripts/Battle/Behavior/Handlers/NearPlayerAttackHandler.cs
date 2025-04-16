@@ -36,7 +36,7 @@ class NearPlayerAttackHandler
             projection.isEnemy = true;
             attackCooldown = attackCooldownWhenAttacked;
             projection.selfDestruct = new TimedProjectionSelfDestructHandler(0.2f).Update;
-            projection.collideHandler = new AttackCollideHandler(false).Update;
+            projection.collideHandler = new AttackCollideHandler(-1).Update;
             projection.isProjector = true;
             result.Add(projection);
         }
