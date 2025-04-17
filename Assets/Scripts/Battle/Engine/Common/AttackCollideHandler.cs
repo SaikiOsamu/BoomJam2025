@@ -34,7 +34,7 @@ class AttackCollideHandler
         {
             return;
         }
-        theOtherEntity.life -= attack;
+        theOtherEntity.Damage(attack);
         if (maxDamageTargets > 0 && collidedObjects.Count >= maxDamageTargets)
         {
             param.entity.isAlive = false;

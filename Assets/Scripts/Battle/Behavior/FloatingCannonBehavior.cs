@@ -117,7 +117,7 @@ class FloatingCannonBehavior : BaseBehavior
             {
                 return;
             }
-            theOtherEntity.life -= attack;
+            theOtherEntity.Damage(attack);
             collidedObjects.Add(theOtherEntity);
         }
         return;
