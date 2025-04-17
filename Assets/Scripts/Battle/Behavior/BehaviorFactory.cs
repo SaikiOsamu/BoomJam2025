@@ -4,10 +4,10 @@ using UnityEngine;
 
 public interface Behavior
 {
-     BattleEntity.MoveDelegate MoveDelegate { get; }
-     BattleEntity.AttackDelegate AttackDelegate { get; }
-     BattleEntity.CollideDelegate CollideDelegate { get;}
-     BattleEntity.SelfDestructDelegate SelfDestructDelegate { get; }
+    BattleEntity.MoveDelegate MoveDelegate { get; }
+    BattleEntity.AttackDelegate AttackDelegate { get; }
+    BattleEntity.CollideDelegate CollideDelegate { get; }
+    BattleEntity.SelfDestructDelegate SelfDestructDelegate { get; }
 }
 
 public class BaseBehavior : Behavior
@@ -42,6 +42,8 @@ public class BehaviorFactory
                 return new NaofuBehavior(definitions);
             case BehaviorType.Rabbit:
                 return new RabbitBehavior(definitions);
+            case BehaviorType.Cobra:
+                return new CobraBehavior(definitions);
             case BehaviorType.Unknown:
             default:
                 return new BaseBehavior();
