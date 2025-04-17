@@ -44,6 +44,8 @@ public class BehaviorFactory
                 return new RabbitBehavior(definitions);
             case BehaviorType.Cobra:
                 return new CobraBehavior(definitions);
+            case BehaviorType.Turtle:
+                return new TurtleBehavior(definitions);
             case BehaviorType.Unknown:
             default:
                 return new BaseBehavior();

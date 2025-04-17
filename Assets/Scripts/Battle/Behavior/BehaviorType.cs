@@ -14,6 +14,7 @@ public enum BehaviorType
     Barrier = 6,
     Blink = 7,
     Cobra = 8,
+    Turtle = 9,
     Naofu = 100,
     Rabbit = 200,
 }
