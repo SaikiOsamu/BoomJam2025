@@ -9,6 +9,7 @@ public class BehaviorDefinitions : ScriptableObject
     // Used by PlayerBehavior
     public InputActionProperty moveAction;
     public InputActionProperty jumpAction;
+    public InputActionProperty blinkAction;
     public InputActionProperty attackAction;
     public InputActionProperty skill1Action;
     public InputActionProperty barrierAction;

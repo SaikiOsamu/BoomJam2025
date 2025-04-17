@@ -30,6 +30,8 @@ public class BehaviorFactory
                 return new PlayerBehavior(definitions);
             case BehaviorType.Barrier:
                 return new BarrierBehavior(definitions);
+            case BehaviorType.Blink:
+                return new BlinkBehavior(definitions);
             case BehaviorType.Enemy:
                 return new RangedEnemyBehavior(definitions);
             case BehaviorType.Bird:

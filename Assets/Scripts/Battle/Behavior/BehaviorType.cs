@@ -12,6 +12,7 @@ public enum BehaviorType
     Player = 4,
     DamagingProjectile = 5,
     Barrier = 6,
+    Blink = 7,
     Naofu = 100,
     Rabbit = 200,
 }
