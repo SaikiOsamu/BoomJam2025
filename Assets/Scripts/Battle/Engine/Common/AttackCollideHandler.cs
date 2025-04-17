@@ -35,10 +35,10 @@ class AttackCollideHandler
             return;
         }
         theOtherEntity.Damage(attack);
+        collidedObjects.Add(theOtherEntity);
         if (maxDamageTargets > 0 && collidedObjects.Count >= maxDamageTargets)
         {
             param.entity.isAlive = false;
         }
-        collidedObjects.Add(theOtherEntity);
     }
 }
