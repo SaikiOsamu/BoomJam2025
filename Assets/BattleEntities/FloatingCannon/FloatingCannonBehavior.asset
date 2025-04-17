@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: FloatingCannon
+  m_Name: FloatingCannonBehavior
   m_EditorClassIdentifier: 
   behaviorType: 3
   moveAction:
@@ -32,6 +32,18 @@ MonoBehaviour:
       m_Type: 0
       m_ExpectedControlType: 
       m_Id: 02d3f448-a909-4b0b-ba4f-f41eaef15680
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  blinkAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Blink
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: d2bc955f-f400-49c2-b4f7-1c182efe215a
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -77,3 +89,5 @@ MonoBehaviour:
   maxDamageTargets: -1
   projectileDamage: 0
   timeToLive: 1
+  godPowerDrainPerSecond: 0
+  attackDistance: 0

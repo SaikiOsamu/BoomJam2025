@@ -37,6 +37,18 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
+  blinkAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Blink
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 0de4ea37-60ed-4b7f-bcae-41061ee4435e
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   attackAction:
     m_UseReference: 0
     m_Action:
@@ -77,3 +89,5 @@ MonoBehaviour:
   maxDamageTargets: -1
   projectileDamage: 0
   timeToLive: 1
+  godPowerDrainPerSecond: 0
+  attackDistance: 0

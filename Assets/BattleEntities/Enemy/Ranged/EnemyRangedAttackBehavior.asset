@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: AttackingEnemy
+  m_Name: EnemyRangedAttackBehavior
   m_EditorClassIdentifier: 
-  behaviorType: 1
+  behaviorType: 5
   moveAction:
     m_UseReference: 0
     m_Action:
@@ -32,6 +32,18 @@ MonoBehaviour:
       m_Type: 0
       m_ExpectedControlType: 
       m_Id: 50616473-61d5-4e0e-9d47-cf7c60b71130
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  blinkAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Blink
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 10d4928d-761f-4454-bbab-875695fff0c8
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -74,3 +86,8 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   moveSpeed: 0.5
+  maxDamageTargets: -1
+  projectileDamage: 5
+  timeToLive: 50
+  godPowerDrainPerSecond: 0
+  attackDistance: 0

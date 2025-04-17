@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: EnemyRangedAttackBehavior
+  m_Name: EnemyMeleeAttackBehavior
   m_EditorClassIdentifier: 
   behaviorType: 5
   moveAction:
@@ -32,6 +32,18 @@ MonoBehaviour:
       m_Type: 0
       m_ExpectedControlType: 
       m_Id: 50616473-61d5-4e0e-9d47-cf7c60b71130
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  blinkAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Blink
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: ad13d50e-00c5-4513-9d61-05131e74e74a
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -73,9 +85,9 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  moveSpeed: 0.5
+  moveSpeed: 0
   maxDamageTargets: -1
   projectileDamage: 5
-  timeToLive: 50
+  timeToLive: 0.2
   godPowerDrainPerSecond: 0
   attackDistance: 0
