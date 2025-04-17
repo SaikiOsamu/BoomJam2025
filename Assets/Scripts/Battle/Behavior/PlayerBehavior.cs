@@ -15,14 +15,12 @@ class PlayerBehavior : BaseBehavior
     public override AttackDelegate AttackDelegate => Attack;
     public override SelfDestructDelegate SelfDestructDelegate => Update;
 
-    public float attackCooldown = 0;
-    public float attackCooldownWhenAttacked = 1;
-
     BehaviorDefinitions definitions;
     InputAction moveAction;
     InputAction jumpAction;
     InputAction attackAction;
     InputAction barrierAction;
+    InputAction blinkAction;
     InputAction skill1Action;
     List<float> skillCooldown = new();
 
@@ -31,6 +29,7 @@ class PlayerBehavior : BaseBehavior
         this.definitions = definitions;
         moveAction = definitions.moveAction.action;
         jumpAction = definitions.jumpAction.action;
+        blinkAction = definitions.blinkAction.action;
         attackAction = definitions.attackAction.action;
         barrierAction = definitions.barrierAction.action;
         skill1Action = definitions.skill1Action.action;
@@ -108,6 +107,15 @@ class PlayerBehavior : BaseBehavior
             }
             result.AddRange(barrier);
         }
+        if (blinkAction.triggered && !barrierAction.IsPressed())
+        {
+            var blink = ActivateSkill(3, param.entity);
+            foreach (BattleEntity entity in blink)
+            {
+                entity.facingEast = param.player.facingEast;
+            }
+            result.AddRange(blink);
+        }
         return result;
     }
     public bool onGround = true;
@@ -168,5 +176,36 @@ class PlayerBehavior : BaseBehavior
                 param.entity.godPower = param.entity.godPowerMax;
             }
         }
+    }
+}
+
+public class BlinkBehavior : BaseBehavior
+{
+    TimedProjectionSelfDestructHandler TimedProjectionSelfDestructHandler;
+
+    float blinkDistance;
+    public BlinkBehavior(BehaviorDefinitions definitions)
+    {
+        blinkDistance = definitions.moveSpeed;
+        TimedProjectionSelfDestructHandler = new TimedProjectionSelfDestructHandler(definitions.timeToLive);
+    }
+    bool blinked = false;
+
+    public override SelfDestructDelegate SelfDestructDelegate => Update;
+    public void Update(EntityUpdateParams param)
+    {
+        if (!blinked)
+        {
+            blinked = true;
+            if (param.entity.facingEast)
+            {
+                param.player.position.x += blinkDistance;
+            }
+            else
+            {
+                param.player.position.x -= blinkDistance;
+            }
+        }
+        TimedProjectionSelfDestructHandler.Update(param);
     }
 }

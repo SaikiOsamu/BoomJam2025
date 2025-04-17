@@ -34,11 +34,11 @@ class AttackCollideHandler
         {
             return;
         }
-        theOtherEntity.life -= attack;
+        theOtherEntity.Damage(attack);
+        collidedObjects.Add(theOtherEntity);
         if (maxDamageTargets > 0 && collidedObjects.Count >= maxDamageTargets)
         {
             param.entity.isAlive = false;
         }
-        collidedObjects.Add(theOtherEntity);
     }
 }

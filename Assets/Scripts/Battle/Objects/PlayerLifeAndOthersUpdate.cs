@@ -19,7 +19,12 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
     void Update()
     {
         var player = root.GetComponentInParent<LevelManager>().player;
-        textMeshProUGUI.text = "Life: " + player.life + " / " + player.lifeMax
-            + "\nGod Power: " + player.godPower + " / " + player.godPowerMax;
+        string text = "Life: " + player.life + " / " + player.lifeMax;
+        if (player.shield > 0)
+        {
+            text += "\nShield: " + player.shield + " / " + player.shieldMax;
+        }
+        text += "\nGod Power: " + player.godPower + " / " + player.godPowerMax;
+        textMeshProUGUI.text = text;
     }
 }

@@ -92,4 +92,23 @@ public class BattleEntity
         }
         return result;
     }
+
+    // Deal x damage to this entity.
+    public void Damage(int x)
+    {
+        if (shield > 0)
+        {
+            if (x > shield)
+            {
+                x -= shield;
+                shield = 0;
+            }
+            else
+            {
+                shield -= x;
+                return;
+            }
+        }
+        life -= x;
+    }
 }
