@@ -30,15 +30,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character playerPrefab;
     [SerializeField]
-    private List<Character> enemyPrefabs;
-    [SerializeField]
-    private Character birdPrefab;
-    [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
-    private Character naofuPrefab;
+    private List<Character> enemyPrefabs;
     [SerializeField]
-    private Character rabbitPrefab;
+    private List<Character> animalAllyPrefabs;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,22 +42,17 @@ public class LevelManager : MonoBehaviour
         player = BattleEntity.FromPrefab(playerPrefab);
         entities.Add(player);
 
-        // Add a bomb bird.
-        BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
-        entities.Add(bombBird);
-        RegisterObject(bombBird);
-
-        BattleEntity naofu = BattleEntity.FromPrefab(naofuPrefab);
-        entities.Add(naofu);
-        RegisterObject(naofu);
-
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
         RegisterObject(floatingCannon);
 
-        BattleEntity rabbit = BattleEntity.FromPrefab(rabbitPrefab);
-        entities.Add(rabbit);
-        RegisterObject(rabbit);
+        // Add animal allies.. For testing.
+        foreach (var animalAlly in animalAllyPrefabs)
+        {
+            BattleEntity ally = BattleEntity.FromPrefab(animalAlly);
+            entities.Add(ally);
+            RegisterObject(ally);
+        }
     }
 
     void RegisterObject(BattleEntity entity)

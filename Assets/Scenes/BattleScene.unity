@@ -1024,6 +1024,11 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
   - {fileID: 11400000, guid: 6d488706b84cc234ba6b4a5f0f751f1d, type: 2}
+  animalAllyPrefabs:
+  - {fileID: 11400000, guid: 02f8d397d206e6940a1d1938980918c2, type: 2}
+  - {fileID: 11400000, guid: bce8ebdb17f1d43f6a8e021086a5a22d, type: 2}
+  - {fileID: 11400000, guid: 7a35d4c805a0a4081ac5ca24fc8932d0, type: 2}
+  - {fileID: 11400000, guid: 589177cb8a0439544a4ed705b8a5bb25, type: 2}
   birdPrefab: {fileID: 11400000, guid: 02f8d397d206e6940a1d1938980918c2, type: 2}
   floatingCannonPrefab: {fileID: 11400000, guid: 495dcc2447425fd4ba06b463feec8c58, type: 2}
   naofuPrefab: {fileID: 11400000, guid: bce8ebdb17f1d43f6a8e021086a5a22d, type: 2}
