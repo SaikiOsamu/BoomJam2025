@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
+  m_Name: Cobra
+  m_EditorClassIdentifier: 
+  entityName: 
+  description: 
+  isProjector: 0
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
+  prefab: {fileID: 5095337469806169938, guid: 0b3991b34f82d0b419676b4d52185666, type: 3}
+  skills:
+  - {fileID: 11400000, guid: d9c8faf203c7ad448ba3f7b6e0c7bd9d, type: 2}
+  life: 5
+  lifeMax: 100
+  resilience: 0
+  resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  godPowerRecoveryPerSecond: 0.1
+  shield: 0
+  shieldMax: 200
+  behavior: {fileID: 11400000, guid: b4eb56436602d5e4b8bdf7ef097af79d, type: 2}
