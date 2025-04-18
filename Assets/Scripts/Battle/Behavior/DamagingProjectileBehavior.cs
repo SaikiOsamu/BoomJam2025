@@ -47,7 +47,9 @@ class DamagingProjectileBehavior : BaseBehavior
     public DamagingProjectileBehavior(BehaviorDefinitions definitions)
     {
         this.definitions = definitions;
-        mCollideDelegate = new AttackCollideHandler(definitions.maxDamageTargets, definitions.projectileDamage).Update;
+        mCollideDelegate = new AttackCollideHandler(
+            definitions.maxDamageTargets, definitions.projectileDamage, 
+            definitions.projectileDamageEveryNSecond).Update;
         if (definitions.timeToLive > 0)
         {
             maybeTimeBasedDelegate = new TimedProjectionSelfDestructHandler(definitions.timeToLive).Update;

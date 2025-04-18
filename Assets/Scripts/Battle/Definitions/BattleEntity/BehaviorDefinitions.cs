@@ -20,6 +20,8 @@ public class BehaviorDefinitions : ScriptableObject
     // Set this to a non positive number to indicate infinite.
     public int maxDamageTargets = -1;
     public int projectileDamage = 0;
+    // If set above 0, the projectile can damage the target every N second.
+    public float projectileDamageEveryNSecond = -1;
     // Set this to a negative number to indicate no destruction by ttl.
     public float timeToLive = 1;
     public float godPowerDrainPerSecond = 0;
