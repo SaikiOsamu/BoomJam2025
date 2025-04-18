@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
         new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
-    public float enemySpawnCooldown = 0;
+    public float enemySpawnCooldown = 20;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -219,7 +219,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = 0.2f;
+            enemySpawnCooldown = 20f;
         }
     }
 }

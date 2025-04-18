@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class BattleEntity
 {
     public delegate Vector2 MoveDelegate(EntityUpdateParams param);

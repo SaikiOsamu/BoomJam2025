@@ -27,11 +27,14 @@ class BombBirdBehavior : BaseBehavior
     public override AttackDelegate AttackDelegate => Attack;
 
     public float attackCooldown = 0;
-    public float birdMoveSpeed = 3;
+    public float birdMoveSpeed = 0.1f;
 
     public BombBirdBehavior(BehaviorDefinitions definitions)
     {
         birdMoveSpeed = definitions.moveSpeed;
+        moveState.orbitBaseRadiusX = 4;
+        moveState.orbitBaseRadiusY = 1;
+        moveState.orbitEnableFigure8 = true;
     }
 
     public enum State
@@ -140,8 +143,36 @@ class BombBirdBehavior : BaseBehavior
             case State.BIRD_STATE_IDLE:
                 if (nearestEntity == null)
                 {
-                    moveValue = (param.player.position + new Vector2(0, 3) - param.entity.position).normalized
-                        * param.timeDiff * birdMoveSpeed;
+                    Vector2 dynamicCenter = param.player.position + new Vector2(0, 3f);
+
+                    // 初始化状态，只需做一次
+                    if (moveState.currentMode != "idle")
+                    {
+                        MovementHandler2D.SwitchMode(moveState, "idle");
+                        moveState.orbitBaseRadiusX = 1.2f;
+                        moveState.orbitBaseRadiusY = 0.5f;
+                        moveState.orbitWobbleAmplitude = 0.05f;
+                        moveState.orbitWobbleFrequency = 2f;
+                        moveState.orbitShapeCycleTime = 5f;
+                        moveState.orbitShapeBlend = AnimationCurve.EaseInOut(0, 0, 1, 1);
+                    }
+
+                    Vector2 orbitPoint = MovementHandler2D.OrbitFancy2D(
+                        param.entity.position,
+                        dynamicCenter, // 🔁 跟随玩家位置
+                        moveState,
+                        birdMoveSpeed,
+                        0.5f
+                    );
+
+                    Vector2 smoothed = MovementHandler2D.EaseIntoTrajectory2D(
+                        param.entity.position,
+                        orbitPoint,
+                        moveState,
+                        0.5f
+                    );
+
+                    moveValue = smoothed - param.entity.position;
                     break;
                 }
                 birdState = State.BIRD_STATE_CHASING_ENEMY;
@@ -160,6 +191,8 @@ class BombBirdBehavior : BaseBehavior
             case State.BIRD_STATE_RETURNING:
                 if (Mathf.Abs(param.player.position.x - param.entity.position.x) < 0.2f)
                 {
+
+                    moveState.startTime = 0;
                     birdState = State.BIRD_STATE_IDLE;
                     break;
                 }
