@@ -73,6 +73,42 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -7681151759399470137, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  skill2Action:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Skill 2
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 5fe60913-6671-4322-9989-f7781ca36eb5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 2664301880708444139, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  skill3Action:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Skill 3
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: db8d3d15-3835-47cd-a7bb-edb327c2261a
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 2940633652448191597, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  skill4Action:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Skill 4
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 3789c408-f443-4857-919b-b5c36dba0276
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -854673996423781611, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   barrierAction:
     m_UseReference: 1
     m_Action:
@@ -85,7 +121,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 714601444611612194, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  moveSpeed: 1
+  moveSpeed: 2.5
   maxDamageTargets: -1
   projectileDamage: 0
   timeToLive: 1

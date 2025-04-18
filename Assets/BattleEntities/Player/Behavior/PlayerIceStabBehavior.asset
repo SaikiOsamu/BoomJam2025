@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: PlayerFlyingSwordAttackBehavior
+  m_Name: PlayerIceStabBehavior
   m_EditorClassIdentifier: 
   behaviorType: 5
   moveAction:
@@ -73,42 +73,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  skill2Action:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Skill 2
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 9bf2d449-d87a-4859-91f5-35ece115215c
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  skill3Action:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Skill 3
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 994bb7a6-d4ef-4c92-8b80-306691588669
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  skill4Action:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Skill 4
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 620bb075-d05e-4c39-807a-3dd16b73111f
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
   barrierAction:
     m_UseReference: 0
     m_Action:
@@ -121,8 +85,8 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  moveSpeed: 0
-  maxDamageTargets: -1
+  moveSpeed: 2
+  maxDamageTargets: 1
   projectileDamage: 5000
   timeToLive: 15
   godPowerDrainPerSecond: 0
