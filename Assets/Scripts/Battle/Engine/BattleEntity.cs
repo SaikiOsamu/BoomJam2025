@@ -71,29 +71,44 @@ public class BattleEntity
         return battleEntity;
     }
 
-    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown)
+    public Skills GetSkill(int skillIndex, bool dynamic)
     {
-        return GetSkillSummon(skillIndex, out cooldown, out _);
+        Skills skill = null;
+        if (dynamic)
+        {
+            if (dynamicSkills.Count > skillIndex)
+            {
+                skill = dynamicSkills[skillIndex];
+            }
+        }
+        else
+        {
+            if (prefabCharacter != null && prefabCharacter.skills.Count > skillIndex)
+            {
+                skill = prefabCharacter.skills[skillIndex];
+            }
+        }
+        return skill;
     }
 
-    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown, out int godPowerConsumption)
+    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown, bool dynamic = false)
+    {
+        return GetSkillSummon(skillIndex, out cooldown, out _, dynamic);
+    }
+
+    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown, out int godPowerConsumption, bool dynamic = false)
     {
         List<BattleEntity> result = new List<BattleEntity>();
-        if (prefabCharacter == null)
+        Skills skill = GetSkill(skillIndex, dynamic);
+        if (skill == null)
         {
             cooldown = 0;
             godPowerConsumption = 0;
             return result;
         }
-        if (prefabCharacter.skills.Count <= skillIndex)
-        {
-            cooldown = 0;
-            godPowerConsumption = 0;
-            return result;
-        }
-        cooldown = prefabCharacter.skills[skillIndex].cooldownSecond;
-        godPowerConsumption = prefabCharacter.skills[skillIndex].godPowerConsumption;
-        foreach (Character summoning in prefabCharacter.skills[skillIndex].summoning)
+        cooldown = skill.cooldownSecond;
+        godPowerConsumption = skill.godPowerConsumption;
+        foreach (Character summoning in skill.summoning)
         {
             BattleEntity toSummon = FromPrefab(summoning);
             toSummon.position = position * 1;
@@ -103,17 +118,14 @@ public class BattleEntity
         return result;
     }
 
-    public float GetSkillCasttime(int skillIndex)
+    public float GetSkillCasttime(int skillIndex, bool dynamic = false)
     {
-        if (prefabCharacter == null)
+        Skills skill = GetSkill(skillIndex, dynamic);
+        if (skill == null)
         {
             return 0;
         }
-        if (prefabCharacter.skills.Count <= skillIndex)
-        {
-            return 0;
-        }
-        return prefabCharacter.skills[skillIndex].castSecond;
+        return skill.castSecond;
     }
 
     // Deal x damage to this entity.
