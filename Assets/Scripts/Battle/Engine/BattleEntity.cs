@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleEntity
@@ -71,18 +72,26 @@ public class BattleEntity
 
     public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown)
     {
+        return GetSkillSummon(skillIndex, out cooldown, out _);
+    }
+
+    public List<BattleEntity> GetSkillSummon(int skillIndex, out float cooldown, out int godPowerConsumption)
+    {
         List<BattleEntity> result = new List<BattleEntity>();
         if (prefabCharacter == null)
         {
             cooldown = 0;
+            godPowerConsumption = 0;
             return result;
         }
         if (prefabCharacter.skills.Count <= skillIndex)
         {
             cooldown = 0;
+            godPowerConsumption = 0;
             return result;
         }
         cooldown = prefabCharacter.skills[skillIndex].cooldownSecond;
+        godPowerConsumption = prefabCharacter.skills[skillIndex].godPowerConsumption;
         foreach (Character summoning in prefabCharacter.skills[skillIndex].summoning)
         {
             BattleEntity toSummon = FromPrefab(summoning);
@@ -91,6 +100,19 @@ public class BattleEntity
             result.Add(toSummon);
         }
         return result;
+    }
+
+    public float GetSkillCasttime(int skillIndex)
+    {
+        if (prefabCharacter == null)
+        {
+            return 0;
+        }
+        if (prefabCharacter.skills.Count <= skillIndex)
+        {
+            return 0;
+        }
+        return prefabCharacter.skills[skillIndex].castSecond;
     }
 
     // Deal x damage to this entity.
