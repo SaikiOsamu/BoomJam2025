@@ -12,6 +12,9 @@ public class BehaviorDefinitions : ScriptableObject
     public InputActionProperty blinkAction;
     public InputActionProperty attackAction;
     public InputActionProperty skill1Action;
+    public InputActionProperty skill2Action;
+    public InputActionProperty skill3Action;
+    public InputActionProperty skill4Action;
     public InputActionProperty barrierAction;
     public float moveSpeed = 0.5f;
     // Set this to a non positive number to indicate infinite.
