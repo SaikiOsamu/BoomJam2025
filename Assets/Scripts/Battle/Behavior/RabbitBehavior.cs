@@ -61,10 +61,10 @@ public class RabbitBehavior : BaseBehavior
 
     }
 
-    private float healCooldown = 2f;
+    private float healCooldown = 12f;
     private float healTimer = 0f;
     private int minHeal = 20;
-    private int maxHeal = 80;
+    private int maxHeal = 50;
     public override BattleEntity.AttackDelegate AttackDelegate => Heal;
     public List<BattleEntity> Heal(BattleEntity.EntityUpdateParams param)
     {
