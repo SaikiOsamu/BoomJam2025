@@ -161,7 +161,7 @@ public class LevelManager : MonoBehaviour
         }
         // Objects Attack
         List<BattleEntity> attackResults = new List<BattleEntity>();
-        foreach (BattleEntity entity in entities.Prepend(player))
+        foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
