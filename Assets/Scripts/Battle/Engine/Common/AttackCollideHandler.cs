@@ -12,12 +12,17 @@ class AttackCollideHandler
 {
     public int attack = 5;
     public int maxDamageTargets = -1;
+    public float damageEvery = -1;
+    public float damageLastDealt = 0;
+    // Used by damage every N second.
+    public int alreadyDamagedObjects = 0;
     public HashSet<BattleEntity> collidedObjects = new HashSet<BattleEntity>(ReferenceEqualityComparer.Instance);
 
-    public AttackCollideHandler(int maxDamageTargets, int attack = 5)
+    public AttackCollideHandler(int maxDamageTargets, int attack = 5, float damageEvery = -1)
     {
         this.maxDamageTargets = maxDamageTargets;
         this.attack = attack;
+        this.damageEvery = damageEvery;
     }
 
     public void Update(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
@@ -25,6 +30,16 @@ class AttackCollideHandler
         if (!param.entity.isAlive)
         {
             return;
+        }
+        if (damageEvery > 0)
+        {
+            damageLastDealt += param.timeDiff;
+            if (damageLastDealt > damageEvery)
+            {
+                damageLastDealt = 0;
+                alreadyDamagedObjects += collidedObjects.Count;
+                collidedObjects.Clear();
+            }
         }
         if (collidedObjects.Contains(theOtherEntity))
         {
@@ -36,7 +51,7 @@ class AttackCollideHandler
         }
         theOtherEntity.Damage(attack);
         collidedObjects.Add(theOtherEntity);
-        if (maxDamageTargets > 0 && collidedObjects.Count >= maxDamageTargets)
+        if (maxDamageTargets > 0 && alreadyDamagedObjects + collidedObjects.Count >= maxDamageTargets)
         {
             param.entity.isAlive = false;
         }

@@ -35,11 +35,14 @@ public class LevelManager : MonoBehaviour
     private List<Character> enemyPrefabs;
     [SerializeField]
     private List<Character> animalAllyPrefabs;
+    [SerializeField]
+    private List<Skills> playerDynamicSkills;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = BattleEntity.FromPrefab(playerPrefab);
+        player.dynamicSkills = playerDynamicSkills;
         entities.Add(player);
 
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
@@ -158,7 +161,7 @@ public class LevelManager : MonoBehaviour
         }
         // Objects Attack
         List<BattleEntity> attackResults = new List<BattleEntity>();
-        foreach (BattleEntity entity in entities.Prepend(player))
+        foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;

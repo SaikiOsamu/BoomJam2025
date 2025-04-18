@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
-  m_Name: PlayerBlinkSkill
+  m_Name: PlayerHolyFireSkill
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Holy Fire
   description: 
   summoning:
-  - {fileID: 11400000, guid: fa05e5f2a61623d4cada3888543059ec, type: 2}
-  cooldownSecond: 1.5
-  castSecond: 0
-  godPowerConsumption: 0
+  - {fileID: 11400000, guid: e7ce19c373bf86f41989cdfb0b2582a2, type: 2}
+  cooldownSecond: 0.5
+  castSecond: 1
+  godPowerConsumption: 15

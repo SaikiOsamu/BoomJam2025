@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
-  m_Name: PlayerBlinkSkill
+  m_Name: PlayerDirtHaulerSkill 2
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Dirt Hauler
   description: 
   summoning:
-  - {fileID: 11400000, guid: fa05e5f2a61623d4cada3888543059ec, type: 2}
-  cooldownSecond: 1.5
+  - {fileID: 11400000, guid: eaf427fdf8985bd4f8951f846229a878, type: 2}
+  cooldownSecond: 0
   castSecond: 0
   godPowerConsumption: 0

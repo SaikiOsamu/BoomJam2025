@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: PlayerFlyingSwordAttackBehavior
+  m_Name: PlayerDirtHaulerBehavior2
   m_EditorClassIdentifier: 
   behaviorType: 5
   moveAction:
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_Name: Skill 2
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 9bf2d449-d87a-4859-91f5-35ece115215c
+      m_Id: 90cdd615-5c9e-4c85-84d1-c6d3a33d9baa
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -91,7 +91,7 @@ MonoBehaviour:
       m_Name: Skill 3
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 994bb7a6-d4ef-4c92-8b80-306691588669
+      m_Id: a440fe7f-5e2c-4535-ad2a-43beec1f2750
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -103,7 +103,7 @@ MonoBehaviour:
       m_Name: Skill 4
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 620bb075-d05e-4c39-807a-3dd16b73111f
+      m_Id: 3fb66bb5-1c35-4d0b-91ad-4a38d25866e7
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -124,6 +124,9 @@ MonoBehaviour:
   moveSpeed: 0
   maxDamageTargets: -1
   projectileDamage: 5000
-  timeToLive: 15
+  projectileDamageEveryNSecond: 0
+  timeToLive: 1
   godPowerDrainPerSecond: 0
   attackDistance: 0
+  doSkillWhenDisappear: 1
+  disappearSkillPositionOffset: {x: 0.8, y: 0}

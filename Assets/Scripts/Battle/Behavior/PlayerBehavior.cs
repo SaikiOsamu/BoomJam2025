@@ -9,6 +9,19 @@ using UnityEngine.InputSystem;
 using static BattleEntity;
 using static UnityEngine.EventSystems.EventTrigger;
 
+internal class SkillCooldownAndActionPair
+{
+    public InputAction action;
+    public float castTime;
+    public bool hasCasted = false;
+
+    public SkillCooldownAndActionPair(InputAction action)
+    {
+        this.action = action;
+        castTime = 0;
+    }
+}
+
 class PlayerBehavior : BaseBehavior
 {
     public override MoveDelegate MoveDelegate => Move;
@@ -21,8 +34,8 @@ class PlayerBehavior : BaseBehavior
     InputAction attackAction;
     InputAction barrierAction;
     InputAction blinkAction;
-    InputAction skill1Action;
     List<float> skillCooldown = new();
+    List<SkillCooldownAndActionPair> skillCooldownAndActionPairs = new();
 
     public PlayerBehavior(BehaviorDefinitions definitions)
     {
@@ -32,14 +45,17 @@ class PlayerBehavior : BaseBehavior
         blinkAction = definitions.blinkAction.action;
         attackAction = definitions.attackAction.action;
         barrierAction = definitions.barrierAction.action;
-        skill1Action = definitions.skill1Action.action;
         for (int i = 0; i < 20; i++)
         {
             skillCooldown.Add(0);
         }
+        skillCooldownAndActionPairs.Add(new SkillCooldownAndActionPair(definitions.skill1Action.action));
+        skillCooldownAndActionPairs.Add(new SkillCooldownAndActionPair(definitions.skill2Action.action));
+        skillCooldownAndActionPairs.Add(new SkillCooldownAndActionPair(definitions.skill3Action.action));
+        skillCooldownAndActionPairs.Add(new SkillCooldownAndActionPair(definitions.skill4Action.action));
     }
 
-    private List<BattleEntity> ActivateSkill(int skillIndex, BattleEntity entity)
+    private List<BattleEntity> ActivateSkill(int skillIndex, BattleEntity entity, bool dynamic = false)
     {
         List<BattleEntity> result = new List<BattleEntity>();
         if (skillCooldown[skillIndex] > 0)
@@ -48,7 +64,16 @@ class PlayerBehavior : BaseBehavior
         }
         else
         {
-            var entitiesSummoned = entity.GetSkillSummon(skillIndex, out float cooldown);
+            var entitiesSummoned =
+                entity.GetSkillSummon(skillIndex, out float cooldown, out int godPowerConsumption, dynamic);
+            if (entity.godPower >= godPowerConsumption)
+            {
+                entity.godPower -= godPowerConsumption;
+            }
+            else
+            {
+                return result;
+            }
             foreach (BattleEntity toSummon in entitiesSummoned)
             {
                 if (entity.facingEast)
@@ -62,6 +87,43 @@ class PlayerBehavior : BaseBehavior
                 result.Add(toSummon);
             }
             skillCooldown[skillIndex] = cooldown;
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(1, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                e.moveHandler = new FlyingSwordMoveHandler(entity).Move;
+            }
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(4, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Maybe throw it out
+                if (e.prefabCharacter != null && e.prefabCharacter.behavior.moveSpeed != 0)
+                {
+                    e.moveHandler = new VelocityMoveHandler(
+                        e.prefabCharacter.behavior.moveSpeed,
+                        new Vector2(entity.facingEast ? 1 : -1, 0).normalized).Move;
+                }
+            }
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(5, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Attach fire spread ability.
+                FireSpreadBehavior spreadRight = new FireSpreadBehavior();
+                FireSpreadBehavior spreadLeft = new FireSpreadBehavior();
+                spreadLeft.facingEast = false;
+                e.attackHandler = param =>
+                {
+                    List<BattleEntity> result = new List<BattleEntity>();
+                    result.AddRange(spreadRight.Spread(param));
+                    result.AddRange(spreadLeft.Spread(param));
+                    return result;
+                };
+            }
         }
         return result;
     }
@@ -81,14 +143,38 @@ class PlayerBehavior : BaseBehavior
         {
             result.AddRange(ActivateSkill(0, param.entity));
         }
-        if (skill1Action.triggered)
+        for (int i = 0; i < skillCooldownAndActionPairs.Count; i++)
         {
-            var flyingSword = ActivateSkill(1, param.entity);
-            foreach (BattleEntity entity in flyingSword)
+            SkillCooldownAndActionPair skill = skillCooldownAndActionPairs[i];
+            if (skill.action.triggered)
             {
-                entity.moveHandler = new FlyingSwordMoveHandler(param.entity).Move;
+                if (param.entity.GetSkillCasttime(i, true) <= 0)
+                {
+                    skill.hasCasted = true;
+                    result.AddRange(ActivateSkill(i, param.entity, true));
+                }
+                else
+                {
+                    skill.castTime += param.timeDiff;
+                }
             }
-            result.AddRange(flyingSword);
+            else if (skill.action.IsPressed())
+            {
+                if (!skill.hasCasted)
+                {
+                    skill.castTime += param.timeDiff;
+                    if (param.entity.GetSkillCasttime(i, true) < skill.castTime)
+                    {
+                        skill.hasCasted = true;
+                        result.AddRange(ActivateSkill(i, param.entity, true));
+                    }
+                }
+            }
+            else
+            {
+                skill.castTime = 0;
+                skill.hasCasted = false;
+            }
         }
         if (barrierAction.triggered && onGround)
         {
@@ -207,5 +293,46 @@ public class BlinkBehavior : BaseBehavior
             }
         }
         TimedProjectionSelfDestructHandler.Update(param);
+    }
+}
+
+public class FireSpreadBehavior
+{
+    public int spreadRemaining = 3;
+    public bool facingEast = true;
+    public float spreadDelay = 0.2f;
+    public bool spreadHandled = false;
+
+    public List<BattleEntity> Spread(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (spreadRemaining < 0 || spreadHandled)
+        {
+            return result;
+        }
+        if (spreadDelay > 0)
+        {
+            spreadDelay -= param.timeDiff;
+            return result;
+        }
+        var entitiesSummoned = param.entity.GetSkillSummon(0, out _);
+        foreach (BattleEntity toSummon in entitiesSummoned)
+        {
+            if (facingEast)
+            {
+                toSummon.position.x += 0.8f;
+            }
+            else
+            {
+                toSummon.position.x -= 0.8f;
+            }
+            FireSpreadBehavior behavior = new FireSpreadBehavior();
+            behavior.spreadRemaining = spreadRemaining - 1;
+            behavior.facingEast = facingEast;
+            toSummon.attackHandler = behavior.Spread;
+            result.Add(toSummon);
+            spreadHandled = true;
+        }
+        return result;
     }
 }
