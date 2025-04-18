@@ -37,6 +37,18 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
+  blinkAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Blink
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 67126f6d-a473-45c6-b16e-c504e1a5d047
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   attackAction:
     m_UseReference: 0
     m_Action:
