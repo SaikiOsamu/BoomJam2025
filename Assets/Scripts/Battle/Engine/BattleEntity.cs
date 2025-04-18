@@ -38,6 +38,7 @@ public class BattleEntity
     public bool isProjector = false;
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;
+    public List<Skills> dynamicSkills = new List<Skills>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };
