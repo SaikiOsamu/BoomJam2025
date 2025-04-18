@@ -11,12 +11,12 @@ using static UnityEngine.EventSystems.EventTrigger;
 class AttackCollideHandler
 {
     public int attack = 5;
-    public bool shouldDestructAfterCollide = false;
+    public int maxDamageTargets = -1;
     public HashSet<BattleEntity> collidedObjects = new HashSet<BattleEntity>(ReferenceEqualityComparer.Instance);
 
-    public AttackCollideHandler(bool shouldDestructAfterCollide, int attack = 5)
+    public AttackCollideHandler(int maxDamageTargets, int attack = 5)
     {
-        this.shouldDestructAfterCollide = shouldDestructAfterCollide;
+        this.maxDamageTargets = maxDamageTargets;
         this.attack = attack;
     }
 
@@ -34,11 +34,11 @@ class AttackCollideHandler
         {
             return;
         }
-        theOtherEntity.life -= attack;
-        if (shouldDestructAfterCollide)
+        theOtherEntity.Damage(attack);
+        collidedObjects.Add(theOtherEntity);
+        if (maxDamageTargets > 0 && collidedObjects.Count >= maxDamageTargets)
         {
             param.entity.isAlive = false;
         }
-        collidedObjects.Add(theOtherEntity);
     }
 }

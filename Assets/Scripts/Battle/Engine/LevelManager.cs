@@ -1,44 +1,12 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
-public class BattleEntity
-{
-    public delegate Vector2 MoveDelegate(EntityUpdateParams param);
-    public delegate List<BattleEntity> AttackDelegate(EntityUpdateParams param);
-    public delegate void CollideDelegate(EntityUpdateParams param, BattleEntity theOtherEntity);
-    public delegate void SelfDestructDelegate(EntityUpdateParams param);
-
-    public class EntityUpdateParams
-    {
-        public BattleEntity entity;
-        public ReadOnlyCollection<BattleEntity> entities;
-        public BattleEntity player;
-        public float timeDiff;
-    }
-
-    public Vector2 position = Vector2.zero;
-    public Color color = Color.white;
-    public Sprite sprite = null;
-    public float radius = 1;
-    public int life = 100;
-    public int shield = 0;
-    public int shieldMax = 200;
-    public bool facingEast = true;
-    public bool isAlive = true;
-    public bool isEnemy = false;
-    public bool isProjector = false;
-    public MoveDelegate moveHandler = _ => Vector2.zero;
-    public AttackDelegate attackHandler = _ => new List<BattleEntity>();
-    public CollideDelegate collideHandler = (_, _) => { };
-    public SelfDestructDelegate selfDestruct = _ => { };
-}
 
 public class CollisionBattleEntity
 {
@@ -59,44 +27,58 @@ public class LevelManager : MonoBehaviour
     private GameObject entityPrefab;
     [SerializeField]
     private GameObject projectilePrefab;
+    [SerializeField]
+    private Character playerPrefab;
+    [SerializeField]
+    private Character floatingCannonPrefab;
+    [SerializeField]
+    private List<Character> enemyPrefabs;
+    [SerializeField]
+    private List<Character> animalAllyPrefabs;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = new BattleEntity();
-        player.moveHandler = new PlayerMoveHandler(InputSystem.actions.FindAction("Move"),
-            InputSystem.actions.FindAction("Jump")).Move;
-        player.attackHandler = new PlayerAttackHandler(InputSystem.actions.FindAction("Attack"),
-            InputSystem.actions.FindAction("Skill 1")).Attack;
-        player.selfDestruct = new LifeBasedSelfDestructHandler().Update;
+        player = BattleEntity.FromPrefab(playerPrefab);
+        entities.Add(player);
 
-        // Add a bomb bird.
-        BattleEntity bombBird = new BattleEntity();
-        bombBird.color = Color.green;
-        BombBirdHandler bombBirdHandler = new BombBirdHandler();
-        bombBird.moveHandler = bombBirdHandler.Move;
-        bombBird.attackHandler = bombBirdHandler.Attack;
-        entities.Add(bombBird);
-        RegisterObject(bombBird);
+        BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
+        entities.Add(floatingCannon);
+        RegisterObject(floatingCannon);
+
+        // Add animal allies.. For testing.
+        foreach (var animalAlly in animalAllyPrefabs)
+        {
+            BattleEntity ally = BattleEntity.FromPrefab(animalAlly);
+            entities.Add(ally);
+            RegisterObject(ally);
+        }
     }
 
     void RegisterObject(BattleEntity entity)
     {
         GameObject obj;
-        if (entity.isProjector)
+        if (entity.prefabCharacter != null)
         {
-            obj = Instantiate(projectilePrefab);
+            obj = Instantiate(entity.prefabCharacter.prefab);
         }
         else
         {
-            obj = Instantiate(entityPrefab);
+            if (entity.isProjector)
+            {
+                obj = Instantiate(projectilePrefab);
+            }
+            else
+            {
+                obj = Instantiate(entityPrefab);
+            }
+            obj.transform.localScale = Vector3.one * entity.radius;
+            if (entity.sprite != null)
+            {
+                obj.GetComponent<SpriteRenderer>().sprite = entity.sprite;
+            }
+            obj.GetComponent<SpriteRenderer>().color = entity.color;
         }
-        obj.transform.localScale = Vector3.one * entity.radius;
-        if (entity.sprite != null)
-        {
-            obj.GetComponent<SpriteRenderer>().sprite = entity.sprite;
-        }
-        obj.GetComponent<SpriteRenderer>().color = entity.color;
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
@@ -141,13 +123,8 @@ public class LevelManager : MonoBehaviour
 
     void AddEnemy()
     {
-        BattleEntity enemy = new BattleEntity();
-        enemy.radius = 1;
+        BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
         enemy.isEnemy = true;
-        enemy.moveHandler = new ChasePlayerMoveHandler(player, 0.5f).Move;
-        enemy.attackHandler = new NearPlayerAttackHandler(player).Attack;
-        enemy.selfDestruct = new LifeBasedSelfDestructHandler().Update;
-        enemy.color = Color.red;
         float position = Random.value;
         if (position > 0.5)
         {
@@ -194,9 +171,22 @@ public class LevelManager : MonoBehaviour
         // Projects Collide
         foreach (CollisionBattleEntity collisionBattleEntity in collisionBattleEntities.Values)
         {
-            // TODO: Sort the victims to support shield.
-            foreach (BattleEntity victim in collisionBattleEntity.victims)
+            foreach (BattleEntity victim in collisionBattleEntity.victims.OrderBy(v => v.position.x * (collisionBattleEntity.projector.facingEast ? 1 : -1)))
             {
+                // Barrier resolution
+                if (victim.isBarrier && collisionBattleEntity.projector.isEnemy)
+                {
+                    if (collisionBattleEntity.projector.projectorDestroiedOnContactWithBarrier)
+                    {
+                        // Destroied by barrier.
+                        collisionBattleEntity.projector.isAlive = false;
+                    }
+                    else
+                    {
+                        // Stop resolution for further contacts.
+                        break;
+                    }
+                }
                 BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                 p.entity = collisionBattleEntity.projector;
                 p.entities = entities.AsReadOnly();
@@ -226,7 +216,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = Mathf.Min(player.position.x != 0 ? 10 / Mathf.Abs(player.position.x) : 10, 10);
+            enemySpawnCooldown = 0.2f;
         }
     }
 }

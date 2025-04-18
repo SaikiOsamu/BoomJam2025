@@ -17,11 +17,13 @@ public class ObjectStatusUpdate : MonoBehaviour
     {
         if (entity != null)
         {
-            gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
-            if (player != null)
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
             {
-                gameObject.transform.localPosition = entity.position;
+                gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             }
+            gameObject.transform.localPosition = entity.position;
+            gameObject.transform.localRotation = entity.rotation;
             if (!entity.isAlive)
             {
                 Destroy(gameObject);
@@ -50,6 +52,10 @@ public class ObjectStatusUpdate : MonoBehaviour
             }
         }
         if (otherEntity == null || otherEntity.isProjector)
+        {
+            return;
+        }
+        if (otherEntity.isEnemy == entity.isEnemy)
         {
             return;
         }
