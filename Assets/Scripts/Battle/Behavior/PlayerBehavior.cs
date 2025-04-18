@@ -95,6 +95,23 @@ class PlayerBehavior : BaseBehavior
                 e.moveHandler = new FlyingSwordMoveHandler(entity).Move;
             }
         }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(4, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Maybe throw it out
+                if (e.prefabCharacter != null && e.prefabCharacter.behavior.moveSpeed != 0)
+                {
+                    e.moveHandler = new VelocityMoveHandler(
+                        e.prefabCharacter.behavior.moveSpeed,
+                        new Vector2(entity.facingEast ? 1 : -1, 0).normalized).Move;
+                }
+                // Blast on contact.
+                IceStabBehavior iceStabBehavior = new IceStabBehavior(e.selfDestruct);
+                e.attackHandler = iceStabBehavior.MaybeBlast;
+                e.selfDestruct = iceStabBehavior.Update;
+            }
+        }
         return result;
     }
 
@@ -263,5 +280,38 @@ public class BlinkBehavior : BaseBehavior
             }
         }
         TimedProjectionSelfDestructHandler.Update(param);
+    }
+}
+
+public class IceStabBehavior
+{
+    bool blasted = false;
+
+    SelfDestructDelegate originalDelegate;
+    public IceStabBehavior(SelfDestructDelegate originalDelegate)
+    {
+        this.originalDelegate = originalDelegate;
+    }
+
+    public List<BattleEntity> MaybeBlast(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (blasted)
+        {
+            param.entity.isAlive = false;
+            result.AddRange(param.entity.GetSkillSummon(0, out _));
+        }
+        return result;
+    }
+
+    public void Update(EntityUpdateParams param)
+    {
+        originalDelegate.Invoke(param);
+        if (!param.entity.isAlive && !blasted)
+        {
+            // Medical miracle!
+            param.entity.isAlive = true;
+            blasted = true;
+        }
     }
 }
