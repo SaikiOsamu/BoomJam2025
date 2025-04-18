@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static MovementHandler2D;
 
 public interface Behavior
 {
@@ -16,6 +17,8 @@ public class BaseBehavior : Behavior
     public virtual BattleEntity.AttackDelegate AttackDelegate { get => _ => new List<BattleEntity>(); }
     public virtual BattleEntity.CollideDelegate CollideDelegate { get => (_, _) => { }; }
     public virtual BattleEntity.SelfDestructDelegate SelfDestructDelegate { get => _ => { }; }
+
+    public MovementState moveState = new MovementState();
 }
 
 public class BehaviorFactory
