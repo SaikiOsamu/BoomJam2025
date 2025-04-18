@@ -73,6 +73,42 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
+  skill2Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 2
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 90cdd615-5c9e-4c85-84d1-c6d3a33d9baa
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  skill3Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 3
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: a440fe7f-5e2c-4535-ad2a-43beec1f2750
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  skill4Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 4
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 3fb66bb5-1c35-4d0b-91ad-4a38d25866e7
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   barrierAction:
     m_UseReference: 0
     m_Action:
@@ -91,3 +127,4 @@ MonoBehaviour:
   timeToLive: 15
   godPowerDrainPerSecond: 0
   attackDistance: 0
+  doSkillWhenDisappear: 1
