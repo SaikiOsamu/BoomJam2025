@@ -25,4 +25,6 @@ public class BehaviorDefinitions : ScriptableObject
     public float godPowerDrainPerSecond = 0;
     // For ranged enemy, this is the distance to player for attack etc.
     public float attackDistance = 0;
+    // For projectile, do its skill on death.
+    public bool doSkillWhenDisappear = false;
 }
