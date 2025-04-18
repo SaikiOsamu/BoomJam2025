@@ -108,6 +108,23 @@ class PlayerBehavior : BaseBehavior
                 }
             }
         }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(5, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Attach fire spread ability.
+                FireSpreadBehavior spreadRight = new FireSpreadBehavior();
+                FireSpreadBehavior spreadLeft = new FireSpreadBehavior();
+                spreadLeft.facingEast = false;
+                e.attackHandler = param =>
+                {
+                    List<BattleEntity> result = new List<BattleEntity>();
+                    result.AddRange(spreadRight.Spread(param));
+                    result.AddRange(spreadLeft.Spread(param));
+                    return result;
+                };
+            }
+        }
         return result;
     }
 
@@ -276,5 +293,46 @@ public class BlinkBehavior : BaseBehavior
             }
         }
         TimedProjectionSelfDestructHandler.Update(param);
+    }
+}
+
+public class FireSpreadBehavior
+{
+    public int spreadRemaining = 3;
+    public bool facingEast = true;
+    public float spreadDelay = 0.2f;
+    public bool spreadHandled = false;
+
+    public List<BattleEntity> Spread(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (spreadRemaining < 0 || spreadHandled)
+        {
+            return result;
+        }
+        if (spreadDelay > 0)
+        {
+            spreadDelay -= param.timeDiff;
+            return result;
+        }
+        var entitiesSummoned = param.entity.GetSkillSummon(0, out _);
+        foreach (BattleEntity toSummon in entitiesSummoned)
+        {
+            if (facingEast)
+            {
+                toSummon.position.x += 0.8f;
+            }
+            else
+            {
+                toSummon.position.x -= 0.8f;
+            }
+            FireSpreadBehavior behavior = new FireSpreadBehavior();
+            behavior.spreadRemaining = spreadRemaining - 1;
+            behavior.facingEast = facingEast;
+            toSummon.attackHandler = behavior.Spread;
+            result.Add(toSummon);
+            spreadHandled = true;
+        }
+        return result;
     }
 }
