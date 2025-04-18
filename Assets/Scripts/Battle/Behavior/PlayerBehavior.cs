@@ -48,7 +48,16 @@ class PlayerBehavior : BaseBehavior
         }
         else
         {
-            var entitiesSummoned = entity.GetSkillSummon(skillIndex, out float cooldown);
+            var entitiesSummoned =
+                entity.GetSkillSummon(skillIndex, out float cooldown, out int godPowerConsumption);
+            if (entity.godPower >= godPowerConsumption)
+            {
+                entity.godPower -= godPowerConsumption;
+            }
+            else
+            {
+                return result;
+            }
             foreach (BattleEntity toSummon in entitiesSummoned)
             {
                 if (entity.facingEast)
