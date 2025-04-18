@@ -34,12 +34,13 @@ public class RabbitBehavior : BaseBehavior
 
         Vector2 pos = param.entity.position;
 
+        float playerX = param.player.position.x;
         float speedMultiplier = 0.5f + Mathf.Abs(Mathf.Sin(Time.time * 2f));
         float currentSpeed = baseSpeed * speedMultiplier;
 
         float newX = pos.x + currentSpeed * moveDirection * param.timeDiff;
 
-        float offset = newX - originX;
+        float offset = newX - playerX;
 
         if (offset > maxOffset)
         {
@@ -52,7 +53,7 @@ public class RabbitBehavior : BaseBehavior
             moveDirection = 1f;
         }
 
-        newX = originX + offset;
+        newX = playerX + offset;
 
         param.entity.facingEast = moveDirection > 0;
 
