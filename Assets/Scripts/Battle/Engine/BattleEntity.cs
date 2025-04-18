@@ -112,6 +112,7 @@ public class BattleEntity
         {
             BattleEntity toSummon = FromPrefab(summoning);
             toSummon.position = position * 1;
+            toSummon.facingEast = facingEast;
             toSummon.isEnemy = isEnemy;
             result.Add(toSummon);
         }

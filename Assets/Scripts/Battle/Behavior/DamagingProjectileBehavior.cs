@@ -39,7 +39,19 @@ class DamagingProjectileBehavior : BaseBehavior
         if (shouldDoFinaleSkill)
         {
             param.entity.isAlive = false;
-            result.AddRange(param.entity.GetSkillSummon(0, out _));
+            var summonedObjects = param.entity.GetSkillSummon(0, out _);
+            foreach (var obj in summonedObjects)
+            {
+                if (obj.facingEast)
+                {
+                    obj.position += definitions.disappearSkillPositionOffset;
+                }
+                else
+                {
+                    obj.position -= definitions.disappearSkillPositionOffset;
+                }
+            }
+            result.AddRange(summonedObjects);
         }
         return result;
     }
@@ -48,7 +60,7 @@ class DamagingProjectileBehavior : BaseBehavior
     {
         this.definitions = definitions;
         mCollideDelegate = new AttackCollideHandler(
-            definitions.maxDamageTargets, definitions.projectileDamage, 
+            definitions.maxDamageTargets, definitions.projectileDamage,
             definitions.projectileDamageEveryNSecond).Update;
         if (definitions.timeToLive > 0)
         {

@@ -29,4 +29,5 @@ public class BehaviorDefinitions : ScriptableObject
     public float attackDistance = 0;
     // For projectile, do its skill on death.
     public bool doSkillWhenDisappear = false;
+    public Vector2 disappearSkillPositionOffset = Vector2.zero;
 }
