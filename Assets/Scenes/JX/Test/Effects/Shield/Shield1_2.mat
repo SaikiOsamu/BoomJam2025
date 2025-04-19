@@ -26,7 +26,7 @@ Material:
   m_Name: Shield1_2
   m_Shader: {fileID: -6465566751694194690, guid: 36ce200eebad80b45bebe392f91fd84d, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 36ce200eebad80b45bebe392f91fd84d, type: 3}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT

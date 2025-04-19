@@ -54,24 +54,25 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaDstBlend: 10
-    - _Dissolove: 0.04
+    - _Dissolove: 0.08
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
     - _DstBlend2: 10
-    - _NoiseSpeed2: 1
-    - _Power: 7.85
-    - _Scale1: 10
-    - _Scale2: 600
+    - _NoiseSpeed: 0.1
+    - _NoiseSpeed2: 1.5
+    - _Power: 3.7
+    - _Scale1: 24.52
+    - _Scale2: 122.63
     - _Smoothness: 0
     - _StencilRefDepth: 0
     - _StencilRefGBuffer: 2
     - _StencilRefMV: 32
-    - _Step: -0.29
+    - _Step: -0.22
     - _SurfaceType: 1
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 3
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 46.580544, g: 95.87451, b: 84.38014, a: 0.34117648}
+    - _Color: {r: 12.323495, g: 14.884205, b: 23.96863, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
