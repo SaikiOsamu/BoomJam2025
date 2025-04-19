@@ -39,7 +39,7 @@ Material:
   m_Name: Old01
   m_Shader: {fileID: -6465566751694194690, guid: 1f1dfdbf35a532b419e49414664e9f94, type: 3}
   m_Parent: {fileID: 2100000, guid: 7992e8fa92af9054295d290e44b0f3d5, type: 2}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT

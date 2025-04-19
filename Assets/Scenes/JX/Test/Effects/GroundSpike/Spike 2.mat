@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-754231395983988229
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 13
-  hdPluginSubTargetMaterialVersions:
-    m_Keys: []
-    m_Values: 
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -23,12 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shield2_1
-  m_Shader: {fileID: -6465566751694194690, guid: 1df5f45a39a454044863dfb447a9b7da, type: 3}
-  m_Parent: {fileID: -876546973899608171, guid: 1df5f45a39a454044863dfb447a9b7da, type: 3}
-  m_ModifiedSerializedProperties: 16
+  m_Name: Spike 2
+  m_Shader: {fileID: -6465566751694194690, guid: 34f988b627e985d499fb985d4d0a6bad, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 34f988b627e985d499fb985d4d0a6bad, type: 3}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHATEST_ON
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
@@ -53,26 +36,40 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 10
-    - _Dissolove: 0.08
+    - _DissoloveAmount: 0.614
+    - _DissoloveScale: -0.81
+    - _DissoloveWidth: 0.99
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
     - _DstBlend2: 10
-    - _NoiseSpeed: 0.05
-    - _NoiseSpeed2: 0
-    - _Power: 5.3
-    - _Scale1: 24.52
-    - _Scale2: 1
-    - _Smoothness: 0
+    - _FresnelPower: 12.3
     - _StencilRefDepth: 0
     - _StencilRefGBuffer: 2
     - _StencilRefMV: 32
-    - _Step: -0.22
     - _SurfaceType: 1
     - _ZTestDepthEqualForOpaque: 4
-    - _ZTestGBuffer: 3
+    - _ZTestGBuffer: 4
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 12.323495, g: 14.884205, b: 23.96863, a: 0}
+    - _Color: {r: 337.79395, g: 337.79395, b: 337.79395, a: 0.7176471}
+    - _DissoloveColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &8091022788057148590
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 13
+  hdPluginSubTargetMaterialVersions:
+    m_Keys: []
+    m_Values: 
