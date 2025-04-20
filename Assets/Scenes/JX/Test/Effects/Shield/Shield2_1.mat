@@ -54,7 +54,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaDstBlend: 10
-    - _Dissolove: 0.08
+    - _Dissolove: 0.03
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
     - _DstBlend2: 10
@@ -67,7 +67,7 @@ Material:
     - _StencilRefDepth: 0
     - _StencilRefGBuffer: 2
     - _StencilRefMV: 32
-    - _Step: -0.22
+    - _Step: 0.5
     - _SurfaceType: 1
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 3

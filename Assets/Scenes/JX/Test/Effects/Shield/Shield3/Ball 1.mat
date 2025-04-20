@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ball 1
+  m_Shader: {fileID: -6465566751694194690, guid: 32b4ced5649909744a43b0adeac031d5, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 32b4ced5649909744a43b0adeac031d5, type: 3}
+  m_ModifiedSerializedProperties: 16
+  m_ValidKeywords:
+  - _ENABLE_FOG_ON_TRANSPARENT
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    MotionVector: User
+    RenderType: Transparent
+  disabledShaderPasses:
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
+  - TransparentBackface
+  - RayTracingPrepass
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - Vector1_434d8f6edb7f4e109dc7b47df03c0119: 0.4
+    - Vector1_53e4b2024ef54323864a72f98f5e1ffa: 0.45
+    - Vector1_689f7ceae4b946f38b5ff9bf84f2f023: 7.3
+    - Vector1_6e530d0ea7094cf48496d609411b7adc: 9.07
+    - Vector1_b534a4b300384ab0a0cab100a5d223fa: 0.17
+    - Vector1_cf86a053aa2c40e78a605292021f44c3: -0.57
+    - _AlphaDstBlend: 10
+    - _Disolve: 0
+    - _DoubleSidedNormalMode: 2
+    - _DstBlend: 10
+    - _DstBlend2: 10
+    - _EnableBlendModePreserveSpecularLighting: 0
+    - _RenderQueueType: 3
+    - _SurfaceType: 1
+    - _ZTestDepthEqualForOpaque: 4
+    - _ZWrite: 0
+    m_Colors:
+    - Color_027e4586f058443ca29389a6ccbed930: {r: 0, g: 2.744369, b: 23.968628, a: 0}
+    - Color_cf12b49411d94583a269f83e6981abd1: {r: 0, g: 9.037751, b: 72.65929, a: 1}
+    - Vector2_6d629b6a76b14f7b9f3bf64e1f22ccd1: {r: 13.99, g: 4.3, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &3099105546321974351
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9
+--- !u!114 &4483321537199915499
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 13
+  hdPluginSubTargetMaterialVersions:
+    m_Keys: []
+    m_Values: 
