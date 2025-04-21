@@ -147,11 +147,11 @@ public class LevelManager : MonoBehaviour
         float position = Random.value;
         if (position > 0.5)
         {
-            enemy.position = new Vector2(7, 0);
+            enemy.position = player.position + new Vector2(7, 0);
         }
         else
         {
-            enemy.position = new Vector2(-7, 0);
+            enemy.position = player.position + new Vector2(-7, 0);
         }
         entities.Add(enemy);
         RegisterObject(enemy);
