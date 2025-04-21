@@ -2,6 +2,15 @@
 using System.Collections.ObjectModel;
 using Unity.VisualScripting;
 using UnityEngine;
+
+public class BattleStatus
+{
+    public BattleStatusEffect status = null;
+    public Vector2 pushBackAlreadyApplied = Vector2.zero;
+    public float damageToApply = 0;
+    public float timeElapsed = 0;
+}
+
 public class BattleEntity
 {
     public delegate Vector2 MoveDelegate(EntityUpdateParams param);
@@ -38,6 +47,7 @@ public class BattleEntity
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;
     public List<Skills> dynamicSkills = new List<Skills>();
+    public List<BattleStatus> statusInEffect = new List<BattleStatus>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
     public CollideDelegate collideHandler = (_, _) => { };
