@@ -17,6 +17,7 @@ public class BattleStatusEffect : ScriptableObject
     public BattleStatusEffectType type = BattleStatusEffectType.UNKNOWN;
     public string statusName;
     public string description;
+    public int maxAppliedAtOnce = 0;
     public float statusEffectTime = 0;
     public Vector2 pushBackSpeedPerSecond = Vector2.zero;
     public float poisonDamagePerSecond = 0;

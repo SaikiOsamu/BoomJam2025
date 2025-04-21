@@ -88,10 +88,22 @@ public class LevelManager : MonoBehaviour
         update.levelManager = this;
     }
 
-    void HandleMoveResult(BattleEntity entity, Vector2 moveResult, float timeDiff)
+    void HandleMoveResult(
+        BattleEntity entity,
+        Vector2 moveResult,
+        float timeDiff,
+        Dictionary<string, int> statusTakenEffectMap)
     {
         foreach (BattleStatus status in entity.statusInEffect)
         {
+            if (status.status?.maxAppliedAtOnce > 0)
+            {
+                int appliedCount = statusTakenEffectMap.GetValueOrDefault(status.status?.name ?? "");
+                if (appliedCount >= status.status?.maxAppliedAtOnce) {
+                    continue;
+                }
+                statusTakenEffectMap[status.status?.name ?? ""] = appliedCount + 1;
+            }
             if (status.status?.type == BattleStatusEffectType.PUSH_BACK)
             {
                 Vector2 pushBack = status.status.pushBackSpeedPerSecond * timeDiff;
@@ -166,6 +178,7 @@ public class LevelManager : MonoBehaviour
         }
         float delta = Time.deltaTime;
         // Objects Move
+        Dictionary<string, int> statusTakenEffectMap = new Dictionary<string, int>();
         foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
@@ -173,7 +186,7 @@ public class LevelManager : MonoBehaviour
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
-            HandleMoveResult(entity, entity.moveHandler(p), delta);
+            HandleMoveResult(entity, entity.moveHandler(p), delta, statusTakenEffectMap);
         }
         // Objects Attack
         List<BattleEntity> attackResults = new List<BattleEntity>();
@@ -219,6 +232,17 @@ public class LevelManager : MonoBehaviour
         {
             foreach (BattleStatus status in entity.statusInEffect)
             {
+                // Progress the time.
+                status.timeElapsed += delta;
+                if (status.status?.maxAppliedAtOnce > 0)
+                {
+                    int appliedCount = statusTakenEffectMap.GetValueOrDefault(status.status?.name ?? "");
+                    if (appliedCount >= status.status?.maxAppliedAtOnce)
+                    {
+                        continue;
+                    }
+                    statusTakenEffectMap[status.status?.name ?? ""] = appliedCount + 1;
+                }
                 // Apply damage related status.
                 if (status.status?.type == BattleStatusEffectType.POISON)
                 {
@@ -230,8 +254,6 @@ public class LevelManager : MonoBehaviour
                         status.damageToApply -= damageToApply;
                     }
                 }
-                // Progress the time.
-                status.timeElapsed += delta;
             }
             // Remove if effect no longer takes effect.
             entity.statusInEffect.RemoveAll(s => s.timeElapsed > (s.status?.statusEffectTime ?? 0));
