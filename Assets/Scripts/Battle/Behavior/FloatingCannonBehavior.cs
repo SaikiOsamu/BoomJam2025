@@ -101,26 +101,27 @@ class FloatingCannonBehavior : BaseBehavior
         }
     }
 
-    private void LazerAttack(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
+    private bool LazerAttack(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
     {
         if (lazerTime < 0.3)
         {
-            return;
+            return false;
         }
         if (lazerTime < 0.5)
         {
             if (collidedObjects.Contains(theOtherEntity))
             {
-                return;
+                return false;
             }
             if (param.entity.isEnemy == theOtherEntity.isEnemy)
             {
-                return;
+                return false;
             }
             theOtherEntity.Damage(attack);
             collidedObjects.Add(theOtherEntity);
+            return true;
         }
-        return;
+        return false;
     }
 
     public Vector2 Move(EntityUpdateParams param)

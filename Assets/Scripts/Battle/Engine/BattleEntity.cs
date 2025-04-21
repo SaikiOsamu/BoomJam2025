@@ -15,7 +15,7 @@ public class BattleEntity
 {
     public delegate Vector2 MoveDelegate(EntityUpdateParams param);
     public delegate List<BattleEntity> AttackDelegate(EntityUpdateParams param);
-    public delegate void CollideDelegate(EntityUpdateParams param, BattleEntity theOtherEntity);
+    public delegate bool CollideDelegate(EntityUpdateParams param, BattleEntity theOtherEntity);
     public delegate void SelfDestructDelegate(EntityUpdateParams param);
 
     public class EntityUpdateParams
@@ -50,7 +50,7 @@ public class BattleEntity
     public List<BattleStatus> statusInEffect = new List<BattleStatus>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
-    public CollideDelegate collideHandler = (_, _) => { };
+    public CollideDelegate collideHandler = (_, _) => false;
     public SelfDestructDelegate selfDestruct = _ => { };
 
     public static BattleEntity FromPrefab(Character prefabCharacter)

@@ -15,7 +15,7 @@ public class BaseBehavior : Behavior
 {
     public virtual BattleEntity.MoveDelegate MoveDelegate { get => _ => Vector2.zero; }
     public virtual BattleEntity.AttackDelegate AttackDelegate { get => _ => new List<BattleEntity>(); }
-    public virtual BattleEntity.CollideDelegate CollideDelegate { get => (_, _) => { }; }
+    public virtual BattleEntity.CollideDelegate CollideDelegate { get => (_, _) => false; }
     public virtual BattleEntity.SelfDestructDelegate SelfDestructDelegate { get => _ => { }; }
 
     public MovementState moveState = new MovementState();
