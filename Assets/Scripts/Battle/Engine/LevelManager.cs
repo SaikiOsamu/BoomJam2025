@@ -253,7 +253,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = 20f;
+            enemySpawnCooldown = 0.2f;
         }
     }
 }
