@@ -15,9 +15,9 @@ MonoBehaviour:
   entityName: 
   description: 
   isProjector: 1
-  projectorDestroiedOnContactWithBarrier: 1
+  projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 161100275d0e64140a415eb746f41853, type: 3}
+  prefab: {fileID: 2757770327938398083, guid: 08eb77210cd698844b294ee8bbb5f7f6, type: 3}
   skills: []
   life: 100
   lifeMax: 100

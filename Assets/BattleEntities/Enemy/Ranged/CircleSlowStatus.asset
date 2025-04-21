@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CircleSlowStatus
   m_EditorClassIdentifier: 
   type: 3
-  statusName: 
+  statusName: RangedEnemySlow
   description: 
+  maxAppliedAtOnce: 1
   statusEffectTime: 0.2
   pushBackSpeedPerSecond: {x: 2, y: 5}
   poisonDamagePerSecond: 0
