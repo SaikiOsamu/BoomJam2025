@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spike 2
+  m_Name: FloatingBallOut
   m_Shader: {fileID: -6465566751694194690, guid: 34f988b627e985d499fb985d4d0a6bad, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 34f988b627e985d499fb985d4d0a6bad, type: 3}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT
@@ -38,7 +38,7 @@ Material:
     m_Floats:
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 10
-    - _DissoloveAmount: 0.614
+    - _DissoloveAmount: 0.55
     - _DissoloveScale: -0.81
     - _DissoloveWidth: 0.99
     - _DoubleSidedNormalMode: 1
