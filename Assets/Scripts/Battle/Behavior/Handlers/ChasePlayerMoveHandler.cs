@@ -34,6 +34,10 @@ public class ChasePlayerMoveHandler
                 dy = -param.entity.position.y;
             }
         }
+        else
+        {
+            dropCurrentSpeed = 0;
+        }
         if ((param.player.position - param.entity.position).magnitude < until)
         {
             return new Vector2(0, dy);
