@@ -99,7 +99,7 @@ public class LevelManager : MonoBehaviour
                 {
                     pushBack.x *= -1;
                 }
-                moveResult += status.status.pushBackSpeedPerSecond * timeDiff;
+                moveResult += pushBack;
             }
             else if (status.status?.type == BattleStatusEffectType.SLOW)
             {
