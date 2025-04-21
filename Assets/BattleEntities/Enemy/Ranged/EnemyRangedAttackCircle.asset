@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: EnemyRangedAttack
+  m_Name: EnemyRangedAttackCircle
   m_EditorClassIdentifier: 
   entityName: 
   description: 
   isProjector: 1
-  projectorDestroiedOnContactWithBarrier: 1
+  projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 161100275d0e64140a415eb746f41853, type: 3}
-  skills:
-  - {fileID: 11400000, guid: 11a65e6016a3a304a88cd413694984de, type: 2}
+  prefab: {fileID: 2757770327938398083, guid: 08eb77210cd698844b294ee8bbb5f7f6, type: 3}
+  skills: []
   life: 100
   lifeMax: 100
   resilience: 0
@@ -29,4 +28,4 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: 3cf51a9e0f6c9da44a00a3b1a0929a77, type: 2}
+  behavior: {fileID: 11400000, guid: 2bb41c47c03d4864398c50866657111f, type: 2}

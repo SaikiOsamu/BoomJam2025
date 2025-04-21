@@ -11,7 +11,7 @@ using static BattleEntity;
 class DamagingProjectileBehavior : BaseBehavior
 {
     public override AttackDelegate AttackDelegate => MaybeDoSkill;
-    public override CollideDelegate CollideDelegate => mCollideDelegate;
+    public override CollideDelegate CollideDelegate => Collide;
     public override SelfDestructDelegate SelfDestructDelegate => param =>
     {
         maybeTimeBasedDelegate.Invoke(param);
@@ -48,12 +48,30 @@ class DamagingProjectileBehavior : BaseBehavior
                 }
                 else
                 {
-                    obj.position -= definitions.disappearSkillPositionOffset;
+                    obj.position.x -= definitions.disappearSkillPositionOffset.x;
+                    obj.position.y += definitions.disappearSkillPositionOffset.y;
                 }
             }
             result.AddRange(summonedObjects);
         }
         return result;
+    }
+
+    public bool Collide(EntityUpdateParams param, BattleEntity other)
+    {
+        bool collideHappened = mCollideDelegate.Invoke(param, other);
+        // Apply status.
+        if (collideHappened)
+        {
+            foreach (BattleStatusEffect eff in definitions.grantingStatus)
+            {
+                BattleStatus status = new BattleStatus();
+                status.status = eff;
+                status.pushBackFacingEast = param.entity.facingEast;
+                other.statusInEffect.Add(status);
+            }
+        }
+        return collideHappened;
     }
 
     public DamagingProjectileBehavior(BehaviorDefinitions definitions)

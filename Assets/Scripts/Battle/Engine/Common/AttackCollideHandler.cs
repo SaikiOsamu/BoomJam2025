@@ -25,11 +25,11 @@ class AttackCollideHandler
         this.damageEvery = damageEvery;
     }
 
-    public void Update(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
+    public bool Update(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
     {
         if (!param.entity.isAlive)
         {
-            return;
+            return false;
         }
         if (damageEvery > 0)
         {
@@ -43,11 +43,11 @@ class AttackCollideHandler
         }
         if (collidedObjects.Contains(theOtherEntity))
         {
-            return;
+            return false;
         }
         if (param.entity.isEnemy == theOtherEntity.isEnemy)
         {
-            return;
+            return false;
         }
         theOtherEntity.Damage(attack);
         collidedObjects.Add(theOtherEntity);
@@ -55,5 +55,6 @@ class AttackCollideHandler
         {
             param.entity.isAlive = false;
         }
+        return true;
     }
 }

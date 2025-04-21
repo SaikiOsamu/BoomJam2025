@@ -254,6 +254,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7a35d4c805a0a4081ac5ca24fc8932d0, type: 2}
   - {fileID: 11400000, guid: 589177cb8a0439544a4ed705b8a5bb25, type: 2}
   - {fileID: 11400000, guid: 4961952e878e2a4429157f1c76929d57, type: 2}
+  playerDynamicSkills:
+  - {fileID: 11400000, guid: 48ef73e5a34f53a46bd6d1b1c71ae71b, type: 2}
+  - {fileID: 11400000, guid: fd1c589c0b2578c44abbae9dcf71de73, type: 2}
+  - {fileID: 11400000, guid: 7b0668c48ca575640af7602ef2ee4ad8, type: 2}
+  - {fileID: 11400000, guid: 7f2d4492aeeb3ac4aa22b9919355fca4, type: 2}
 --- !u!4 &175570905
 Transform:
   m_ObjectHideFlags: 0

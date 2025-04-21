@@ -2,11 +2,20 @@
 using System.Collections.ObjectModel;
 using Unity.VisualScripting;
 using UnityEngine;
+
+public class BattleStatus
+{
+    public BattleStatusEffect status = null;
+    public bool pushBackFacingEast = true;
+    public float damageToApply = 0;
+    public float timeElapsed = 0;
+}
+
 public class BattleEntity
 {
     public delegate Vector2 MoveDelegate(EntityUpdateParams param);
     public delegate List<BattleEntity> AttackDelegate(EntityUpdateParams param);
-    public delegate void CollideDelegate(EntityUpdateParams param, BattleEntity theOtherEntity);
+    public delegate bool CollideDelegate(EntityUpdateParams param, BattleEntity theOtherEntity);
     public delegate void SelfDestructDelegate(EntityUpdateParams param);
 
     public class EntityUpdateParams
@@ -38,9 +47,10 @@ public class BattleEntity
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;
     public List<Skills> dynamicSkills = new List<Skills>();
+    public List<BattleStatus> statusInEffect = new List<BattleStatus>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
     public AttackDelegate attackHandler = _ => new List<BattleEntity>();
-    public CollideDelegate collideHandler = (_, _) => { };
+    public CollideDelegate collideHandler = (_, _) => false;
     public SelfDestructDelegate selfDestruct = _ => { };
 
     public static BattleEntity FromPrefab(Character prefabCharacter)

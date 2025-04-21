@@ -16,6 +16,7 @@ public class BehaviorDefinitions : ScriptableObject
     public InputActionProperty skill3Action;
     public InputActionProperty skill4Action;
     public InputActionProperty barrierAction;
+    public List<BattleStatusEffect> grantingStatus;
     public float moveSpeed = 0.5f;
     // Set this to a non positive number to indicate infinite.
     public int maxDamageTargets = -1;
