@@ -48,7 +48,8 @@ class DamagingProjectileBehavior : BaseBehavior
                 }
                 else
                 {
-                    obj.position -= definitions.disappearSkillPositionOffset;
+                    obj.position.x -= definitions.disappearSkillPositionOffset.x;
+                    obj.position.y += definitions.disappearSkillPositionOffset.y;
                 }
             }
             result.AddRange(summonedObjects);
