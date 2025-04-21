@@ -6,7 +6,7 @@ using UnityEngine;
 public class BattleStatus
 {
     public BattleStatusEffect status = null;
-    public Vector2 pushBackAlreadyApplied = Vector2.zero;
+    public bool pushBackFacingEast = true;
     public float damageToApply = 0;
     public float timeElapsed = 0;
 }

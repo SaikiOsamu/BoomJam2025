@@ -94,6 +94,11 @@ public class LevelManager : MonoBehaviour
         {
             if (status.status?.type == BattleStatusEffectType.PUSH_BACK)
             {
+                Vector2 pushBack = status.status.pushBackSpeedPerSecond * timeDiff;
+                if (!status.pushBackFacingEast)
+                {
+                    pushBack.x *= -1;
+                }
                 moveResult += status.status.pushBackSpeedPerSecond * timeDiff;
             }
             else if (status.status?.type == BattleStatusEffectType.SLOW)
