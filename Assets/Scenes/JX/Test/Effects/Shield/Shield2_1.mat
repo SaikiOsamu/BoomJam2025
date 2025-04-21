@@ -60,14 +60,14 @@ Material:
     - _DstBlend2: 10
     - _NoiseSpeed: 0.05
     - _NoiseSpeed2: 0
-    - _Power: 5.3
+    - _Power: 17.76
     - _Scale1: 24.52
     - _Scale2: 1
     - _Smoothness: 0
     - _StencilRefDepth: 0
     - _StencilRefGBuffer: 2
     - _StencilRefMV: 32
-    - _Step: 0.5
+    - _Step: 0.33
     - _SurfaceType: 1
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 3
