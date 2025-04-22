@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -10,7 +11,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 class NearPlayerSkillHandler
 {
     public float attackCooldown = 0;
-
+    public float castTime = 0;
     public float attackDistance = 0.4f;
 
     public NearPlayerSkillHandler(float attackDistance)
@@ -28,27 +29,40 @@ class NearPlayerSkillHandler
         }
         else if ((param.player.position - param.entity.position).magnitude < attackDistance)
         {
-            var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
-            foreach (BattleEntity toSummon in entitiesSummoned)
+            float skillCastTimeRequired = param.entity.GetSkillCasttime(0);
+            if (skillCastTimeRequired <= 0 || castTime > skillCastTimeRequired)
             {
-                if (param.entity.facingEast)
+                var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
+                foreach (BattleEntity toSummon in entitiesSummoned)
                 {
-                    toSummon.position.x += 0.4f;
+                    if (param.entity.facingEast)
+                    {
+                        toSummon.position.x += 0.4f;
+                    }
+                    else
+                    {
+                        toSummon.position.x -= 0.4f;
+                    }
+                    // Maybe throw it out
+                    if (toSummon.prefabCharacter != null && toSummon.prefabCharacter.behavior.moveSpeed != 0)
+                    {
+                        toSummon.moveHandler = new VelocityMoveHandler(
+                            toSummon.prefabCharacter.behavior.moveSpeed,
+                            (param.player.position - toSummon.position).normalized).Move;
+                    }
+                    result.Add(toSummon);
                 }
-                else
-                {
-                    toSummon.position.x -= 0.4f;
-                }
-                // Maybe throw it out
-                if (toSummon.prefabCharacter != null && toSummon.prefabCharacter.behavior.moveSpeed != 0)
-                {
-                    toSummon.moveHandler = new VelocityMoveHandler(
-                        toSummon.prefabCharacter.behavior.moveSpeed,
-                        (param.player.position - toSummon.position).normalized).Move;
-                }
-                result.Add(toSummon);
+                attackCooldown = cooldown;
+                castTime = 0;
             }
-            attackCooldown = cooldown;
+            else
+            {
+                castTime += param.timeDiff;
+            }
+        }
+        else
+        {
+            castTime = 0;
         }
         return result;
     }
