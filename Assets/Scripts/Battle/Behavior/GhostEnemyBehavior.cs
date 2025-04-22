@@ -66,6 +66,7 @@ class GhostEnemyBehavior : BaseBehavior
     }
 
     public float attackCooldown = 0;
+    public float meleeAttackCooldown = 0;
     public float castTime = 0;
     public float meleeDistance = 0.4f;
 
@@ -73,10 +74,15 @@ class GhostEnemyBehavior : BaseBehavior
     {
         List<BattleEntity> result = new List<BattleEntity>();
 
+        if (meleeAttackCooldown > 0)
+        {
+            meleeAttackCooldown -= param.timeDiff;
+        }
         if (attackCooldown > 0)
         {
             attackCooldown -= param.timeDiff;
-            if ((param.player.position - param.entity.position).magnitude < meleeDistance
+            if (meleeAttackCooldown <= 0
+                && (param.player.position - param.entity.position).magnitude < meleeDistance
                 && (param.entity.prefabCharacter?.skills.Count ?? 0) > 1)
             {
                 // Use the last skill, which is the attack.
@@ -93,6 +99,7 @@ class GhostEnemyBehavior : BaseBehavior
                     }
                     result.Add(toSummon);
                 }
+                meleeAttackCooldown = cooldown;
             }
         }
         else if (param.entity.isHidden && (param.player.position - param.entity.position).magnitude < meleeDistance)
