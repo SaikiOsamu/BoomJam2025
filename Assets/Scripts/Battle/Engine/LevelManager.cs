@@ -21,10 +21,11 @@ public class LevelManager : MonoBehaviour
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
         new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
-    public float enemySpawnCooldown = 20;
+    public float enemySpawnCooldown = 0;
     public int area = 1;
     public int cleanse = 0;
     public int cleanseThreshold = 200;
+    public float enemySpawnCooldownReset = 0.2f;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -283,7 +284,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = 0.2f;
+            enemySpawnCooldown = enemySpawnCooldownReset;
         }
     }
 }
