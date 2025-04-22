@@ -51,6 +51,10 @@ public class ObjectStatusUpdate : MonoBehaviour
                 otherEntity = player;
             }
         }
+        if (otherEntity.isHidden)
+        {
+            return;
+        }
         if (otherEntity == null || otherEntity.isProjector)
         {
             return;

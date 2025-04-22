@@ -47,6 +47,8 @@ public class BattleEntity
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;
     public int cleanseWhenDefeated = 0;
+    // Only affects collide.
+    public bool isHidden = false;
     public List<Skills> dynamicSkills = new List<Skills>();
     public List<BattleStatus> statusInEffect = new List<BattleStatus>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
