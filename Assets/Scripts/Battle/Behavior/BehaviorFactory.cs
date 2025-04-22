@@ -37,6 +37,8 @@ public class BehaviorFactory
                 return new BlinkBehavior(definitions);
             case BehaviorType.Enemy:
                 return new RangedEnemyBehavior(definitions);
+            case BehaviorType.GhostEnemy:
+                return new GhostEnemyBehavior(definitions);
             case BehaviorType.Bird:
                 return new BombBirdBehavior(definitions);
             case BehaviorType.FloatingCannon:
