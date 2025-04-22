@@ -46,6 +46,7 @@ public class BattleEntity
     public bool isProjector = false;
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;
+    public int cleanseWhenDefeated = 0;
     public List<Skills> dynamicSkills = new List<Skills>();
     public List<BattleStatus> statusInEffect = new List<BattleStatus>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
@@ -69,6 +70,7 @@ public class BattleEntity
         battleEntity.shieldMax = prefabCharacter.shieldMax;
         battleEntity.projectorDestroiedOnContactWithBarrier = prefabCharacter.projectorDestroiedOnContactWithBarrier;
         battleEntity.isBarrier = prefabCharacter.isBarrier;
+        battleEntity.cleanseWhenDefeated = prefabCharacter.cleanseWhenDefeated;
         if (prefabCharacter.behavior != null)
         {
             Behavior behavior = BehaviorFactory.GetBehavior(prefabCharacter.behavior);
