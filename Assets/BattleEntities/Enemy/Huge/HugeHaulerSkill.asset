@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
-  m_Name: EnemyRangedAttackSkill
+  m_Name: HugeHaulerSkill
   m_EditorClassIdentifier: 
   skillName: 
   description: 
   summoning:
-  - {fileID: 11400000, guid: eb236df4543ba4043b9c3bd3001f5579, type: 2}
-  cooldownSecond: 0.6
-  castSecond: 2
+  - {fileID: 11400000, guid: e87abaac35bc59f49ab287c27ae70b16, type: 2}
+  cooldownSecond: 8
+  castSecond: 3
   godPowerConsumption: 0

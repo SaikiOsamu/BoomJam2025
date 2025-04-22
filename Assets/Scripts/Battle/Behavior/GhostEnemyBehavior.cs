@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
 
-class RangedEnemyBehavior : BaseBehavior
+class GhostEnemyBehavior : BaseBehavior
 {
     public override MoveDelegate MoveDelegate => Move;
     public override AttackDelegate AttackDelegate => Attack;
@@ -16,7 +16,7 @@ class RangedEnemyBehavior : BaseBehavior
 
     BehaviorDefinitions definitions;
 
-    public RangedEnemyBehavior(BehaviorDefinitions definitions)
+    public GhostEnemyBehavior(BehaviorDefinitions definitions)
     {
         this.definitions = definitions;
     }
@@ -24,6 +24,8 @@ class RangedEnemyBehavior : BaseBehavior
     public float dropCurrentSpeed = 0;
     public float gravity = 9.8f;
     public bool onGround = true;
+    public bool isHidden = false;
+    public float hiddenCooldown = 0;
 
     public Vector2 Move(EntityUpdateParams param)
     {
@@ -48,9 +50,9 @@ class RangedEnemyBehavior : BaseBehavior
         }
         if ((param.player.position - param.entity.position).magnitude < definitions.attackDistance)
         {
-            if (param.entity.prefabCharacter?.skills.Count <= 1)
+            if (attackCooldown <= 0 && !param.entity.isHidden)
             {
-                return new Vector2(0, dy);
+                param.entity.isHidden = true;
             }
             if ((param.player.position - param.entity.position).magnitude < meleeDistance)
             {
@@ -100,7 +102,7 @@ class RangedEnemyBehavior : BaseBehavior
                 meleeAttackCooldown = cooldown;
             }
         }
-        else if ((param.player.position - param.entity.position).magnitude < definitions.attackDistance)
+        else if (param.entity.isHidden && (param.player.position - param.entity.position).magnitude < meleeDistance)
         {
             float skillCastTimeRequired = param.entity.GetSkillCasttime(0);
             if (skillCastTimeRequired <= 0 || castTime > skillCastTimeRequired)
@@ -121,12 +123,13 @@ class RangedEnemyBehavior : BaseBehavior
                     {
                         toSummon.moveHandler = new VelocityMoveHandler(
                             toSummon.prefabCharacter.behavior.moveSpeed,
-                            (param.player.position - toSummon.position).normalized).Move;
+                            new Vector2(0, 1)).Move;
                     }
                     result.Add(toSummon);
                 }
                 attackCooldown = cooldown;
                 castTime = 0;
+                param.entity.isHidden = false;
             }
             else
             {

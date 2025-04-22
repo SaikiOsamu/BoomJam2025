@@ -18,7 +18,7 @@ public class ObjectStatusUpdate : MonoBehaviour
         if (entity != null)
         {
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
+            if (spriteRenderer != null && !entity.isBarrier)
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             }
@@ -50,6 +50,10 @@ public class ObjectStatusUpdate : MonoBehaviour
             {
                 otherEntity = player;
             }
+        }
+        if (otherEntity.isHidden)
+        {
+            return;
         }
         if (otherEntity == null || otherEntity.isProjector)
         {

@@ -76,6 +76,7 @@ class PlayerBehavior : BaseBehavior
             }
             foreach (BattleEntity toSummon in entitiesSummoned)
             {
+                toSummon.facingEast = entity.facingEast;
                 if (entity.facingEast)
                 {
                     toSummon.position.x += 0.4f;
@@ -176,7 +177,7 @@ class PlayerBehavior : BaseBehavior
                 skill.hasCasted = false;
             }
         }
-        if (barrierAction.triggered && onGround)
+        if (barrierAction.triggered && param.entity.position.y <= 0)
         {
             var barrier = ActivateSkill(2, param.entity);
             foreach (BattleEntity entity in barrier)
@@ -204,7 +205,6 @@ class PlayerBehavior : BaseBehavior
         }
         return result;
     }
-    public bool onGround = true;
     public float jumpInitialSpeed = 7.5f;
     public float jumpCurrentSpeed = 0;
     public float jumpGravity = 9.8f;
@@ -216,24 +216,24 @@ class PlayerBehavior : BaseBehavior
         {
             param.entity.facingEast = moveValue.x > 0;
         }
-        if (jumpAction.triggered && onGround && !barrierAction.IsPressed())
+        if (jumpAction.triggered && param.entity.position.y <= 0 && !barrierAction.IsPressed())
         {
             jumpCurrentSpeed = jumpInitialSpeed;
-            onGround = false;
+            moveValue.y = jumpCurrentSpeed * param.timeDiff;
         }
-        if (!onGround)
+        if (param.entity.position.y > 0 || jumpCurrentSpeed > 0)
         {
             jumpCurrentSpeed -= jumpGravity * param.timeDiff;
             moveValue.y = jumpCurrentSpeed * param.timeDiff;
             if (param.entity.position.y + moveValue.y < 0)
             {
-                onGround = true;
                 moveValue.y = -param.entity.position.y;
             }
         }
         else
         {
             moveValue.y = 0;
+            jumpCurrentSpeed = 0;
         }
         if (barrierAction.IsPressed())
         {

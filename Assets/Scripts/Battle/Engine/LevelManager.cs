@@ -21,7 +21,11 @@ public class LevelManager : MonoBehaviour
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
         new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
-    public float enemySpawnCooldown = 20;
+    public float enemySpawnCooldown = 0;
+    public int area = 1;
+    public int cleanse = 0;
+    public int cleanseThreshold = 200;
+    public float enemySpawnCooldownReset = 0.2f;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -43,7 +47,6 @@ public class LevelManager : MonoBehaviour
     {
         player = BattleEntity.FromPrefab(playerPrefab);
         player.dynamicSkills = playerDynamicSkills;
-        entities.Add(player);
 
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
@@ -99,7 +102,8 @@ public class LevelManager : MonoBehaviour
             if (status.status?.maxAppliedAtOnce > 0)
             {
                 int appliedCount = statusTakenEffectMap.GetValueOrDefault(status.status?.name ?? "");
-                if (appliedCount >= status.status?.maxAppliedAtOnce) {
+                if (appliedCount >= status.status?.maxAppliedAtOnce)
+                {
                     continue;
                 }
                 statusTakenEffectMap[status.status?.name ?? ""] = appliedCount + 1;
@@ -263,6 +267,11 @@ public class LevelManager : MonoBehaviour
             p.player = player;
             p.timeDiff = delta;
             entity.selfDestruct(p);
+            // Add cleanse progress if needed.
+            if (entity.isEnemy && !entity.isProjector && !entity.isAlive)
+            {
+                cleanse += entity.cleanseWhenDefeated;
+            }
         }
         // Remove dead objects
         entities.RemoveAll(enemy => !enemy.isAlive);
@@ -275,7 +284,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             AddEnemy();
-            enemySpawnCooldown = 0.2f;
+            enemySpawnCooldown = enemySpawnCooldownReset;
         }
     }
 }
