@@ -18,7 +18,7 @@ public class ObjectStatusUpdate : MonoBehaviour
         if (entity != null)
         {
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
+            if (spriteRenderer != null && !entity.isBarrier)
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             }
