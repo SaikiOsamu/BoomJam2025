@@ -42,9 +42,20 @@ class RangedEnemyBehavior : BaseBehavior
         {
             dropCurrentSpeed = 0;
         }
-        if ((param.player.position - param.entity.position).magnitude < definitions.attackDistance)
+        if (castTime > 0)
         {
             return new Vector2(0, dy);
+        }
+        if ((param.player.position - param.entity.position).magnitude < definitions.attackDistance)
+        {
+            if (param.entity.prefabCharacter?.skills.Count <= 1)
+            {
+                return new Vector2(0, dy);
+            }
+            if ((param.player.position - param.entity.position).magnitude < meleeDistance)
+            {
+                return new Vector2(0, dy);
+            }
         }
         Vector2 moveValue = (param.player.position - param.entity.position).normalized * param.timeDiff * definitions.moveSpeed;
         param.entity.facingEast = moveValue.x > 0;
