@@ -46,7 +46,6 @@ public class LevelManager : MonoBehaviour
     {
         player = BattleEntity.FromPrefab(playerPrefab);
         player.dynamicSkills = playerDynamicSkills;
-        entities.Add(player);
 
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
