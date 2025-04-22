@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: BarrierBehavior
+  m_Name: EnemyMeleeAttackBehavior
   m_EditorClassIdentifier: 
-  behaviorType: 6
+  behaviorType: 5
   moveAction:
     m_UseReference: 0
     m_Action:
       m_Name: Move
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: a0a8b919-7815-43a5-91a5-5bb480efca4f
+      m_Id: ad927e2a-cbdd-4067-80b2-9f710c4fad4f
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -31,7 +31,7 @@ MonoBehaviour:
       m_Name: Jump
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: ded26aab-a558-4e4c-a2c4-e5cd6b239f42
+      m_Id: 50616473-61d5-4e0e-9d47-cf7c60b71130
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -43,7 +43,7 @@ MonoBehaviour:
       m_Name: Blink
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 452397bb-b76f-4996-b3bb-a149b67d593a
+      m_Id: ad13d50e-00c5-4513-9d61-05131e74e74a
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -55,7 +55,7 @@ MonoBehaviour:
       m_Name: Attack
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 6f779061-6871-4def-9fd8-8c2f9bc6c661
+      m_Id: 06dca719-79c6-4667-b958-fe914a52ff5a
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Name: Skill 1
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 5285ff3c-bc8d-4b5b-b18b-a1da71983c40
+      m_Id: 59af3cfa-11b9-4a9c-95b6-47463c293c9e
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_Name: Skill 2
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 7c01dbbb-ca49-4871-a821-48e28307c554
+      m_Id: 1ae931eb-4b40-4d0d-8638-a9bc847bf630
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -91,7 +91,7 @@ MonoBehaviour:
       m_Name: Skill 3
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: bf08e356-2282-476a-b4d9-8e2da72bfe0f
+      m_Id: e4cbc39f-0ddb-4b4b-bb52-2314ba282356
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -103,31 +103,31 @@ MonoBehaviour:
       m_Name: Skill 4
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: e781a48c-f46c-40d7-b6e6-c1c41c2a4389
+      m_Id: 8faeae1b-681a-4ae4-a6a4-784ca57e01be
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
   barrierAction:
-    m_UseReference: 1
+    m_UseReference: 0
     m_Action:
       m_Name: Barrier
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 23099552-670d-41e4-b8f0-c7ef51ddec57
+      m_Id: f9073b5a-80e2-42cf-8a08-d45a7a45d14c
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 714601444611612194, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    m_Reference: {fileID: 0}
   grantingStatus: []
   moveSpeed: 0
   maxDamageTargets: -1
-  projectileDamage: 0
+  projectileDamage: 5
   projectileDamageEveryNSecond: -1
-  timeToLive: 1
-  godPowerDrainPerSecond: 5
+  timeToLive: 0.2
+  godPowerDrainPerSecond: 0
   attackDistance: 0
   doSkillWhenDisappear: 0
   disappearSkillPositionOffset: {x: 0, y: 0}
