@@ -13,6 +13,6 @@ public class CameraPlayerStatusReverseUpdate : MonoBehaviour
     void Update()
     {
         var player = transform.parent.gameObject.GetComponentInParent<LevelManager>().player;
-        transform.localPosition = new Vector3(0, -player.position.y, -10);
+        transform.localPosition = new Vector3(8, -player.position.y, -10);
     }
 }

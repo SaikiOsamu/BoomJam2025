@@ -160,15 +160,7 @@ public class LevelManager : MonoBehaviour
     {
         BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
         enemy.isEnemy = true;
-        float position = Random.value;
-        if (position > 0.5)
-        {
-            enemy.position = player.position + new Vector2(7, 0);
-        }
-        else
-        {
-            enemy.position = player.position + new Vector2(-7, 0);
-        }
+        enemy.position = player.position + new Vector2(25, 0);
         entities.Add(enemy);
         RegisterObject(enemy);
     }
