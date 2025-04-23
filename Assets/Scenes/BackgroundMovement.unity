@@ -241,6 +241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnCooldown: 0
+  area: 1
+  cleanse: 0
+  cleanseThreshold: 200
+  enemySpawnCooldownReset: 0.2
+  isInBossFight: 0
   entityPrefab: {fileID: 5095337469806169938, guid: c4d3c19f39e3ad14685fac2f23cb8258, type: 3}
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
   playerPrefab: {fileID: 11400000, guid: 99761945ae4f079499ead2040830690b, type: 2}
@@ -1022,7 +1027,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -4.19, z: -0.24}
-  m_LocalScale: {x: 11.16, y: 9.31, z: 0.625}
+  m_LocalScale: {x: 17.33, y: 9.31, z: 0.625}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1609799850}
