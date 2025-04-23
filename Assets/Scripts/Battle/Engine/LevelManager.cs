@@ -26,6 +26,7 @@ public class LevelManager : MonoBehaviour
     public int cleanse = 0;
     public int cleanseThreshold = 200;
     public float enemySpawnCooldownReset = 0.2f;
+    public bool isInBossFight = false;
 
     [SerializeField]
     private GameObject entityPrefab;
