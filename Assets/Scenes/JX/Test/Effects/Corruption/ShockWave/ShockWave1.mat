@@ -36,10 +36,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Old01
+  m_Name: ShockWave1
   m_Shader: {fileID: -6465566751694194690, guid: 1f1dfdbf35a532b419e49414664e9f94, type: 3}
   m_Parent: {fileID: 2100000, guid: 7992e8fa92af9054295d290e44b0f3d5, type: 2}
-  m_ModifiedSerializedProperties: 16
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
@@ -66,6 +66,7 @@ Material:
     - Vector1_66e1813dce49453b9d978b14470b05c7: 30.75
     - _AlphaDstBlend: 10
     - _Disolve: 0.756
+    - _DisolveStartHeight: 0.84
     - _DstBlend: 10
     - _DstBlend2: 10
     - _QueueControl: 1
@@ -73,6 +74,7 @@ Material:
     - _Scale: 2.18
     m_Colors:
     - Color_4344b865b07d428c9f7b0ae863f3619f: {r: 1.6529912, g: 3.409824, b: 38.937145, a: 0}
+    - Color_bfc578eca04d48a9a6b782710f0c4014: {r: 0, g: 3.7268686, b: 16.94838, a: 0}
     - Vector2_4c87d13ea4d9494aa84c3320a263248e: {r: 8.77, g: 4.3, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

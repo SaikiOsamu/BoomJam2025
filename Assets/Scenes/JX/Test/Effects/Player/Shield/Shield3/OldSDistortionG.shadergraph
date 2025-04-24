@@ -244,9 +244,6 @@
             "m_Id": "1b66ad2d9df7460c883fde8af5334c06"
         },
         {
-            "m_Id": "82cf0995dc3b430890e438686dc5463e"
-        },
-        {
             "m_Id": "68443cbc0cc040c8bd78b1cacbd5d802"
         },
         {
@@ -335,6 +332,9 @@
         },
         {
             "m_Id": "5d5195a972a14cc0b693007da5df2941"
+        },
+        {
+            "m_Id": "586150ec6ab8418598092b0070a35a45"
         }
     ],
     "m_GroupDatas": [
@@ -1740,9 +1740,6 @@
                 "m_Id": "3d5f87a7d59b455bbd290a2d95f6b5ec"
             },
             {
-                "m_Id": "82cf0995dc3b430890e438686dc5463e"
-            },
-            {
                 "m_Id": "5d5195a972a14cc0b693007da5df2941"
             }
         ]
@@ -2611,7 +2608,7 @@
     "m_ObjectId": "19f75487474d40219e610e0b1a5b46a3",
     "m_Title": "Disolve Edge",
     "m_Position": {
-        "x": -452.0,
+        "x": -452.00006103515627,
         "y": 2835.0
     }
 }
@@ -5239,6 +5236,40 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.HighDefinition.ExposureNode",
+    "m_ObjectId": "586150ec6ab8418598092b0070a35a45",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Exposure",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -455.0000305175781,
+            "y": -149.0000457763672,
+            "width": 145.00003051757813,
+            "height": 111.00001525878906
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ff4e477a177a4502bf1c44fc43649758"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_ExposureType": 0
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "5a339d03329c4ecea4d0520f829cdcfd",
@@ -6512,46 +6543,12 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "82cf0995dc3b430890e438686dc5463e",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.AlphaClipThreshold",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "83e109eb13774eebbe75c44ff46a0a21"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.AlphaClipThreshold"
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "830f50c5d9674e45ac94b3f48b9c6e19",
     "m_Title": "Disolve Effect",
     "m_Position": {
-        "x": -1822.0,
-        "y": 1927.0
+        "x": -1822.0001220703125,
+        "y": 1927.0001220703125
     }
 }
 
@@ -6577,21 +6574,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "83e109eb13774eebbe75c44ff46a0a21",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha Clip Threshold",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "AlphaClipThreshold",
-    "m_StageCapability": 2,
-    "m_Value": 0.5,
-    "m_DefaultValue": 0.5,
-    "m_Labels": []
 }
 
 {
@@ -7338,7 +7320,7 @@
     "m_Title": "Procedural Center mask",
     "m_Position": {
         "x": -4372.0,
-        "y": 482.0
+        "y": 482.0000915527344
     }
 }
 
@@ -7614,7 +7596,7 @@
     "m_ObjectId": "a5d09dfcb5444bd08ef68394b39dd0f3",
     "m_Title": "Vertex Displacement",
     "m_Position": {
-        "x": -1705.0,
+        "x": -1705.0001220703125,
         "y": -2298.0
     }
 }
@@ -9159,8 +9141,8 @@
     "m_ObjectId": "c8b417dd4f1a47a4b823e80e6c807843",
     "m_Title": "Twirl Distortion",
     "m_Position": {
-        "x": -3212.0,
-        "y": -346.0
+        "x": -3212.000244140625,
+        "y": -346.0000305175781
     }
 }
 
@@ -9648,7 +9630,7 @@
     "m_ObjectId": "d727747273bc4fa49facd60f83c251f4",
     "m_Title": "Zoom Effect",
     "m_Position": {
-        "x": -2983.0,
+        "x": -2983.000244140625,
         "y": -1082.0
     }
 }
@@ -11405,7 +11387,7 @@
     "m_ObjectId": "f844b73686004f34a418e91609c3eafa",
     "m_Title": "Depth Outline",
     "m_Position": {
-        "x": -4926.0,
+        "x": -4926.00048828125,
         "y": 2332.0
     }
 }
@@ -11684,6 +11666,36 @@
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.ColorRGBMaterialSlot",
+    "m_ObjectId": "ff4e477a177a4502bf1c44fc43649758",
+    "m_Id": 0,
+    "m_DisplayName": "Output",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Output",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": [],
+    "m_ColorMode": 0,
+    "m_DefaultColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
     }
 }
 

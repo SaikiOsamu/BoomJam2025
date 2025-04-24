@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ICESpikeRefraction 2
+  m_Name: ICESpikeRefraction
   m_Shader: {fileID: -6465566751694194690, guid: 49ec4288c1a855143b13ffa17e77994a, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 49ec4288c1a855143b13ffa17e77994a, type: 3}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT
@@ -49,11 +49,10 @@ Material:
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
     - _DstBlend2: 10
-    - _FresnelPower: 0.1
+    - _FresnelPower: -0.42
     - _FresnelPowerMask: 1.74
-    - _ICE_Normal_Offset: 0.37
-    - _ICE_Tiling: 0.94
-    - _Refract_Strength: 0.13
+    - _ICE_Tiling: 0.59
+    - _Refract_Strength: -0.28
     - _Smoothness: 0
     - _StencilRefDepth: 0
     - _StencilRefGBuffer: 2
@@ -65,7 +64,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DissoloveColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColor: {r: 0.28257388, g: 0.32777917, b: 0.4716981, a: 0}
+    - _FresnelColor: {r: 0.1761748, g: 0.22371732, b: 0.3490566, a: 0}
     - _RefractionColor: {r: 0.3241812, g: 0.39393097, b: 0.4433962, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
