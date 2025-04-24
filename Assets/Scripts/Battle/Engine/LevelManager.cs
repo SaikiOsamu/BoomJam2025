@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CollisionBattleEntity
 {
@@ -14,9 +17,19 @@ public class CollisionBattleEntity
     public List<BattleEntity> victims;
 }
 
+[Serializable]
+public enum LevelStage
+{
+    LEVEL_STAGE_UNKNOWN = 0,
+    LEVEL_STAGE_DOING_CLEANSE = 1,
+    LEVEL_STAGE_CLEANSE_COMPLETED = 2,
+    LEVEL_STAGE_BOSS_FIGHT = 3,
+}
+
 public class LevelManager : MonoBehaviour
 {
     public BattleEntity player;
+    public BattleEntity boss;
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
@@ -26,7 +39,7 @@ public class LevelManager : MonoBehaviour
     public int cleanse = 0;
     public int cleanseThreshold = 200;
     public float enemySpawnCooldownReset = 0.2f;
-    public bool isInBossFight = false;
+    public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -37,7 +50,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
+    private Character startBossFightPrefab;
+    [SerializeField]
     private List<Character> enemyPrefabs;
+    [SerializeField]
+    private List<Character> bossPrefabs;
     [SerializeField]
     private List<Character> animalAllyPrefabs;
     [SerializeField]
@@ -166,12 +183,67 @@ public class LevelManager : MonoBehaviour
         RegisterObject(enemy);
     }
 
+    void EnterBossFight()
+    {
+        if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+        {
+            return;
+        }
+        levelStage = LevelStage.LEVEL_STAGE_BOSS_FIGHT;
+        boss = BattleEntity.FromPrefab(bossPrefabs[area - 1]);
+        boss.isEnemy = true;
+        boss.position = player.position + new Vector2(25, 0);
+        entities.Add(boss);
+        RegisterObject(boss);
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (!player.isAlive)
         {
             return;
+        }
+
+        if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE && cleanse >= cleanseThreshold)
+        {
+            levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
+            cleanse = 0;
+
+            BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
+            startBossFight.isEnemy = true;
+            startBossFight.position = player.position + new Vector2(10, 0);
+            startBossFight.collideHandler = (param, other) =>
+            {
+                if (!param.entity.isAlive)
+                {
+                    return false;
+                }
+                if (!ReferenceEquals(other, player))
+                {
+                    return false;
+                }
+                EnterBossFight();
+                return true;
+            };
+            startBossFight.selfDestruct = param =>
+            {
+                if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+                {
+                    param.entity.isAlive = false;
+                }
+            };
+            projectors.Add(startBossFight);
+            RegisterObject(startBossFight);
+        }
+        if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
+        {
+            levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+            area += 1;
+            if (area == 4)
+            {
+                // TODO: Win?
+            }
         }
         float delta = Time.deltaTime;
         // Objects Move
@@ -261,7 +333,10 @@ public class LevelManager : MonoBehaviour
             p.timeDiff = delta;
             entity.selfDestruct(p);
             // Add cleanse progress if needed.
-            if (entity.isEnemy && !entity.isProjector && !entity.isAlive)
+            if (entity.isEnemy && 
+                !entity.isProjector && 
+                !entity.isAlive && 
+                levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
             {
                 cleanse += entity.cleanseWhenDefeated;
             }
@@ -274,7 +349,7 @@ public class LevelManager : MonoBehaviour
         {
             enemySpawnCooldown -= delta;
         }
-        else
+        else if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
         {
             AddEnemy();
             enemySpawnCooldown = enemySpawnCooldownReset;
