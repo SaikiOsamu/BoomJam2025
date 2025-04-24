@@ -36,10 +36,14 @@ public class LevelManager : MonoBehaviour
         new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
     public float enemySpawnCooldown = 0;
     public int area = 1;
+    public int cleanseRewardAlreadyGranted = 0;
     public int cleanse = 0;
     public int cleanseThreshold = 200;
     public float enemySpawnCooldownReset = 0.2f;
     public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+
+    [SerializeField]
+    private AnimalSelectionUI animalSelectionUI = null;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -66,18 +70,20 @@ public class LevelManager : MonoBehaviour
         player = BattleEntity.FromPrefab(playerPrefab);
         player.dynamicSkills = playerDynamicSkills;
 
+        animalSelectionUI.selectAnimalPartnerDelegate = SpawnAnimalAlly;
+
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
         RegisterObject(floatingCannon);
+    }
 
-        // Add animal allies.. For testing.
-        foreach (var animalAlly in animalAllyPrefabs)
+    void SpawnAnimalAlly(Character prefab)
         {
-            BattleEntity ally = BattleEntity.FromPrefab(animalAlly);
+        BattleEntity ally = BattleEntity.FromPrefab(prefab);
+        ally.position = player.position;
             entities.Add(ally);
             RegisterObject(ally);
         }
-    }
 
     void RegisterObject(BattleEntity entity)
     {
@@ -209,6 +215,7 @@ public class LevelManager : MonoBehaviour
         {
             levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
             cleanse = 0;
+                cleanseRewardAlreadyGranted = 0;
 
             BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
             startBossFight.isEnemy = true;
@@ -236,6 +243,11 @@ public class LevelManager : MonoBehaviour
             projectors.Add(startBossFight);
             RegisterObject(startBossFight);
         }
+            else if (cleanse / (cleanseThreshold / 4) > cleanseRewardAlreadyGranted)
+            {
+                cleanseRewardAlreadyGranted += 1;
+                animalSelectionUI.Show();
+            }
         if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
         {
             levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
