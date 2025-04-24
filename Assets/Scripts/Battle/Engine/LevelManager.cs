@@ -24,6 +24,9 @@ public enum LevelStage
     LEVEL_STAGE_DOING_CLEANSE = 1,
     LEVEL_STAGE_CLEANSE_COMPLETED = 2,
     LEVEL_STAGE_BOSS_FIGHT = 3,
+    LEVEL_STAGE_LOST = 4,
+    LEVEL_STAGE_WINNER = 5,
+    LEVEL_STAGE_ENDLESS = 6,
 }
 
 public class LevelManager : MonoBehaviour
@@ -78,12 +81,12 @@ public class LevelManager : MonoBehaviour
     }
 
     void SpawnAnimalAlly(Character prefab)
-        {
+    {
         BattleEntity ally = BattleEntity.FromPrefab(prefab);
         ally.position = player.position;
-            entities.Add(ally);
-            RegisterObject(ally);
-        }
+        entities.Add(ally);
+        RegisterObject(ally);
+    }
 
     void RegisterObject(BattleEntity entity)
     {
@@ -206,48 +209,60 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!player.isAlive)
+        if (levelStage == LevelStage.LEVEL_STAGE_WINNER)
         {
             return;
         }
-
-        if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE && cleanse >= cleanseThreshold)
+        if (!player.isAlive)
         {
-            levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
-            cleanse = 0;
+            levelStage = LevelStage.LEVEL_STAGE_LOST;
+            return;
+        }
+
+        if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
+        {
+            if (cleanse >= cleanseThreshold)
+            {
+                if (area > bossPrefabs.Count) {
+                    levelStage = LevelStage.LEVEL_STAGE_WINNER;
+                    return;
+                }
+                levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
+                cleanse = 0;
                 cleanseRewardAlreadyGranted = 0;
 
-            BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
-            startBossFight.isEnemy = true;
-            startBossFight.position = player.position + new Vector2(10, 0);
-            startBossFight.collideHandler = (param, other) =>
-            {
-                if (!param.entity.isAlive)
+                BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
+                startBossFight.isEnemy = true;
+                startBossFight.position = player.position + new Vector2(10, 0);
+                startBossFight.collideHandler = (param, other) =>
                 {
-                    return false;
-                }
-                if (!ReferenceEquals(other, player))
+                    if (!param.entity.isAlive)
+                    {
+                        return false;
+                    }
+                    if (!ReferenceEquals(other, player))
+                    {
+                        return false;
+                    }
+                    EnterBossFight();
+                    return true;
+                };
+                startBossFight.selfDestruct = param =>
                 {
-                    return false;
-                }
-                EnterBossFight();
-                return true;
-            };
-            startBossFight.selfDestruct = param =>
-            {
-                if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
-                {
-                    param.entity.isAlive = false;
-                }
-            };
-            projectors.Add(startBossFight);
-            RegisterObject(startBossFight);
-        }
+                    if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+                    {
+                        param.entity.isAlive = false;
+                    }
+                };
+                projectors.Add(startBossFight);
+                RegisterObject(startBossFight);
+            } 
             else if (cleanse / (cleanseThreshold / 4) > cleanseRewardAlreadyGranted)
             {
                 cleanseRewardAlreadyGranted += 1;
                 animalSelectionUI.Show();
             }
+        }
         if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
         {
             levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
