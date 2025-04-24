@@ -15,6 +15,7 @@ class CobraBehavior : BaseBehavior
     public override AttackDelegate AttackDelegate => Attack;
 
     public float attackCooldown = 0;
+    public float castTime = 0;
     BehaviorDefinitions definitions;
 
     public CobraBehavior(BehaviorDefinitions definitions)
@@ -75,10 +76,16 @@ class CobraBehavior : BaseBehavior
         BattleEntity nearestEntity = FindNearestEnemy(param.entities, param.entity.position);
         if (attackCooldown > 0)
         {
+            param.entity.isAttacking = false;
             attackCooldown -= param.timeDiff;
         }
         else if (nearestEntity != null)
         {
+            param.entity.isAttacking = true;
+            if (castTime < param.entity.prefabCharacter?.skills.FirstOrDefault()?.castSecond)
+            {
+                castTime += param.timeDiff;
+            }
             var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
             foreach (BattleEntity toSummon in entitiesSummoned)
             {
@@ -101,6 +108,10 @@ class CobraBehavior : BaseBehavior
             }
             attackCooldown = cooldown;
         }
+        else
+        {
+            castTime = 0;
+        }
         return result;
     }
 
@@ -108,6 +119,10 @@ class CobraBehavior : BaseBehavior
     {
         BattleEntity nearestEntity = FindNearestEnemy(param.entities, param.entity.position);
         Vector2 moveValue = Vector2.zero;
+        if (castTime > 0)
+        {
+            return moveValue;
+        }
         if (nearestEntity != null)
         {
             if ((nearestEntity.position - param.entity.position).magnitude > definitions.attackDistance)

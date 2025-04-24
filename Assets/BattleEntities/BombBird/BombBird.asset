@@ -12,15 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: BombBird
   m_EditorClassIdentifier: 
-  entityName: 
+  id: 10002
+  entityName: "\u6D77\u9E25"
   description: 
   isProjector: 0
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
   prefab: {fileID: 5095337469806169938, guid: a91650f6836ab5a4781d1d10e0bfd604, type: 3}
   skills:
   - {fileID: 11400000, guid: f9bd69793c3a9084fbfdff7e42fa441d, type: 2}
   life: 100
+  lifeMax: 100
   resilience: 0
   resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  cleanseWhenDefeated: 1
+  godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 05030f0422ac0c24298558b832383226, type: 2}
+  icon: {fileID: 21300000, guid: d38c73b9329b9bc418127b59ebaa63e4, type: 3}

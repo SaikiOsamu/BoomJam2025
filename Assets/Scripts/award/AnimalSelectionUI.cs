@@ -6,15 +6,19 @@ using TMPro;
 
 public class AnimalSelectionUI : MonoBehaviour
 {
+    public delegate void SelectAnimalPartnerDelegate(Character prefab);
+
     public GameObject panel;
-    public List<AnimalOptionSO> allAnimals;
+    public List<Character> allAnimals;
+
 
     public Button[] animalButtons;
     public Image[] animalIcons;
     public TextMeshProUGUI[] animalNames;
     public TextMeshProUGUI descriptionBox;
+    public SelectAnimalPartnerDelegate selectAnimalPartnerDelegate;
 
-    private AnimalOptionSO[] selectedOptions = new AnimalOptionSO[2];
+    private Character[] selectedOptions = new Character[2];
 
     private void Awake()
     {
@@ -33,7 +37,7 @@ public class AnimalSelectionUI : MonoBehaviour
         {   
             selectedOptions[i] = chosen[i];
             animalIcons[i].sprite = chosen[i].icon;
-            animalNames[i].text = chosen[i].animalName;
+            animalNames[i].text = chosen[i].entityName;
 
             int index = i;
 
@@ -45,8 +49,7 @@ public class AnimalSelectionUI : MonoBehaviour
                 if (hasSelected) return; // 已选过则不再执行
                 hasSelected = true;
 
-                // TODO: add animal to player bag
-                // AddToBackpack(selectedOptions[index]);
+                selectAnimalPartnerDelegate.Invoke(selectedOptions[index]);
 
                 // 禁用所有按钮，避免双击
                 foreach (var btn in animalButtons)

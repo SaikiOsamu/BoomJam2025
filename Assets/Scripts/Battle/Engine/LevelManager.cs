@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CollisionBattleEntity
 {
@@ -14,18 +17,36 @@ public class CollisionBattleEntity
     public List<BattleEntity> victims;
 }
 
+[Serializable]
+public enum LevelStage
+{
+    LEVEL_STAGE_UNKNOWN = 0,
+    LEVEL_STAGE_DOING_CLEANSE = 1,
+    LEVEL_STAGE_CLEANSE_COMPLETED = 2,
+    LEVEL_STAGE_BOSS_FIGHT = 3,
+    LEVEL_STAGE_LOST = 4,
+    LEVEL_STAGE_WINNER = 5,
+    LEVEL_STAGE_ENDLESS = 6,
+}
+
 public class LevelManager : MonoBehaviour
 {
     public BattleEntity player;
+    public BattleEntity boss;
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
         new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
     public float enemySpawnCooldown = 0;
     public int area = 1;
+    public int cleanseRewardAlreadyGranted = 0;
     public int cleanse = 0;
     public int cleanseThreshold = 200;
     public float enemySpawnCooldownReset = 0.2f;
+    public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+
+    [SerializeField]
+    private AnimalSelectionUI animalSelectionUI = null;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -36,7 +57,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
+    private Character startBossFightPrefab;
+    [SerializeField]
     private List<Character> enemyPrefabs;
+    [SerializeField]
+    private List<Character> bossPrefabs;
     [SerializeField]
     private List<Character> animalAllyPrefabs;
     [SerializeField]
@@ -48,17 +73,19 @@ public class LevelManager : MonoBehaviour
         player = BattleEntity.FromPrefab(playerPrefab);
         player.dynamicSkills = playerDynamicSkills;
 
+        animalSelectionUI.selectAnimalPartnerDelegate = SpawnAnimalAlly;
+
         BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
         entities.Add(floatingCannon);
         RegisterObject(floatingCannon);
+    }
 
-        // Add animal allies.. For testing.
-        foreach (var animalAlly in animalAllyPrefabs)
-        {
-            BattleEntity ally = BattleEntity.FromPrefab(animalAlly);
-            entities.Add(ally);
-            RegisterObject(ally);
-        }
+    void SpawnAnimalAlly(Character prefab)
+    {
+        BattleEntity ally = BattleEntity.FromPrefab(prefab);
+        ally.position = player.position;
+        entities.Add(ally);
+        RegisterObject(ally);
     }
 
     void RegisterObject(BattleEntity entity)
@@ -160,25 +187,90 @@ public class LevelManager : MonoBehaviour
     {
         BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
         enemy.isEnemy = true;
-        float position = Random.value;
-        if (position > 0.5)
-        {
-            enemy.position = player.position + new Vector2(7, 0);
-        }
-        else
-        {
-            enemy.position = player.position + new Vector2(-7, 0);
-        }
+        enemy.position = player.position + new Vector2(25, 0);
         entities.Add(enemy);
         RegisterObject(enemy);
+    }
+
+    void EnterBossFight()
+    {
+        if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+        {
+            return;
+        }
+        levelStage = LevelStage.LEVEL_STAGE_BOSS_FIGHT;
+        boss = BattleEntity.FromPrefab(bossPrefabs[area - 1]);
+        boss.isEnemy = true;
+        boss.position = player.position + new Vector2(25, 0);
+        entities.Add(boss);
+        RegisterObject(boss);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!player.isAlive)
+        if (levelStage == LevelStage.LEVEL_STAGE_WINNER)
         {
             return;
+        }
+        if (!player.isAlive)
+        {
+            levelStage = LevelStage.LEVEL_STAGE_LOST;
+            return;
+        }
+
+        if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
+        {
+            if (cleanse >= cleanseThreshold)
+            {
+                if (area > bossPrefabs.Count) {
+                    levelStage = LevelStage.LEVEL_STAGE_WINNER;
+                    return;
+                }
+                levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
+                cleanse = 0;
+                cleanseRewardAlreadyGranted = 0;
+
+                BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
+                startBossFight.isEnemy = true;
+                startBossFight.position = player.position + new Vector2(10, 0);
+                startBossFight.collideHandler = (param, other) =>
+                {
+                    if (!param.entity.isAlive)
+                    {
+                        return false;
+                    }
+                    if (!ReferenceEquals(other, player))
+                    {
+                        return false;
+                    }
+                    EnterBossFight();
+                    return true;
+                };
+                startBossFight.selfDestruct = param =>
+                {
+                    if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+                    {
+                        param.entity.isAlive = false;
+                    }
+                };
+                projectors.Add(startBossFight);
+                RegisterObject(startBossFight);
+            } 
+            else if (cleanse / (cleanseThreshold / 4) > cleanseRewardAlreadyGranted)
+            {
+                cleanseRewardAlreadyGranted += 1;
+                animalSelectionUI.Show();
+            }
+        }
+        if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
+        {
+            levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+            area += 1;
+            if (area == 4)
+            {
+                // TODO: Win?
+            }
         }
         float delta = Time.deltaTime;
         // Objects Move
@@ -268,7 +360,10 @@ public class LevelManager : MonoBehaviour
             p.timeDiff = delta;
             entity.selfDestruct(p);
             // Add cleanse progress if needed.
-            if (entity.isEnemy && !entity.isProjector && !entity.isAlive)
+            if (entity.isEnemy && 
+                !entity.isProjector && 
+                !entity.isAlive && 
+                levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
             {
                 cleanse += entity.cleanseWhenDefeated;
             }
@@ -281,7 +376,7 @@ public class LevelManager : MonoBehaviour
         {
             enemySpawnCooldown -= delta;
         }
-        else
+        else if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
         {
             AddEnemy();
             enemySpawnCooldown = enemySpawnCooldownReset;

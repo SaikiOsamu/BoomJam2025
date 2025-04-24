@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: Rabbit
+  m_Name: BossFight
   m_EditorClassIdentifier: 
-  id: 10006
-  entityName: "\u91CE\u5154/Hare"
+  entityName: 
   description: 
-  isProjector: 0
+  isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 6782176509065335048, guid: d20704797be8d47dc89aa92d657e0da0, type: 3}
+  prefab: {fileID: 2757770327938398083, guid: e34411d26ad17f24abdbeb31e09790ad, type: 3}
   skills:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 11a65e6016a3a304a88cd413694984de, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
@@ -31,5 +30,4 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: 4d504c0ca24e64d8d9a0f59394a0e2ee, type: 2}
-  icon: {fileID: 21300000, guid: d9254979b253c481e80450165b99f3af, type: 3}
+  behavior: {fileID: 11400000, guid: 3cf51a9e0f6c9da44a00a3b1a0929a77, type: 2}

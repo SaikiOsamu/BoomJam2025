@@ -26,7 +26,16 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
             text += "\nShield: " + player.shield + " / " + player.shieldMax;
         }
         text += "\nGod Power: " + player.godPower + " / " + player.godPowerMax;
+        text += "\nArea: " + levelManager.area;
         text += "\nCleanse: " + levelManager.cleanse + " / " + levelManager.cleanseThreshold;
+        if (levelManager.levelStage == LevelStage.LEVEL_STAGE_WINNER)
+        {
+            text += "\nYOU WIN!";
+        }
+        if (levelManager.levelStage == LevelStage.LEVEL_STAGE_LOST)
+        {
+            text += "\nYou lose..";
+        }
         textMeshProUGUI.text = text;
     }
 }

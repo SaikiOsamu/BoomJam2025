@@ -78,6 +78,7 @@ class GhostEnemyBehavior : BaseBehavior
         {
             meleeAttackCooldown -= param.timeDiff;
         }
+        float skillCastTimeRequired = param.entity.GetSkillCasttime(0);
         if (attackCooldown > 0)
         {
             attackCooldown -= param.timeDiff;
@@ -104,8 +105,7 @@ class GhostEnemyBehavior : BaseBehavior
         }
         else if (param.entity.isHidden && (param.player.position - param.entity.position).magnitude < meleeDistance)
         {
-            float skillCastTimeRequired = param.entity.GetSkillCasttime(0);
-            if (skillCastTimeRequired <= 0 || castTime > skillCastTimeRequired)
+            if (castTime > skillCastTimeRequired)
             {
                 var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
                 foreach (BattleEntity toSummon in entitiesSummoned)
@@ -136,9 +136,35 @@ class GhostEnemyBehavior : BaseBehavior
                 castTime += param.timeDiff;
             }
         }
-        else
+        else if (castTime > 0 && castTime < skillCastTimeRequired)
         {
+            castTime += param.timeDiff;
+        }
+        else if (castTime > skillCastTimeRequired)
+        {
+            var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
+            foreach (BattleEntity toSummon in entitiesSummoned)
+            {
+                if (param.entity.facingEast)
+                {
+                    toSummon.position.x += 0.4f;
+                }
+                else
+                {
+                    toSummon.position.x -= 0.4f;
+                }
+                // Maybe throw it out
+                if (toSummon.prefabCharacter != null && toSummon.prefabCharacter.behavior.moveSpeed != 0)
+                {
+                    toSummon.moveHandler = new VelocityMoveHandler(
+                        toSummon.prefabCharacter.behavior.moveSpeed,
+                        new Vector2(0, 1)).Move;
+                }
+                result.Add(toSummon);
+            }
+            attackCooldown = cooldown;
             castTime = 0;
+            param.entity.isHidden = false;
         }
         return result;
     }
