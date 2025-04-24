@@ -258,12 +258,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d488706b84cc234ba6b4a5f0f751f1d, type: 2}
   bossPrefabs:
   - {fileID: 11400000, guid: 254693db68f7b644591375d80373fecc, type: 2}
-  animalAllyPrefabs:
-  - {fileID: 11400000, guid: 02f8d397d206e6940a1d1938980918c2, type: 2}
-  - {fileID: 11400000, guid: bce8ebdb17f1d43f6a8e021086a5a22d, type: 2}
-  - {fileID: 11400000, guid: 7a35d4c805a0a4081ac5ca24fc8932d0, type: 2}
-  - {fileID: 11400000, guid: 589177cb8a0439544a4ed705b8a5bb25, type: 2}
-  - {fileID: 11400000, guid: 4961952e878e2a4429157f1c76929d57, type: 2}
+  animalAllyPrefabs: []
   playerDynamicSkills:
   - {fileID: 11400000, guid: 48ef73e5a34f53a46bd6d1b1c71ae71b, type: 2}
   - {fileID: 11400000, guid: fd1c589c0b2578c44abbae9dcf71de73, type: 2}
@@ -1964,6 +1959,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: animalPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 1878029668088131605, guid: 74c49569df323654ead5cba8da1bdd3e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4454667752639741455, guid: 74c49569df323654ead5cba8da1bdd3e, type: 3}
       propertyPath: panel
       value: 
@@ -2560,12 +2559,12 @@ GameObject:
   - component: {fileID: 1783840615}
   - component: {fileID: 1783840614}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: RewardSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1783840613
 RectTransform:
   m_ObjectHideFlags: 0
