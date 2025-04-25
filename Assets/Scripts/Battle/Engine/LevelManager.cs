@@ -75,9 +75,12 @@ public class LevelManager : MonoBehaviour
 
         animalSelectionUI.selectAnimalPartnerDelegate = SpawnAnimalAlly;
 
-        BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
-        entities.Add(floatingCannon);
-        RegisterObject(floatingCannon);
+        if (floatingCannonPrefab != null)
+        {
+            BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
+            entities.Add(floatingCannon);
+            RegisterObject(floatingCannon);
+        }
     }
 
     void SpawnAnimalAlly(Character prefab)
@@ -227,7 +230,8 @@ public class LevelManager : MonoBehaviour
         {
             if (cleanse >= cleanseThreshold)
             {
-                if (area > bossPrefabs.Count) {
+                if (area > bossPrefabs.Count)
+                {
                     levelStage = LevelStage.LEVEL_STAGE_WINNER;
                     return;
                 }
@@ -260,7 +264,7 @@ public class LevelManager : MonoBehaviour
                 };
                 projectors.Add(startBossFight);
                 RegisterObject(startBossFight);
-            } 
+            }
             else if (cleanse / (cleanseThreshold / 4) > cleanseRewardAlreadyGranted)
             {
                 cleanseRewardAlreadyGranted += 1;
@@ -364,9 +368,9 @@ public class LevelManager : MonoBehaviour
             p.timeDiff = delta;
             entity.selfDestruct(p);
             // Add cleanse progress if needed.
-            if (entity.isEnemy && 
-                !entity.isProjector && 
-                !entity.isAlive && 
+            if (entity.isEnemy &&
+                !entity.isProjector &&
+                !entity.isAlive &&
                 levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
             {
                 cleanse += entity.cleanseWhenDefeated;
