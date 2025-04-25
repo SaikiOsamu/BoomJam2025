@@ -43,8 +43,11 @@ public class LevelManager : MonoBehaviour
     public int cleanse = 0;
     public int cleanseThreshold = 200;
     public float enemySpawnCooldownReset = 0.2f;
+    public float bossFightSize = 20;
     public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
-
+    
+    [SerializeField]
+    public Vector2 bossFightCenter = Vector2.zero;
     [SerializeField]
     private AnimalSelectionUI animalSelectionUI = null;
 
@@ -157,6 +160,18 @@ public class LevelManager : MonoBehaviour
             }
         }
         entity.position += moveResult;
+        // Boss fight wall
+        if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && ReferenceEquals(entity, player))
+        {
+            if (entity.position.x > bossFightCenter.x + bossFightSize)
+            {
+                entity.position.x = bossFightCenter.x + bossFightSize;
+            }
+            if (entity.position.x < bossFightCenter.x - bossFightSize)
+            {
+                entity.position.x = bossFightCenter.x - bossFightSize;
+            }
+        }
     }
 
     void HandleAttackResult(List<BattleEntity> newProjectors)
@@ -205,6 +220,7 @@ public class LevelManager : MonoBehaviour
         {
             return;
         }
+        bossFightCenter = player.position + new Vector2(13, 0);
         levelStage = LevelStage.LEVEL_STAGE_BOSS_FIGHT;
         boss = BattleEntity.FromPrefab(bossPrefabs[area - 1]);
         boss.isEnemy = true;
