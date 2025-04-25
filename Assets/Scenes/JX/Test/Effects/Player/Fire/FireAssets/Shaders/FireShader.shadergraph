@@ -2950,8 +2950,8 @@
     "m_ObjectId": "2f67e1586fa34939ac2a0ef2c87b44f3",
     "m_Title": "VERTEX OFFSET",
     "m_Position": {
-        "x": -1222.0,
-        "y": -1287.0
+        "x": -1222.000244140625,
+        "y": -1286.9998779296875
     }
 }
 
@@ -6705,7 +6705,7 @@
     "m_ObjectId": "a316b4656e914c95a8b3232624f93acb",
     "m_Title": "MAIN TEX + DISTORTION",
     "m_Position": {
-        "x": -3307.0,
+        "x": -3306.999755859375,
         "y": 567.0
     }
 }

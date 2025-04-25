@@ -10,7 +10,7 @@ Material:
   m_Name: ice
   m_Shader: {fileID: -6465566751694194690, guid: b97ea2a287e96b14da72d8953251e576, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: b97ea2a287e96b14da72d8953251e576, type: 3}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT

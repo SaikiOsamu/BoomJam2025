@@ -39,7 +39,7 @@ Material:
   m_Name: OldShield
   m_Shader: {fileID: -6465566751694194690, guid: 1f1dfdbf35a532b419e49414664e9f94, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 1f1dfdbf35a532b419e49414664e9f94, type: 3}
-  m_ModifiedSerializedProperties: 16
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
