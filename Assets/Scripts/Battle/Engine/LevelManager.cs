@@ -143,6 +143,10 @@ public class LevelManager : MonoBehaviour
                     pushBack.x *= -1;
                 }
                 moveResult += pushBack;
+            }else if (status.status?.type == BattleStatusEffectType.DRAG)
+            {
+                float speed = status.status.pushBackSpeedPerSecond.magnitude;
+                moveResult += (status.pullCenter - entity.position) * speed * timeDiff;
             }
             else if (status.status?.type == BattleStatusEffectType.SLOW)
             {
