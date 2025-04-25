@@ -68,6 +68,7 @@ class DamagingProjectileBehavior : BaseBehavior
                 BattleStatus status = new BattleStatus();
                 status.status = eff;
                 status.pushBackFacingEast = param.entity.facingEast;
+                status.pullCenter = param.entity.position;
                 other.statusInEffect.Add(status);
             }
         }

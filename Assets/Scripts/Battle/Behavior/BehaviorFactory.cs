@@ -39,6 +39,8 @@ public class BehaviorFactory
                 return new RangedEnemyBehavior(definitions);
             case BehaviorType.GhostEnemy:
                 return new GhostEnemyBehavior(definitions);
+            case BehaviorType.IronFist:
+                return new IronFistBehavior(definitions);
             case BehaviorType.Bird:
                 return new BombBirdBehavior(definitions);
             case BehaviorType.FloatingCannon:

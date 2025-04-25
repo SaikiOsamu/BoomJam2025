@@ -9,6 +9,7 @@ public enum BattleStatusEffectType
     PUSH_BACK = 1,
     POISON = 2,
     SLOW = 3,
+    DRAG = 4,
 }
 
 [CreateAssetMenu(fileName = "BattleStatusEffect", menuName = "Battle Entities/Battle Status Effect")]
