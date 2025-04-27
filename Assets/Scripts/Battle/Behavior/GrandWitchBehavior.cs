@@ -290,6 +290,11 @@ class BlackSwordBehavior
     public void Update(EntityUpdateParams param)
     {
         selfDestructHandler.Update(param);
+        // Self destruct if witch is gone.
+        if (!witch.isAlive)
+        {
+            param.entity.isAlive = false;
+        }
         if (!param.entity.isAlive)
         {
             return;
@@ -516,7 +521,15 @@ class GrandWitchBehavior : BaseBehavior
                         }
                         toSummon.moveHandler = behavior.Move;
                         toSummon.attackHandler = behavior.Attack;
-                        toSummon.selfDestruct = param => behavior.timeExisted += param.timeDiff;
+                        toSummon.selfDestruct = param =>
+                        {
+                            behavior.timeExisted += param.timeDiff;
+                            // Self destruct if witch is gone.
+                            if (!param.entity.isAlive)
+                            {
+                                param.entity.isAlive = false;
+                            }
+                        };
                     }
                     if (castingSkill >= 2 && castingSkill <= 6)
                     {
@@ -560,7 +573,15 @@ class GrandWitchBehavior : BaseBehavior
                         }
                         toSummon.moveHandler = behavior.Move;
                         toSummon.attackHandler = behavior.Attack;
-                        toSummon.selfDestruct = param => behavior.timeExisted += param.timeDiff;
+                        toSummon.selfDestruct = param =>
+                        {
+                            behavior.timeExisted += param.timeDiff;
+                            // Self destruct if witch is gone.
+                            if (!param.entity.isAlive)
+                            {
+                                param.entity.isAlive = false;
+                            }
+                        };
 
                     }
                     if (castingSkill == 7)
