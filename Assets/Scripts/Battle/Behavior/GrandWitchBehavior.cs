@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
@@ -153,7 +154,7 @@ class BlackSwordBehavior
             case Decision.DECISION_FOLLOWING:
                 if ((param.entity.position - GetWitchFollowingPosition()).magnitude > 0.5)
                 {
-                    result = param.timeDiff * speed * (GetWitchFollowingPosition()-param.entity.position).normalized;
+                    result = param.timeDiff * speed * (GetWitchFollowingPosition() - param.entity.position).normalized;
                 }
                 break;
             case Decision.DECISION_ATTACK:
@@ -328,9 +329,21 @@ class GrandWitchBehavior : BaseBehavior
     public bool onGround = true;
     public bool isHidden = false;
     public float hiddenCooldown = 0;
+    public bool ultimateUsed = false;
+    public bool duringUltimate = false;
+    public float ultimateCountdown = -1f;
+    public float ultimateWeaken = -1f;
 
     public Vector2 Move(EntityUpdateParams param)
     {
+        if (duringUltimate)
+        {
+            return Vector2.zero;
+        }
+        if (ultimateWeaken > 0)
+        {
+            return Vector2.zero;
+        }
         // Handle drop
         float dy = 0;
         if (param.entity.position.y > 0)
@@ -370,13 +383,24 @@ class GrandWitchBehavior : BaseBehavior
 
     public StubBehavior[] stubStored = new StubBehavior[3];
 
+    public List<BattleEntity> ultimateSummonedEnemies = new List<BattleEntity>();
+
     public List<BattleEntity> Attack(EntityUpdateParams param)
     {
         List<BattleEntity> result = new List<BattleEntity>();
-        //if ((float)param.entity.life / param.entity.lifeMax < 0.2)
-        //{
-        //    isBloodlust = true;
-        //}
+        if (ultimateWeaken > 0)
+        {
+            ultimateWeaken -= param.timeDiff;
+            return result;
+        }
+        if ((float)param.entity.life / param.entity.lifeMax < 0.2 && !ultimateUsed)
+        {
+            ultimateUsed = true;
+            duringUltimate = true;
+            castingSkill = 8;
+            ultimateCountdown = 60;
+            param.entity.isHidden = true;
+        }
 
         for (int i = 0; i < 4; ++i)
         {
@@ -399,6 +423,59 @@ class GrandWitchBehavior : BaseBehavior
         // If already casting, continue.
         if (castingSkill >= 0)
         {
+            // For ultimate, this is different..
+            if (duringUltimate)
+            {
+                ultimateCountdown -= param.timeDiff;
+                ultimateSummonedEnemies.RemoveAll(e => !e.isAlive);
+                if (castingSkill == 11)
+                {
+                    if (ultimateCountdown <= 0)
+                    {
+                        var entitiesSummoned = param.entity.GetSkillSummon(castingSkill, out float cooldown);
+                        foreach (BattleEntity toSummon in entitiesSummoned)
+                        {
+                            result.Add(toSummon);
+                        }
+                        castingSkill = -1;
+                        duringUltimate = false;
+                        param.entity.isHidden = false;
+                    }
+                    else if (ultimateSummonedEnemies.Count == 0)
+                    {
+                        castingSkill = -1;
+                        duringUltimate = false;
+                        param.entity.isHidden = false;
+                        ultimateWeaken = 8;
+                    }
+                }
+                else if (castingSkill > 7)
+                {
+                    if (ultimateSummonedEnemies.Count == 0)
+                    {
+                        var entitiesSummoned = param.entity.GetSkillSummon(castingSkill, out float cooldown);
+                        foreach (BattleEntity toSummon in entitiesSummoned)
+                        {
+                            result.Add(toSummon);
+                            ultimateSummonedEnemies.Add(toSummon);
+                        }
+                        switch (castingSkill)
+                        {
+                            case 8:
+                                castingSkill = 9;
+                                break;
+                            case 9:
+                                castingSkill = 10;
+                                break;
+                            case 10:
+                                castingSkill = 11;
+                                break;
+                        }
+                    }
+
+                }
+                return result;
+            }
             castTime += param.timeDiff;
             if (castTime > param.entity.GetSkillCasttime(castingSkill))
             {
