@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: GravityEffect
+  m_Name: BlackStabAboutToFire
   m_EditorClassIdentifier: 
   id: 
   entityName: 
@@ -18,8 +18,9 @@ MonoBehaviour:
   isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 7a189cda238edb34f89eafa2e03a8b41, type: 3}
-  skills: []
+  prefab: {fileID: 560128881120421882, guid: 8ba81ed3f9b8ec44cadaf5c45044eeda, type: 3}
+  skills:
+  - {fileID: 11400000, guid: 2522457e437bc5d4095493438d90eb5c, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
@@ -30,5 +31,5 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: ca3b1d48971c40c44aa802b83cf47b0f, type: 2}
+  behavior: {fileID: 11400000, guid: 18b30b0378a3dce4aa0d6ad8b646d4a2, type: 2}
   icon: {fileID: 0}

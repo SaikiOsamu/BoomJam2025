@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: GravityEffect
+  m_Name: IceStabAboutToFire
   m_EditorClassIdentifier: 
   id: 
   entityName: 
@@ -18,8 +18,9 @@ MonoBehaviour:
   isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 7a189cda238edb34f89eafa2e03a8b41, type: 3}
-  skills: []
+  prefab: {fileID: 560128881120421882, guid: 2b44f51116594f241a85a3eb07c0198e, type: 3}
+  skills:
+  - {fileID: 11400000, guid: ee741edb927a44344b0c80f4360c774a, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
@@ -30,5 +31,5 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: ca3b1d48971c40c44aa802b83cf47b0f, type: 2}
+  behavior: {fileID: 11400000, guid: 1f676a67567dd41419f3ad977c80d153, type: 2}
   icon: {fileID: 0}

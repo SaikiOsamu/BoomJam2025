@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: GravityEffect
+  m_Name: BlackStabFired
   m_EditorClassIdentifier: 
   id: 
   entityName: 
@@ -18,7 +18,7 @@ MonoBehaviour:
   isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 7a189cda238edb34f89eafa2e03a8b41, type: 3}
+  prefab: {fileID: 2757770327938398083, guid: d3255cf9e0d75ba4daa42a2a03cb8f14, type: 3}
   skills: []
   life: 100
   lifeMax: 100
@@ -30,5 +30,5 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: ca3b1d48971c40c44aa802b83cf47b0f, type: 2}
+  behavior: {fileID: 11400000, guid: e920c909195cde04e88c9f7afea9a54f, type: 2}
   icon: {fileID: 0}

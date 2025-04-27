@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: GravityEffect
+  m_Name: BlackSwordEnemy
   m_EditorClassIdentifier: 
   id: 
   entityName: 
   description: 
-  isProjector: 1
+  isProjector: 0
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 7a189cda238edb34f89eafa2e03a8b41, type: 3}
-  skills: []
+  prefab: {fileID: 2757770327938398083, guid: 171c422f4708bdb4a9cb6774bfe38879, type: 3}
+  skills:
+  - {fileID: 11400000, guid: a8784f47911ee994d9ea9b8fb641d9d4, type: 2}
+  - {fileID: 11400000, guid: 2eae5d7869c8fb041bddf9832bd5d554, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
@@ -27,8 +29,8 @@ MonoBehaviour:
   godPower: 100
   godPowerMax: 100
   cleanseWhenDefeated: 1
-  godPowerRecoveryPerSecond: 0.1
+  godPowerRecoveryPerSecond: 0
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: ca3b1d48971c40c44aa802b83cf47b0f, type: 2}
+  behavior: {fileID: 0}
   icon: {fileID: 0}

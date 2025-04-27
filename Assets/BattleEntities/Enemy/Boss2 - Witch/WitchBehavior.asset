@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: PlayerMeleeAttackBehavior
+  m_Name: WitchBehavior
   m_EditorClassIdentifier: 
-  behaviorType: 5
+  behaviorType: 12
   moveAction:
     m_UseReference: 0
     m_Action:
@@ -43,7 +43,7 @@ MonoBehaviour:
       m_Name: Blink
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 85e80930-8f1f-47f1-a812-a96d4ff7a2c3
+      m_Id: 22a31c47-24ea-4eb7-865f-5751f3977c3c
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_Name: Skill 2
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: cc917b2f-7991-4b0f-8f02-fb27c939dc77
+      m_Id: ef5d4a53-e86b-4bce-b8b5-466c6f6b85b3
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -91,7 +91,7 @@ MonoBehaviour:
       m_Name: Skill 3
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: acf95178-3879-49da-9cbd-36b46f566eaa
+      m_Id: 73e7d080-cadb-4730-bd71-d10aa7d2d97d
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -103,7 +103,7 @@ MonoBehaviour:
       m_Name: Skill 4
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 775a8b2d-af94-4cf9-ad66-ddfd1df40ab8
+      m_Id: 017a5399-e32e-4226-99fc-35f25eb63b31
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -122,12 +122,12 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   grantingStatus: []
-  moveSpeed: 0
+  moveSpeed: 2
   maxDamageTargets: -1
-  projectileDamage: 10
+  projectileDamage: 0
   projectileDamageEveryNSecond: -1
-  timeToLive: 0.2
+  timeToLive: 1
   godPowerDrainPerSecond: 0
-  attackDistance: 0
+  attackDistance: 5
   doSkillWhenDisappear: 0
   disappearSkillPositionOffset: {x: 0, y: 0}

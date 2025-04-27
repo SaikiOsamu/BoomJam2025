@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: PlayerMeleeAttackBehavior
+  m_Name: BlackSwordMeleeAttackBehavior
   m_EditorClassIdentifier: 
   behaviorType: 5
   moveAction:
@@ -43,7 +43,7 @@ MonoBehaviour:
       m_Name: Blink
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 85e80930-8f1f-47f1-a812-a96d4ff7a2c3
+      m_Id: ad13d50e-00c5-4513-9d61-05131e74e74a
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_Name: Skill 2
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: cc917b2f-7991-4b0f-8f02-fb27c939dc77
+      m_Id: 6a464368-7173-476e-a436-7751320c2e8e
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -91,7 +91,7 @@ MonoBehaviour:
       m_Name: Skill 3
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: acf95178-3879-49da-9cbd-36b46f566eaa
+      m_Id: 1ec2d7d6-b1cb-4c93-a1db-0fe58ef37326
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -103,7 +103,7 @@ MonoBehaviour:
       m_Name: Skill 4
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 775a8b2d-af94-4cf9-ad66-ddfd1df40ab8
+      m_Id: ba4cb637-3afd-4c36-9b7d-f1e2126a15a8
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -124,7 +124,7 @@ MonoBehaviour:
   grantingStatus: []
   moveSpeed: 0
   maxDamageTargets: -1
-  projectileDamage: 10
+  projectileDamage: 5
   projectileDamageEveryNSecond: -1
   timeToLive: 0.2
   godPowerDrainPerSecond: 0
