@@ -306,6 +306,11 @@ public class LevelManager : MonoBehaviour
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
+            if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+            {
+                p.bossFightCenter = bossFightCenter;
+                p.bossFightSize = bossFightSize;
+            }
             HandleMoveResult(entity, entity.moveHandler(p), delta, statusTakenEffectMap);
         }
         // Objects Attack
@@ -317,6 +322,11 @@ public class LevelManager : MonoBehaviour
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
+            if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+            {
+                p.bossFightCenter = bossFightCenter;
+                p.bossFightSize = bossFightSize;
+            }
             attackResults.AddRange(entity.attackHandler(p));
         }
         HandleAttackResult(attackResults);
@@ -344,6 +354,11 @@ public class LevelManager : MonoBehaviour
                 p.entities = entities.AsReadOnly();
                 p.player = player;
                 p.timeDiff = delta;
+                if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+                {
+                    p.bossFightCenter = bossFightCenter;
+                    p.bossFightSize = bossFightSize;
+                }
                 collisionBattleEntity.projector.collideHandler(p, victim);
             }
         }
@@ -382,6 +397,11 @@ public class LevelManager : MonoBehaviour
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
+            if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+            {
+                p.bossFightCenter = bossFightCenter;
+                p.bossFightSize = bossFightSize;
+            }
             entity.selfDestruct(p);
             // Add cleanse progress if needed.
             if (entity.isEnemy &&

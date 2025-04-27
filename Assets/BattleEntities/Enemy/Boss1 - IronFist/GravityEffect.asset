@@ -30,5 +30,5 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: 29a63d5b57f2d84479e12c9aedbc5330, type: 2}
+  behavior: {fileID: 11400000, guid: ca3b1d48971c40c44aa802b83cf47b0f, type: 2}
   icon: {fileID: 0}

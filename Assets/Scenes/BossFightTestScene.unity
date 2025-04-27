@@ -1192,7 +1192,9 @@ MonoBehaviour:
   cleanse: 4
   cleanseThreshold: 4
   enemySpawnCooldownReset: 10
+  bossFightSize: 20
   levelStage: 1
+  bossFightCenter: {x: 0, y: 0}
   animalSelectionUI: {fileID: 1686153898}
   entityPrefab: {fileID: 5095337469806169938, guid: c4d3c19f39e3ad14685fac2f23cb8258, type: 3}
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
@@ -1202,7 +1204,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
   bossPrefabs:
-  - {fileID: 11400000, guid: a8e09f8230118a44d8faf00d5409336b, type: 2}
+  - {fileID: 11400000, guid: 491d694b4de5ed74b8c1e5cf31432968, type: 2}
   animalAllyPrefabs: []
   playerDynamicSkills:
   - {fileID: 11400000, guid: 48ef73e5a34f53a46bd6d1b1c71ae71b, type: 2}

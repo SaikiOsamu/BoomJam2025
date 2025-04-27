@@ -25,6 +25,8 @@ public class BattleEntity
         public ReadOnlyCollection<BattleEntity> entities;
         public BattleEntity player;
         public float timeDiff;
+        public Vector2? bossFightCenter = null;
+        public float? bossFightSize = null;
     }
     public Character prefabCharacter = null;
     public Vector2 position = Vector2.zero;

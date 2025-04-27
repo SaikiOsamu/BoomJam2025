@@ -67,7 +67,15 @@ class FloatingCannonBehavior : BaseBehavior
                 {
                     float diffx = toSummon.position.x - enemy.position.x;
                     float diffy = toSummon.position.y - enemy.position.y;
-                    float sine = Mathf.Asin(diffy / diffx);
+                    float sine;
+                    if (diffx != 0)
+                    {
+                        sine = Mathf.Asin(diffy / diffx);
+                    }
+                    else
+                    {
+                        sine = diffy > 0 ? -Mathf.PI / 2 : Mathf.PI / 2;
+                    }
                     if (diffx > 0)
                     {
                         sine += Mathf.PI;
