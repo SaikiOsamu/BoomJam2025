@@ -17,6 +17,7 @@ public enum BehaviorType
     Turtle = 9,
     GhostEnemy = 10,
     IronFist = 11,
+    GrandWitch = 12,
     Naofu = 100,
     Rabbit = 200,
 }
