@@ -22,7 +22,7 @@ public class PlayerStatusUpdate : MonoBehaviour
         animator.SetBool("is_failing", newPos.y - transform.localPosition.y < 0);
         transform.position = newPos;
 
-        if (newPos.y > 0.05)
+        if (jumpSfxClip != null && newPos.y > 0.05)
         {
             if (!jumpSfx.isPlaying)
             {
@@ -30,11 +30,6 @@ public class PlayerStatusUpdate : MonoBehaviour
                 jumpSfx.Play(0);
             }
         }
-        //else
-        //{
-        //    jumpSfx.Stop();
-        //    jumpSfx.clip = null;
-        //}
 
         GetComponent<SpriteRenderer>().flipX = !player.facingEast;
     }
