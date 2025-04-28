@@ -84,6 +84,13 @@ public class LevelManager : MonoBehaviour
             entities.Add(floatingCannon);
             RegisterObject(floatingCannon);
         }
+
+        foreach (Character ally in animalAllyPrefabs)
+        {
+            BattleEntity a = BattleEntity.FromPrefab(ally);
+            entities.Add(a);
+            RegisterObject(a);
+        }
     }
 
     void SpawnAnimalAlly(Character prefab)
