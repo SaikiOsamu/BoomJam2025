@@ -24,4 +24,6 @@ public class Character : ScriptableObject
     public int shieldMax = 200;
     public BehaviorDefinitions behavior;
     public Sprite icon;
+    public AudioClip onSpawn;
+    public AudioClip onDespawn;
 }

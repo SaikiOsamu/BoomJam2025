@@ -6,6 +6,9 @@ public class ObjectStatusUpdate : MonoBehaviour
     public BattleEntity player;
     public LevelManager levelManager;
     private Animator animator = null;
+    public AudioSource audioSource = null;
+    public bool spawnSoundPlayed = false;
+    public bool isDying = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,12 +34,30 @@ public class ObjectStatusUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDying)
+        {
+            if (!audioSource.isPlaying)
+            {
+                Destroy(gameObject);
+            }
+            return;
+        }
         if (animator == null)
         {
             animator = GetAnimator();
         }
         if (entity != null)
         {
+            if (!spawnSoundPlayed)
+            {
+                spawnSoundPlayed = true;
+                AudioClip spawnSound = entity.prefabCharacter?.onSpawn;
+                if (spawnSound != null)
+                {
+                    audioSource.clip = spawnSound;
+                    audioSource.Play();
+                }
+            }
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             if (spriteRenderer != null && !entity.isBarrier)
             {
@@ -49,7 +70,17 @@ public class ObjectStatusUpdate : MonoBehaviour
             gameObject.transform.localRotation = entity.rotation;
             if (!entity.isAlive)
             {
-                Destroy(gameObject);
+                AudioClip despawnSound = entity.prefabCharacter?.onDespawn;
+                if (despawnSound != null)
+                {
+                    audioSource.clip = despawnSound;
+                    audioSource.Play();
+                }
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.enabled = false;
+                }
+                isDying = true;
             }
         }
     }
