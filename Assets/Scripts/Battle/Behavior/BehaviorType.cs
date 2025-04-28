@@ -12,6 +12,12 @@ public enum BehaviorType
     Player = 4,
     DamagingProjectile = 5,
     Barrier = 6,
+    Blink = 7,
+    Cobra = 8,
+    Turtle = 9,
+    GhostEnemy = 10,
+    IronFist = 11,
+    GrandWitch = 12,
     Naofu = 100,
     Rabbit = 200,
 }

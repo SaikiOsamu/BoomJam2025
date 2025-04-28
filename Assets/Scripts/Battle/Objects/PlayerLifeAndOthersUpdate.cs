@@ -18,8 +18,24 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var player = root.GetComponentInParent<LevelManager>().player;
-        textMeshProUGUI.text = "Life: " + player.life + " / " + player.lifeMax
-            + "\nGod Power: " + player.godPower + " / " + player.godPowerMax;
+        var levelManager = root.GetComponentInParent<LevelManager>();
+        var player = levelManager.player;
+        string text = "Life: " + player.life + " / " + player.lifeMax;
+        if (player.shield > 0)
+        {
+            text += "\nShield: " + player.shield + " / " + player.shieldMax;
+        }
+        text += "\nGod Power: " + player.godPower + " / " + player.godPowerMax;
+        text += "\nArea: " + levelManager.area;
+        text += "\nCleanse: " + levelManager.cleanse + " / " + levelManager.cleanseThreshold;
+        if (levelManager.levelStage == LevelStage.LEVEL_STAGE_WINNER)
+        {
+            text += "\nYOU WIN!";
+        }
+        if (levelManager.levelStage == LevelStage.LEVEL_STAGE_LOST)
+        {
+            text += "\nYou lose..";
+        }
+        textMeshProUGUI.text = text;
     }
 }

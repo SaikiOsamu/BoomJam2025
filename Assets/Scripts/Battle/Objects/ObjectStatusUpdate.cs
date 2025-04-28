@@ -5,6 +5,10 @@ public class ObjectStatusUpdate : MonoBehaviour
     public BattleEntity entity;
     public BattleEntity player;
     public LevelManager levelManager;
+    private Animator animator = null;
+    public AudioSource audioSource = null;
+    public bool spawnSoundPlayed = false;
+    public bool isDying = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -12,21 +16,71 @@ public class ObjectStatusUpdate : MonoBehaviour
 
     }
 
+    Animator GetAnimator()
+    {
+        if (!TryGetComponent(out Animator animator))
+        {
+            for (int i = 0; i < transform.childCount; ++i)
+            {
+                if (transform.GetChild(i).TryGetComponent(out animator))
+                {
+                    break;
+                }
+            }
+        }
+        return animator;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (isDying)
+        {
+            if (!audioSource.isPlaying)
+            {
+                Destroy(gameObject);
+            }
+            return;
+        }
+        if (animator == null)
+        {
+            animator = GetAnimator();
+        }
         if (entity != null)
         {
+            if (!spawnSoundPlayed)
+            {
+                spawnSoundPlayed = true;
+                AudioClip spawnSound = entity.prefabCharacter?.onSpawn;
+                if (spawnSound != null)
+                {
+                    audioSource.clip = spawnSound;
+                    audioSource.Play();
+                }
+            }
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
+            if (spriteRenderer != null && !entity.isBarrier)
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             }
+            Vector3 newPos = entity.position;
+            animator?.SetBool("is_moving", !gameObject.transform.localPosition.Equals(newPos));
+            animator?.SetBool("is_attacking", entity.isAttacking);
             gameObject.transform.localPosition = entity.position;
             gameObject.transform.localRotation = entity.rotation;
             if (!entity.isAlive)
             {
-                Destroy(gameObject);
+                AudioClip despawnSound = entity.prefabCharacter?.onDespawn;
+                if (despawnSound != null)
+                {
+                    audioSource.clip = despawnSound;
+                    audioSource.Play();
+                }
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.enabled = false;
+                }
+                isDying = true;
             }
         }
     }
@@ -50,6 +104,10 @@ public class ObjectStatusUpdate : MonoBehaviour
             {
                 otherEntity = player;
             }
+        }
+        if (otherEntity.isHidden)
+        {
+            return;
         }
         if (otherEntity == null || otherEntity.isProjector)
         {

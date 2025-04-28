@@ -67,7 +67,15 @@ class FloatingCannonBehavior : BaseBehavior
                 {
                     float diffx = toSummon.position.x - enemy.position.x;
                     float diffy = toSummon.position.y - enemy.position.y;
-                    float sine = Mathf.Asin(diffy / diffx);
+                    float sine;
+                    if (diffx != 0)
+                    {
+                        sine = Mathf.Asin(diffy / diffx);
+                    }
+                    else
+                    {
+                        sine = diffy > 0 ? -Mathf.PI / 2 : Mathf.PI / 2;
+                    }
                     if (diffx > 0)
                     {
                         sine += Mathf.PI;
@@ -101,26 +109,27 @@ class FloatingCannonBehavior : BaseBehavior
         }
     }
 
-    private void LazerAttack(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
+    private bool LazerAttack(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
     {
         if (lazerTime < 0.3)
         {
-            return;
+            return false;
         }
         if (lazerTime < 0.5)
         {
             if (collidedObjects.Contains(theOtherEntity))
             {
-                return;
+                return false;
             }
             if (param.entity.isEnemy == theOtherEntity.isEnemy)
             {
-                return;
+                return false;
             }
-            theOtherEntity.life -= attack;
+            theOtherEntity.Damage(attack);
             collidedObjects.Add(theOtherEntity);
+            return true;
         }
-        return;
+        return false;
     }
 
     public Vector2 Move(EntityUpdateParams param)

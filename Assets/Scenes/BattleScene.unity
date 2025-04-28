@@ -242,7 +242,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -247.93304, w: -74.00403}
+  m_margin: {x: 0, y: 0, z: -247.93304, w: -163.08337}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1158,14 +1158,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnCooldown: 0
+  area: 1
+  cleanse: 0
+  cleanseThreshold: 200
+  enemySpawnCooldownReset: 10
   entityPrefab: {fileID: 5095337469806169938, guid: c4d3c19f39e3ad14685fac2f23cb8258, type: 3}
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
   playerPrefab: {fileID: 11400000, guid: 99761945ae4f079499ead2040830690b, type: 2}
-  enemyPrefabs: []
-  birdPrefab: {fileID: 11400000, guid: 02f8d397d206e6940a1d1938980918c2, type: 2}
-  floatingCannonPrefab: {fileID: 11400000, guid: 495dcc2447425fd4ba06b463feec8c58, type: 2}
-  naofuPrefab: {fileID: 11400000, guid: bce8ebdb17f1d43f6a8e021086a5a22d, type: 2}
-  rabbitPrefab: {fileID: 11400000, guid: 7a35d4c805a0a4081ac5ca24fc8932d0, type: 2}
+  floatingCannonPrefab: {fileID: 11400000, guid: 9dc5526979068d84294ba804e2516a70, type: 2}
+  enemyPrefabs:
+  - {fileID: 11400000, guid: 3ce54ed1df3d9234d817946ab341c439, type: 2}
+  animalAllyPrefabs: []
+  playerDynamicSkills:
+  - {fileID: 11400000, guid: 48ef73e5a34f53a46bd6d1b1c71ae71b, type: 2}
+  - {fileID: 11400000, guid: fd1c589c0b2578c44abbae9dcf71de73, type: 2}
+  - {fileID: 11400000, guid: 7b0668c48ca575640af7602ef2ee4ad8, type: 2}
+  - {fileID: 11400000, guid: 7f2d4492aeeb3ac4aa22b9919355fca4, type: 2}
 --- !u!4 &1532566957
 Transform:
   m_ObjectHideFlags: 0

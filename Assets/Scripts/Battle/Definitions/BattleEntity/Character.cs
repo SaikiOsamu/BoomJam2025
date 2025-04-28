@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Character", menuName = "Battle Entities/Character")]
 public class Character : ScriptableObject
 {
+    public string id;
     public string entityName;
     public string description;
     public bool isProjector;
@@ -17,8 +18,12 @@ public class Character : ScriptableObject
     public int resilienceMax = 0;
     public int godPower = 100;
     public int godPowerMax = 100;
+    public int cleanseWhenDefeated = 1;
     public float godPowerRecoveryPerSecond = 0.1f;
     public int shield = 0;
     public int shieldMax = 200;
     public BehaviorDefinitions behavior;
+    public Sprite icon;
+    public AudioClip onSpawn;
+    public AudioClip onDespawn;
 }

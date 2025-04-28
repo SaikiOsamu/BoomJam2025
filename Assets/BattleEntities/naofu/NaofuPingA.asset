@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
+  m_Name: NaofuPingA
+  m_EditorClassIdentifier: 
+  entityName: 
+  description: 
+  isProjector: 1
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
+  prefab: {fileID: 2757770327938398083, guid: 04efbf878144bcc44b6ffcad5049c111, type: 3}
+  skills: []
+  life: 100
+  lifeMax: 100
+  resilience: 0
+  resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  godPowerRecoveryPerSecond: 0.1
+  shield: 0
+  shieldMax: 200
+  behavior: {fileID: 0}

@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CollisionBattleEntity
 {
@@ -14,14 +17,39 @@ public class CollisionBattleEntity
     public List<BattleEntity> victims;
 }
 
+[Serializable]
+public enum LevelStage
+{
+    LEVEL_STAGE_UNKNOWN = 0,
+    LEVEL_STAGE_DOING_CLEANSE = 1,
+    LEVEL_STAGE_CLEANSE_COMPLETED = 2,
+    LEVEL_STAGE_BOSS_FIGHT = 3,
+    LEVEL_STAGE_LOST = 4,
+    LEVEL_STAGE_WINNER = 5,
+    LEVEL_STAGE_ENDLESS = 6,
+}
+
 public class LevelManager : MonoBehaviour
 {
     public BattleEntity player;
+    public BattleEntity boss;
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
         new Dictionary<BattleEntity, CollisionBattleEntity>(ReferenceEqualityComparer.Instance);
     public float enemySpawnCooldown = 0;
+    public int area = 1;
+    public int cleanseRewardAlreadyGranted = 0;
+    public int cleanse = 0;
+    public int cleanseThreshold = 200;
+    public float enemySpawnCooldownReset = 0.2f;
+    public float bossFightSize = 20;
+    public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+    
+    [SerializeField]
+    public Vector2 bossFightCenter = Vector2.zero;
+    [SerializeField]
+    private AnimalSelectionUI animalSelectionUI = null;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -30,38 +58,40 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character playerPrefab;
     [SerializeField]
-    private List<Character> enemyPrefabs;
-    [SerializeField]
-    private Character birdPrefab;
-    [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
-    private Character naofuPrefab;
+    private Character startBossFightPrefab;
     [SerializeField]
-    private Character rabbitPrefab;
+    private List<Character> enemyPrefabs;
+    [SerializeField]
+    private List<Character> bossPrefabs;
+    [SerializeField]
+    private List<Character> animalAllyPrefabs;
+    [SerializeField]
+    private List<Skills> playerDynamicSkills;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = BattleEntity.FromPrefab(playerPrefab);
-        entities.Add(player);
+        player.dynamicSkills = playerDynamicSkills;
 
-        // Add a bomb bird.
-        BattleEntity bombBird = BattleEntity.FromPrefab(birdPrefab);
-        entities.Add(bombBird);
-        RegisterObject(bombBird);
+        animalSelectionUI.selectAnimalPartnerDelegate = SpawnAnimalAlly;
 
-        BattleEntity naofu = BattleEntity.FromPrefab(naofuPrefab);
-        entities.Add(naofu);
-        RegisterObject(naofu);
+        if (floatingCannonPrefab != null)
+        {
+            BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
+            entities.Add(floatingCannon);
+            RegisterObject(floatingCannon);
+        }
+    }
 
-        BattleEntity floatingCannon = BattleEntity.FromPrefab(floatingCannonPrefab);
-        entities.Add(floatingCannon);
-        RegisterObject(floatingCannon);
-
-        BattleEntity rabbit = BattleEntity.FromPrefab(rabbitPrefab);
-        entities.Add(rabbit);
-        RegisterObject(rabbit);
+    void SpawnAnimalAlly(Character prefab)
+    {
+        BattleEntity ally = BattleEntity.FromPrefab(prefab);
+        ally.position = player.position;
+        entities.Add(ally);
+        RegisterObject(ally);
     }
 
     void RegisterObject(BattleEntity entity)
@@ -88,15 +118,62 @@ public class LevelManager : MonoBehaviour
             }
             obj.GetComponent<SpriteRenderer>().color = entity.color;
         }
+        AudioSource audioSource = obj.AddComponent<AudioSource>();
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
         update.levelManager = this;
+        update.audioSource = audioSource;
     }
 
-    void HandleMoveResult(BattleEntity entity, Vector2 moveResult)
+    void HandleMoveResult(
+        BattleEntity entity,
+        Vector2 moveResult,
+        float timeDiff,
+        Dictionary<string, int> statusTakenEffectMap)
     {
+        foreach (BattleStatus status in entity.statusInEffect)
+        {
+            if (status.status?.maxAppliedAtOnce > 0)
+            {
+                int appliedCount = statusTakenEffectMap.GetValueOrDefault(status.status?.name ?? "");
+                if (appliedCount >= status.status?.maxAppliedAtOnce)
+                {
+                    continue;
+                }
+                statusTakenEffectMap[status.status?.name ?? ""] = appliedCount + 1;
+            }
+            if (status.status?.type == BattleStatusEffectType.PUSH_BACK)
+            {
+                Vector2 pushBack = status.status.pushBackSpeedPerSecond * timeDiff;
+                if (!status.pushBackFacingEast)
+                {
+                    pushBack.x *= -1;
+                }
+                moveResult += pushBack;
+            }else if (status.status?.type == BattleStatusEffectType.DRAG)
+            {
+                float speed = status.status.pushBackSpeedPerSecond.magnitude;
+                moveResult += (status.pullCenter - entity.position) * speed * timeDiff;
+            }
+            else if (status.status?.type == BattleStatusEffectType.SLOW)
+            {
+                moveResult *= status.status.slowEffectRatio;
+            }
+        }
         entity.position += moveResult;
+        // Boss fight wall
+        if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && ReferenceEquals(entity, player))
+        {
+            if (entity.position.x > bossFightCenter.x + bossFightSize)
+            {
+                entity.position.x = bossFightCenter.x + bossFightSize;
+            }
+            if (entity.position.x < bossFightCenter.x - bossFightSize)
+            {
+                entity.position.x = bossFightCenter.x - bossFightSize;
+            }
+        }
     }
 
     void HandleAttackResult(List<BattleEntity> newProjectors)
@@ -134,28 +211,96 @@ public class LevelManager : MonoBehaviour
     {
         BattleEntity enemy = BattleEntity.FromPrefab(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
         enemy.isEnemy = true;
-        float position = Random.value;
-        if (position > 0.5)
-        {
-            enemy.position = new Vector2(7, 0);
-        }
-        else
-        {
-            enemy.position = new Vector2(-7, 0);
-        }
+        enemy.position = player.position + new Vector2(25, 0);
         entities.Add(enemy);
         RegisterObject(enemy);
+    }
+
+    void EnterBossFight()
+    {
+        if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+        {
+            return;
+        }
+        bossFightCenter = player.position + new Vector2(13, 0);
+        levelStage = LevelStage.LEVEL_STAGE_BOSS_FIGHT;
+        boss = BattleEntity.FromPrefab(bossPrefabs[area - 1]);
+        boss.isEnemy = true;
+        boss.position = player.position + new Vector2(25, 0);
+        entities.Add(boss);
+        RegisterObject(boss);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!player.isAlive)
+        if (levelStage == LevelStage.LEVEL_STAGE_WINNER)
         {
             return;
         }
+        if (!player.isAlive)
+        {
+            levelStage = LevelStage.LEVEL_STAGE_LOST;
+            return;
+        }
+
+        if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
+        {
+            if (cleanse >= cleanseThreshold)
+            {
+                if (area > bossPrefabs.Count)
+                {
+                    levelStage = LevelStage.LEVEL_STAGE_WINNER;
+                    return;
+                }
+                levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
+                cleanse = 0;
+                cleanseRewardAlreadyGranted = 0;
+
+                BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
+                startBossFight.isEnemy = true;
+                startBossFight.position = player.position + new Vector2(10, 0);
+                startBossFight.collideHandler = (param, other) =>
+                {
+                    if (!param.entity.isAlive)
+                    {
+                        return false;
+                    }
+                    if (!ReferenceEquals(other, player))
+                    {
+                        return false;
+                    }
+                    EnterBossFight();
+                    return true;
+                };
+                startBossFight.selfDestruct = param =>
+                {
+                    if (levelStage != LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED)
+                    {
+                        param.entity.isAlive = false;
+                    }
+                };
+                projectors.Add(startBossFight);
+                RegisterObject(startBossFight);
+            }
+            else if (cleanse / (cleanseThreshold / 4) > cleanseRewardAlreadyGranted)
+            {
+                cleanseRewardAlreadyGranted += 1;
+                animalSelectionUI.Show();
+            }
+        }
+        if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
+        {
+            levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+            area += 1;
+            if (area == 4)
+            {
+                // TODO: Win?
+            }
+        }
         float delta = Time.deltaTime;
         // Objects Move
+        Dictionary<string, int> statusTakenEffectMap = new Dictionary<string, int>();
         foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
@@ -163,17 +308,27 @@ public class LevelManager : MonoBehaviour
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
-            HandleMoveResult(entity, entity.moveHandler(p));
+            if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+            {
+                p.bossFightCenter = bossFightCenter;
+                p.bossFightSize = bossFightSize;
+            }
+            HandleMoveResult(entity, entity.moveHandler(p), delta, statusTakenEffectMap);
         }
         // Objects Attack
         List<BattleEntity> attackResults = new List<BattleEntity>();
-        foreach (BattleEntity entity in entities.Prepend(player))
+        foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
+            if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+            {
+                p.bossFightCenter = bossFightCenter;
+                p.bossFightSize = bossFightSize;
+            }
             attackResults.AddRange(entity.attackHandler(p));
         }
         HandleAttackResult(attackResults);
@@ -201,18 +356,63 @@ public class LevelManager : MonoBehaviour
                 p.entities = entities.AsReadOnly();
                 p.player = player;
                 p.timeDiff = delta;
+                if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+                {
+                    p.bossFightCenter = bossFightCenter;
+                    p.bossFightSize = bossFightSize;
+                }
                 collisionBattleEntity.projector.collideHandler(p, victim);
             }
         }
         // Maybe mark dead
         foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
+            foreach (BattleStatus status in entity.statusInEffect)
+            {
+                // Progress the time.
+                status.timeElapsed += delta;
+                if (status.status?.maxAppliedAtOnce > 0)
+                {
+                    int appliedCount = statusTakenEffectMap.GetValueOrDefault(status.status?.name ?? "");
+                    if (appliedCount >= status.status?.maxAppliedAtOnce)
+                    {
+                        continue;
+                    }
+                    statusTakenEffectMap[status.status?.name ?? ""] = appliedCount + 1;
+                }
+                // Apply damage related status.
+                if (status.status?.type == BattleStatusEffectType.POISON)
+                {
+                    status.damageToApply += delta * status.status?.poisonDamagePerSecond ?? 0;
+                    if (status.damageToApply > 0)
+                    {
+                        int damageToApply = Mathf.FloorToInt(status.damageToApply);
+                        entity.life -= damageToApply;
+                        status.damageToApply -= damageToApply;
+                    }
+                }
+            }
+            // Remove if effect no longer takes effect.
+            entity.statusInEffect.RemoveAll(s => s.timeElapsed > (s.status?.statusEffectTime ?? 0));
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
             p.entity = entity;
             p.entities = entities.AsReadOnly();
             p.player = player;
             p.timeDiff = delta;
+            if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+            {
+                p.bossFightCenter = bossFightCenter;
+                p.bossFightSize = bossFightSize;
+            }
             entity.selfDestruct(p);
+            // Add cleanse progress if needed.
+            if (entity.isEnemy &&
+                !entity.isProjector &&
+                !entity.isAlive &&
+                levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
+            {
+                cleanse += entity.cleanseWhenDefeated;
+            }
         }
         // Remove dead objects
         entities.RemoveAll(enemy => !enemy.isAlive);
@@ -222,10 +422,10 @@ public class LevelManager : MonoBehaviour
         {
             enemySpawnCooldown -= delta;
         }
-        else
+        else if (levelStage == LevelStage.LEVEL_STAGE_DOING_CLEANSE)
         {
             AddEnemy();
-            enemySpawnCooldown = 0.2f;
+            enemySpawnCooldown = enemySpawnCooldownReset;
         }
     }
 }
