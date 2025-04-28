@@ -118,10 +118,12 @@ public class LevelManager : MonoBehaviour
             }
             obj.GetComponent<SpriteRenderer>().color = entity.color;
         }
+        AudioSource audioSource = obj.AddComponent<AudioSource>();
         ObjectStatusUpdate update = obj.AddComponent<ObjectStatusUpdate>();
         update.player = player;
         update.entity = entity;
         update.levelManager = this;
+        update.audioSource = audioSource;
     }
 
     void HandleMoveResult(
