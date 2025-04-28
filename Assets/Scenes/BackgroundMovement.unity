@@ -798,7 +798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 453329592}
-  jumpSfxClip: {fileID: 8300000, guid: 951fb9dfa27648e478af8935e54d39b6, type: 3}
+  jumpSfxClip: {fileID: 0}
   jumpSfx: {fileID: 453329593}
 --- !u!135 &453329590
 SphereCollider:
