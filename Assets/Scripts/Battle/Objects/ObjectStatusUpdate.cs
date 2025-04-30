@@ -1,14 +1,51 @@
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.VFX;
+
+public static class AnimatorExtensions
+{
+
+    public static void TrySetParam(this Animator animator, string paramName, bool paramValue)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == paramName)
+            {
+                animator.SetBool(paramName, paramValue);
+                return;
+            }
+        }
+    }
+    public static List<T> GetEachComponent<T>(this GameObject gameObject)
+    {
+        List<T> effects = new List<T>();
+        if (gameObject.TryGetComponent(out T vfx))
+        {
+            effects.Add(vfx);
+        }
+        for (int i = 0; i < gameObject.transform.childCount; ++i)
+        {
+            effects.AddRange(gameObject.transform.GetChild(i).gameObject.GetEachComponent<T>());
+        }
+        return effects;
+    }
+}
 
 public class ObjectStatusUpdate : MonoBehaviour
 {
+
     public BattleEntity entity;
     public BattleEntity player;
     public LevelManager levelManager;
     private Animator animator = null;
+    private List<VisualEffect> vfx = null;
+    private List<ParticleSystem> particles = null;
     public AudioSource audioSource = null;
     public bool spawnSoundPlayed = false;
     public bool isDying = false;
+    public bool isSlowed = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,6 +83,14 @@ public class ObjectStatusUpdate : MonoBehaviour
         {
             animator = GetAnimator();
         }
+        if (vfx == null)
+        {
+            vfx = gameObject.GetEachComponent<VisualEffect>();
+        }
+        if (particles == null)
+        {
+            particles = gameObject.GetEachComponent<ParticleSystem>();
+        }
         if (entity != null)
         {
             if (!spawnSoundPlayed)
@@ -64,8 +109,8 @@ public class ObjectStatusUpdate : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             }
             Vector3 newPos = entity.position;
-            animator?.SetBool("is_moving", !gameObject.transform.localPosition.Equals(newPos));
-            animator?.SetBool("is_attacking", entity.isAttacking);
+            animator?.TrySetParam("is_moving", !gameObject.transform.localPosition.Equals(newPos));
+            animator?.TrySetParam("is_attacking", entity.isAttacking);
             gameObject.transform.localPosition = entity.position;
             gameObject.transform.localRotation = entity.rotation;
             if (!entity.isAlive)
@@ -81,6 +126,31 @@ public class ObjectStatusUpdate : MonoBehaviour
                     spriteRenderer.enabled = false;
                 }
                 isDying = true;
+            }
+        }
+        // Maybe slow or unslow the particle.
+        if (!isSlowed && levelManager.timeExtender != null)
+        {
+            foreach (var v in vfx)
+            {
+                v.playRate = 0.2f;
+            }
+            foreach (var p in particles)
+            {
+                var main = p.main;
+                main.simulationSpeed = 0.2f;
+            }
+        }
+        if (isSlowed && levelManager.timeExtender == null)
+        {
+            foreach (var v in vfx)
+            {
+                v.playRate = 1;
+            }
+            foreach (var p in particles)
+            {
+                var main = p.main;
+                main.simulationSpeed = 1;
             }
         }
     }
