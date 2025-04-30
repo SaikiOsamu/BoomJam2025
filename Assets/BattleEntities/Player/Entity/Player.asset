@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 0
@@ -26,13 +27,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd1c589c0b2578c44abbae9dcf71de73, type: 2}
   - {fileID: 11400000, guid: 7b0668c48ca575640af7602ef2ee4ad8, type: 2}
   - {fileID: 11400000, guid: 7f2d4492aeeb3ac4aa22b9919355fca4, type: 2}
+  - {fileID: 11400000, guid: d9304b5535051f8468734c657e32a4eb, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
   resilienceMax: 0
   godPower: 100
   godPowerMax: 100
+  cleanseWhenDefeated: 1
   godPowerRecoveryPerSecond: 3
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 2026490bab8be2241b20af87eea294f3, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}
