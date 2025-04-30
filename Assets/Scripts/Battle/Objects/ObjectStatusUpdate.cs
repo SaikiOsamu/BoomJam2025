@@ -1,7 +1,25 @@
+using System.Linq;
 using UnityEngine;
+
+public static class AnimatorExtensions
+{
+
+    public static void TrySetParam(this Animator animator, string paramName, bool paramValue)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == paramName)
+            {
+                animator.SetBool(paramName, paramValue);
+                return;
+            }
+        }
+    }
+}
 
 public class ObjectStatusUpdate : MonoBehaviour
 {
+
     public BattleEntity entity;
     public BattleEntity player;
     public LevelManager levelManager;
@@ -64,8 +82,9 @@ public class ObjectStatusUpdate : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
             }
             Vector3 newPos = entity.position;
-            animator?.SetBool("is_moving", !gameObject.transform.localPosition.Equals(newPos));
-            animator?.SetBool("is_attacking", entity.isAttacking);
+            animator?.TrySetParam("is_moving", !gameObject.transform.localPosition.Equals(newPos));
+            animator?.TrySetParam("is_attacking", entity.isAttacking);
+            animator?.TrySetParam("is_slowed", levelManager.timeExtender != null);
             gameObject.transform.localPosition = entity.position;
             gameObject.transform.localRotation = entity.rotation;
             if (!entity.isAlive)

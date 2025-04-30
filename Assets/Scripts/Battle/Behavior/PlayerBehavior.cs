@@ -126,6 +126,14 @@ class PlayerBehavior : BaseBehavior
                 };
             }
         }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(7, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Mark time extender ultimate.
+                e.isTimeExtender = true;
+            }
+        }
         return result;
     }
 
