@@ -47,6 +47,7 @@ public class BattleEntity
     public bool isAlive = true;
     public bool isEnemy = false;
     public bool isProjector = false;
+    public bool isTimeExtender = false;
     public bool isAttacking = false;
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;

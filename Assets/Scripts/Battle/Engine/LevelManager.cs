@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 using Random = UnityEngine.Random;
 
 public class CollisionBattleEntity
@@ -33,6 +34,7 @@ public class LevelManager : MonoBehaviour
 {
     public BattleEntity player;
     public BattleEntity boss;
+    public BattleEntity? timeExtender;
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
@@ -45,7 +47,7 @@ public class LevelManager : MonoBehaviour
     public float enemySpawnCooldownReset = 0.2f;
     public float bossFightSize = 20;
     public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
-    
+
     [SerializeField]
     public Vector2 bossFightCenter = Vector2.zero;
     [SerializeField]
@@ -69,6 +71,15 @@ public class LevelManager : MonoBehaviour
     private List<Character> animalAllyPrefabs;
     [SerializeField]
     private List<Skills> playerDynamicSkills;
+
+    float TimeCoefficient(BattleEntity entity)
+    {
+        if (timeExtender == null || ReferenceEquals(entity, player))
+        {
+            return 1.0f;
+        }
+        return 0.2f;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -158,7 +169,8 @@ public class LevelManager : MonoBehaviour
                     pushBack.x *= -1;
                 }
                 moveResult += pushBack;
-            }else if (status.status?.type == BattleStatusEffectType.DRAG)
+            }
+            else if (status.status?.type == BattleStatusEffectType.DRAG)
             {
                 float speed = status.status.pushBackSpeedPerSecond.magnitude;
                 moveResult += (status.pullCenter - entity.position) * speed * timeDiff;
@@ -188,7 +200,11 @@ public class LevelManager : MonoBehaviour
         foreach (BattleEntity entity in newProjectors)
         {
             RegisterObject(entity);
-            if (entity.isProjector)
+            if (entity.isTimeExtender)
+            {
+                timeExtender = entity;
+            }
+            else if (entity.isProjector)
             {
                 projectors.Add(entity);
             }
@@ -314,7 +330,7 @@ public class LevelManager : MonoBehaviour
             p.entity = entity;
             p.entities = entities.AsReadOnly();
             p.player = player;
-            p.timeDiff = delta;
+            p.timeDiff = delta * TimeCoefficient(entity);
             if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
             {
                 p.bossFightCenter = bossFightCenter;
@@ -330,7 +346,7 @@ public class LevelManager : MonoBehaviour
             p.entity = entity;
             p.entities = entities.AsReadOnly();
             p.player = player;
-            p.timeDiff = delta;
+            p.timeDiff = delta * TimeCoefficient(entity);
             if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
             {
                 p.bossFightCenter = bossFightCenter;
@@ -362,7 +378,7 @@ public class LevelManager : MonoBehaviour
                 p.entity = collisionBattleEntity.projector;
                 p.entities = entities.AsReadOnly();
                 p.player = player;
-                p.timeDiff = delta;
+                p.timeDiff = delta * TimeCoefficient(collisionBattleEntity.projector);
                 if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
                 {
                     p.bossFightCenter = bossFightCenter;
@@ -405,7 +421,7 @@ public class LevelManager : MonoBehaviour
             p.entity = entity;
             p.entities = entities.AsReadOnly();
             p.player = player;
-            p.timeDiff = delta;
+            p.timeDiff = delta * TimeCoefficient(entity);
             if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
             {
                 p.bossFightCenter = bossFightCenter;
@@ -421,9 +437,22 @@ public class LevelManager : MonoBehaviour
                 cleanse += entity.cleanseWhenDefeated;
             }
         }
+        if (timeExtender != null)
+        {
+            BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
+            p.entity = timeExtender;
+            p.entities = entities.AsReadOnly();
+            p.player = player;
+            p.timeDiff = delta;
+            timeExtender.selfDestruct(p);
+        }
         // Remove dead objects
         entities.RemoveAll(enemy => !enemy.isAlive);
         projectors.RemoveAll(proj => !proj.isAlive);
+        if (!timeExtender?.isAlive ?? false)
+        {
+            timeExtender = null;
+        }
         // Add enemy
         if (enemySpawnCooldown > 0)
         {
