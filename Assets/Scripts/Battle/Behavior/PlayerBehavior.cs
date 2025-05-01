@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
 using static UnityEngine.EventSystems.EventTrigger;
+using Random = UnityEngine.Random;
 
 internal class SkillCooldownAndActionPair
 {
@@ -132,6 +133,13 @@ class PlayerBehavior : BaseBehavior
             {
                 // Mark time extender ultimate.
                 e.isTimeExtender = true;
+            }
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(8, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                e.attackHandler = new LightningControllerBehavior().MaybeLightning;
             }
         }
         return result;
@@ -361,6 +369,33 @@ public class FireSpreadBehavior
             toSummon.attackHandler = behavior.Spread;
             result.Add(toSummon);
             spreadHandled = true;
+        }
+        return result;
+    }
+}
+
+public class LightningControllerBehavior
+{
+    public float cooldown = 0;
+
+    public List<BattleEntity> MaybeLightning(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (cooldown > 0)
+        {
+            cooldown -= param.timeDiff;
+            return result;
+        }
+        var entitiesSummoned = param.entity.GetSkillSummon(0, out cooldown);
+        foreach (BattleEntity toSummon in entitiesSummoned)
+        {
+            // Random
+            if (Random.Range(0f, 1f) < 0.5)
+            {
+                break;
+            }
+            toSummon.position = new Vector2(param.player.position.x + Random.Range(-2f, 20f), 0);
+            result.Add(toSummon);
         }
         return result;
     }
