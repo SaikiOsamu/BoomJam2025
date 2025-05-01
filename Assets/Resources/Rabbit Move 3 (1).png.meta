@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,13 +37,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -173,12 +173,298 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_0
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 2333
+        width: 517
+        height: 577
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e99c4205f7d585a42995ffd2d0dae8dd
+      internalID: -460569274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_1
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 2333
+        width: 517
+        height: 577
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 098f5e7d77a5bbd4c8be72668d613342
+      internalID: 1688044499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_2
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 2333
+        width: 552
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b4bd946d177335458787ed271309484
+      internalID: -1039540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_3
+      rect:
+        serializedVersion: 2
+        x: 2340
+        y: 2333
+        width: 592
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff48d41b2a646e14cbdb49b2e125f0f1
+      internalID: 1105424307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_4
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 1583
+        width: 615
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b1bd37ba9293e4e85443947b4ce592
+      internalID: -1397043705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_5
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 1583
+        width: 590
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ded19ff298f8d714f8d32e0f4b2ddd3d
+      internalID: 1577974135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_6
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 1583
+        width: 564
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede99eb520a1c7c4bb126f89a03c63b6
+      internalID: 919916041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_7
+      rect:
+        serializedVersion: 2
+        x: 2340
+        y: 1583
+        width: 535
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 253085260696eaa4a90946e0dce64a80
+      internalID: -1085651019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_8
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 833
+        width: 492
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 412d4169327e98247bb8b1abc31a48a7
+      internalID: 2098241632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_9
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 833
+        width: 472
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821056419decabf4b92a69edf30c35da
+      internalID: -1052964111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_10
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 833
+        width: 504
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3db5d97eb1337ef4eb81b3062cd44b23
+      internalID: 1247002456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_11
+      rect:
+        serializedVersion: 2
+        x: 2340
+        y: 833
+        width: 510
+        height: 568
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a81da4dfc16f0e8409efc2f1c981ff73
+      internalID: 1755342722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit Move 3 (1)_12
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 83
+        width: 517
+        height: 577
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 946966c284ebb7c488e91a68c7c73e11
+      internalID: 145613281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c871d8027cbe63044a0926d0b72b01e5
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +473,20 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rabbit Move 3 (1)_0: -460569274
+      Rabbit Move 3 (1)_1: 1688044499
+      Rabbit Move 3 (1)_10: 1247002456
+      Rabbit Move 3 (1)_11: 1755342722
+      Rabbit Move 3 (1)_12: 145613281
+      Rabbit Move 3 (1)_2: -1039540
+      Rabbit Move 3 (1)_3: 1105424307
+      Rabbit Move 3 (1)_4: -1397043705
+      Rabbit Move 3 (1)_5: 1577974135
+      Rabbit Move 3 (1)_6: 919916041
+      Rabbit Move 3 (1)_7: -1085651019
+      Rabbit Move 3 (1)_8: 2098241632
+      Rabbit Move 3 (1)_9: -1052964111
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
