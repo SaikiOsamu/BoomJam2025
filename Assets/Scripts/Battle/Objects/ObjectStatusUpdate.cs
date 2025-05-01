@@ -131,9 +131,9 @@ public class ObjectStatusUpdate : MonoBehaviour
                     audioSource.clip = despawnSound;
                     audioSource.Play();
                 }
-                foreach (var renderer in renderers)
+                foreach (var r in renderers)
                 {
-                    renderer.enabled = false;
+                    r.enabled = false;
                 }
                 isDying = true;
                 if (TryGetComponent(out MeshRenderer renderer))
