@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: DirtHaulerBullet5
+  m_Name: Player - Blink end
   m_EditorClassIdentifier: 
   id: 
   entityName: 
   description: 
-  isProjector: 1
+  isProjector: 0
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 3846787435674566992, guid: aaad416e7aa1bb745afa791f6a7cba28, type: 3}
+  prefab: {fileID: 1759750317754374954, guid: a9d9264e6ce5fda4c8d3b8e5dd8509eb, type: 3}
   skills: []
   life: 100
   lifeMax: 100
@@ -27,10 +27,10 @@ MonoBehaviour:
   godPower: 100
   godPowerMax: 100
   cleanseWhenDefeated: 1
-  godPowerRecoveryPerSecond: 0.1
+  godPowerRecoveryPerSecond: 3
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: a101648cbd8c97149a75591c060a8f28, type: 2}
+  behavior: {fileID: 11400000, guid: 47ee21befbf04cb42b7236e5ef6eab83, type: 2}
   icon: {fileID: 0}
   onSpawn: {fileID: 0}
   onDespawn: {fileID: 0}

@@ -5,6 +5,8 @@ public class PlayerStatusUpdate : MonoBehaviour
 {
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private LevelManager levelManager;
     public AudioClip jumpSfxClip;
     public AudioSource jumpSfx;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,7 +17,7 @@ public class PlayerStatusUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var player = GetComponentInParent<LevelManager>().player;
+        var player = levelManager.player;
         Vector3 newPos = player.position;
         animator.SetBool("is_moving", !transform.localPosition.Equals(newPos));
         animator.SetBool("is_in_air", newPos.y > 0.05);
@@ -32,5 +34,14 @@ public class PlayerStatusUpdate : MonoBehaviour
         }
 
         GetComponent<SpriteRenderer>().flipX = !player.facingEast;
+
+        if (levelManager.timeExtender != null)
+        {
+            gameObject.layer = 6;
+        }
+        else
+        {
+            gameObject.layer = 0;
+        }
     }
 }
