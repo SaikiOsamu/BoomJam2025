@@ -48,6 +48,8 @@ public class BattleEntity
     public bool isEnemy = false;
     public bool isProjector = false;
     public bool isTimeExtender = false;
+    public bool isSpaceCutter = false;
+    public bool doesNotBeingCutByUltimate = false;
     public bool isAttacking = false;
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;

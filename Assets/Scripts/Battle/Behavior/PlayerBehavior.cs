@@ -142,6 +142,14 @@ class PlayerBehavior : BaseBehavior
                 e.attackHandler = new LightningControllerBehavior().MaybeLightning;
             }
         }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(9, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Mark space cutter ultimate.
+                e.isSpaceCutter = true;
+            }
+        }
         return result;
     }
 
