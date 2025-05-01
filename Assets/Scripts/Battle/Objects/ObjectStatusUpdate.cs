@@ -129,7 +129,10 @@ public class ObjectStatusUpdate : MonoBehaviour
                     spriteRenderer.enabled = false;
                 }
                 isDying = true;
-                GetComponent<MeshRenderer>().enabled = false;
+                if (TryGetComponent(out MeshRenderer renderer))
+                {
+                    renderer.enabled = false;
+                }
                 foreach (var p in particles) {
                     var emission = p.emission;
                     emission.enabled = false;
