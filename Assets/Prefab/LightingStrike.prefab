@@ -25,9 +25,9 @@ Transform:
   m_GameObject: {fileID: 823864757379758889}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -169.25087, y: 3.3124976, z: -72.645874}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 1000}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 820920790104144883}
   - {fileID: 5047420793035354450}
@@ -62,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 1102310460076277822}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3623352, y: -11.201852, z: 55.98121}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 3301752117576549550}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.3623352, y: 52.00815, z: 55.98121}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -293,7 +293,7 @@ Transform:
   m_GameObject: {fileID: 5746792842374971964}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3623352, y: 23.47, z: 55.98121}
+  m_LocalPosition: {x: 0, y: 46.4, z: 0}
   m_LocalScale: {x: 1, y: 7.9191895, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -428,7 +428,7 @@ Transform:
   m_GameObject: {fileID: 6508193627436454675}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3623352, y: -9.691852, z: 55.98121}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -452,13 +452,13 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2
+      - m_Value: 4
         m_Name: Speed
         m_Overridden: 1
-      - m_Value: 0.45
+      - m_Value: 0.3
         m_Name: Lifetime
         m_Overridden: 1
-      - m_Value: 1
+      - m_Value: 0.6
         m_Name: NoisePower
         m_Overridden: 1
       - m_Value: 50
@@ -479,7 +479,10 @@ VisualEffect:
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 1, y: 4, z: 1}
+        m_Name: Arc Sphere_sphere_transform_scale
+        m_Overridden: 1
     m_Vector4f:
       m_Array:
       - m_Value: {x: 5.3960786, y: 9.450509, z: 11.984314, w: 0}
