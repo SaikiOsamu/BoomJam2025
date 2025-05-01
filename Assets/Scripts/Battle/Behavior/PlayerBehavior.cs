@@ -190,13 +190,8 @@ class PlayerBehavior : BaseBehavior
             var barrier = ActivateSkill(2, param.entity);
             foreach (BattleEntity entity in barrier)
             {
-                if (param.player.facingEast)
+                if (!param.player.facingEast)
                 {
-                    entity.position.x += 0.2f;
-                }
-                else
-                {
-                    entity.position.x -= 0.2f;
                     entity.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
                 }
             }
@@ -284,6 +279,32 @@ public class BlinkBehavior : BaseBehavior
         TimedProjectionSelfDestructHandler = new TimedProjectionSelfDestructHandler(definitions.timeToLive);
     }
     bool blinked = false;
+
+    public override AttackDelegate AttackDelegate => SummonEnd;
+    bool summoned = false;
+    List<BattleEntity> SummonEnd(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (summoned)
+        {
+            return result;
+        }
+        summoned = true;
+        var entitiesSummoned = param.entity.GetSkillSummon(0, out _);
+        foreach (BattleEntity toSummon in entitiesSummoned)
+        {
+            if (param.entity.facingEast)
+            {
+                toSummon.position.x += blinkDistance;
+            }
+            else
+            {
+                toSummon.position.x -= blinkDistance;
+            }
+            result.Add(toSummon);
+        }
+        return result;
+    }
 
     public override SelfDestructDelegate SelfDestructDelegate => Update;
     public void Update(EntityUpdateParams param)

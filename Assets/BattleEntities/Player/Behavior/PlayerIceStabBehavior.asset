@@ -121,10 +121,13 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
+  grantingStatus: []
   moveSpeed: 2
   maxDamageTargets: 1
   projectileDamage: 5000
-  timeToLive: 15
+  projectileDamageEveryNSecond: -1
+  timeToLive: 0.5
   godPowerDrainPerSecond: 0
   attackDistance: 0
   doSkillWhenDisappear: 1
+  disappearSkillPositionOffset: {x: 0, y: 0}

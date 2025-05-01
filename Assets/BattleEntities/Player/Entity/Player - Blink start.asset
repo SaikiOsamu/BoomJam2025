@@ -10,22 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: Player - Blink
+  m_Name: Player - Blink start
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 0
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 5095337469806169938, guid: a5244ef1fb37e6245aeeb28823af06ea, type: 3}
-  skills: []
+  prefab: {fileID: 4106816144917364287, guid: 9ac2a08355e0eb44aa6ffe752685e335, type: 3}
+  skills:
+  - {fileID: 11400000, guid: 544868a3222b3c84ba4e9db082da3cc3, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
   resilienceMax: 0
   godPower: 100
   godPowerMax: 100
+  cleanseWhenDefeated: 1
   godPowerRecoveryPerSecond: 3
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: f93cdf7cb06093c4cad3bb63770a17eb, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

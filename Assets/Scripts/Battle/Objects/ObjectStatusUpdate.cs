@@ -42,10 +42,13 @@ public class ObjectStatusUpdate : MonoBehaviour
     private Animator animator = null;
     private List<VisualEffect> vfx = null;
     private List<ParticleSystem> particles = null;
+    private List<SpriteRenderer> renderers = null;
     public AudioSource audioSource = null;
     public bool spawnSoundPlayed = false;
     public bool isDying = false;
     public bool isSlowed = false;
+    public float deathCounter = 0;
+    public float afterlifeTime = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -73,7 +76,8 @@ public class ObjectStatusUpdate : MonoBehaviour
     {
         if (isDying)
         {
-            if (!audioSource.isPlaying)
+            deathCounter += Time.deltaTime * (isSlowed ? 0.2f: 1);
+            if (!audioSource.isPlaying && deathCounter > afterlifeTime)
             {
                 Destroy(gameObject);
             }
@@ -91,6 +95,10 @@ public class ObjectStatusUpdate : MonoBehaviour
         {
             particles = gameObject.GetEachComponent<ParticleSystem>();
         }
+        if (renderers == null)
+        {
+            renderers = gameObject.GetEachComponent<SpriteRenderer>();
+        }
         if (entity != null)
         {
             if (!spawnSoundPlayed)
@@ -103,10 +111,12 @@ public class ObjectStatusUpdate : MonoBehaviour
                     audioSource.Play();
                 }
             }
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null && !entity.isBarrier)
+            if (!entity.isBarrier)
             {
-                gameObject.GetComponent<SpriteRenderer>().flipX = !entity.facingEast;
+                foreach (var renderer in renderers)
+                {
+                    renderer.flipX = !entity.facingEast;
+                }
             }
             Vector3 newPos = entity.position;
             animator?.TrySetParam("is_moving", !gameObject.transform.localPosition.Equals(newPos));
@@ -121,11 +131,21 @@ public class ObjectStatusUpdate : MonoBehaviour
                     audioSource.clip = despawnSound;
                     audioSource.Play();
                 }
-                if (spriteRenderer != null)
+                foreach (var renderer in renderers)
                 {
-                    spriteRenderer.enabled = false;
+                    renderer.enabled = false;
                 }
                 isDying = true;
+                if (TryGetComponent(out MeshRenderer renderer))
+                {
+                    renderer.enabled = false;
+                }
+                foreach (var p in particles) {
+                    var emission = p.emission;
+                    emission.enabled = false;
+                    var main = p.main;
+                    afterlifeTime = Mathf.Max(afterlifeTime, main.startLifetime.constant);
+                }
             }
         }
         // Maybe slow or unslow the particle.
