@@ -85,7 +85,8 @@ public class TriangleButtonHover : MonoBehaviour, IPointerEnterHandler, IPointer
         float elapsedTime = 0f;
         while (elapsedTime < transitionDuration)
         {
-            elapsedTime += Time.deltaTime;
+            // Use unscaledDeltaTime instead of deltaTime so it works when game is paused
+            elapsedTime += Time.unscaledDeltaTime;
             float t = transitionCurve.Evaluate(elapsedTime / transitionDuration);
 
             Color newColor = buttonImage.color;

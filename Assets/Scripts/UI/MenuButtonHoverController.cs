@@ -124,7 +124,8 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
 
         while (elapsedTime < backgroundFadeDuration)
         {
-            elapsedTime += Time.deltaTime;
+            // Use unscaledDeltaTime instead of deltaTime
+            elapsedTime += Time.unscaledDeltaTime;
             float t = backgroundFadeCurve.Evaluate(elapsedTime / backgroundFadeDuration);
 
             Color newColor = hoverBackgroundImage.color;
@@ -152,7 +153,8 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
 
         while (elapsedTime < arrowFadeDuration)
         {
-            elapsedTime += Time.deltaTime;
+            // Use unscaledDeltaTime instead of deltaTime
+            elapsedTime += Time.unscaledDeltaTime;
             float t = arrowFadeCurve.Evaluate(elapsedTime / arrowFadeDuration);
 
             // Update alpha only, preserve positions
