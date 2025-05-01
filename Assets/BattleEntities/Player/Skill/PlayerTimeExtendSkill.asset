@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
   m_Name: PlayerTimeExtendSkill
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: TimeExtend
   description: 
   summoning:
   - {fileID: 11400000, guid: 46a7242a2691b8644b072a4222e2c825, type: 2}
