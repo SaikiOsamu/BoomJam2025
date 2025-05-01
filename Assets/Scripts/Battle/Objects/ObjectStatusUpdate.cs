@@ -46,6 +46,8 @@ public class ObjectStatusUpdate : MonoBehaviour
     public bool spawnSoundPlayed = false;
     public bool isDying = false;
     public bool isSlowed = false;
+    public float deathCounter = 0;
+    public float afterlifeTime = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -73,7 +75,8 @@ public class ObjectStatusUpdate : MonoBehaviour
     {
         if (isDying)
         {
-            if (!audioSource.isPlaying)
+            deathCounter += Time.deltaTime * (isSlowed ? 0.2f: 1);
+            if (!audioSource.isPlaying && deathCounter > afterlifeTime)
             {
                 Destroy(gameObject);
             }
@@ -126,6 +129,12 @@ public class ObjectStatusUpdate : MonoBehaviour
                     spriteRenderer.enabled = false;
                 }
                 isDying = true;
+                foreach (var p in particles) {
+                    var emission = p.emission;
+                    emission.enabled = false;
+                    var main = p.main;
+                    afterlifeTime = Mathf.Max(afterlifeTime, main.startLifetime.constant);
+                }
             }
         }
         // Maybe slow or unslow the particle.
