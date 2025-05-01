@@ -27,9 +27,8 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
     private Coroutine backgroundTransition;
     private Coroutine arrowsTransition;
 
-    // Original positions
-    private Vector3 leftArrowOriginalPos;
-    private Vector3 rightArrowOriginalPos;
+    // Hover state tracking
+    private bool isHovered = false;
 
     private void Awake()
     {
@@ -46,21 +45,51 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
             }
         }
 
-        // We no longer need to store arrow positions since we won't modify them
-        // Just set initial state
+        // Set initial state
         SetHoverState(false, true);
+    }
+
+    private void OnEnable()
+    {
+        // Reset hover state when the object is enabled (like when returning to menu)
+        ForceResetHoverState();
+    }
+
+    private void OnDisable()
+    {
+        // Stop any ongoing coroutines when disabled
+        if (backgroundTransition != null)
+        {
+            StopCoroutine(backgroundTransition);
+            backgroundTransition = null;
+        }
+
+        if (arrowsTransition != null)
+        {
+            StopCoroutine(arrowsTransition);
+            arrowsTransition = null;
+        }
     }
 
     // Called when pointer enters the button
     public void OnPointerEnter(PointerEventData eventData)
     {
+        isHovered = true;
         SetHoverState(true);
     }
 
     // Called when pointer exits the button
     public void OnPointerExit(PointerEventData eventData)
     {
+        isHovered = false;
         SetHoverState(false);
+    }
+
+    // Public method to force reset the hover state from outside (e.g., PauseMenuController)
+    public void ForceResetHoverState()
+    {
+        isHovered = false;
+        SetHoverState(false, true);
     }
 
     // Set the hover state for all elements
@@ -110,8 +139,6 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
         {
             // Set arrow alpha instantly
             SetArrowsAlpha(isHovered ? 1f : 0f);
-
-            // No position changes - arrows stay where they are
         }
     }
 
@@ -124,7 +151,7 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
 
         while (elapsedTime < backgroundFadeDuration)
         {
-            // Use unscaledDeltaTime instead of deltaTime
+            // Use unscaledDeltaTime to work when game is paused
             elapsedTime += Time.unscaledDeltaTime;
             float t = backgroundFadeCurve.Evaluate(elapsedTime / backgroundFadeDuration);
 
@@ -153,11 +180,11 @@ public class MenuButtonHoverController : MonoBehaviour, IPointerEnterHandler, IP
 
         while (elapsedTime < arrowFadeDuration)
         {
-            // Use unscaledDeltaTime instead of deltaTime
+            // Use unscaledDeltaTime to work when game is paused
             elapsedTime += Time.unscaledDeltaTime;
             float t = arrowFadeCurve.Evaluate(elapsedTime / arrowFadeDuration);
 
-            // Update alpha only, preserve positions
+            // Update alpha only
             float currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
             SetArrowsAlpha(currentAlpha);
 

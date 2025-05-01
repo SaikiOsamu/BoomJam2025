@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -27,8 +26,8 @@ public class PauseMenuController : MonoBehaviour
     // Track the pause state
     private bool isPaused = false;
 
-    // Screen mode before toggling
-    private bool wasFullScreen;
+    // References to menu button hover controllers
+    private MenuButtonHoverController[] menuButtonControllers;
 
     private void Awake()
     {
@@ -37,6 +36,12 @@ public class PauseMenuController : MonoBehaviour
         if (restartPanel) restartPanel.SetActive(false);
         if (controlsPanel) controlsPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
+
+        // Cache references to all menu button hover controllers
+        if (menuPausePanel)
+        {
+            menuButtonControllers = menuPausePanel.GetComponentsInChildren<MenuButtonHoverController>(true);
+        }
 
         // Initialize settings controls
         InitializeSettingsControls();
@@ -62,7 +67,6 @@ public class PauseMenuController : MonoBehaviour
         if (windowedModeToggle)
         {
             windowedModeToggle.isOn = !Screen.fullScreen;
-            wasFullScreen = Screen.fullScreen;
             windowedModeToggle.onValueChanged.AddListener(SetWindowedMode);
         }
     }
@@ -106,9 +110,12 @@ public class PauseMenuController : MonoBehaviour
 
         // Show only main pause panel
         if (menuPausePanel) menuPausePanel.SetActive(true);
+
+        // Reset all hover states when returning to main menu
+        ResetAllButtonHoverStates();
     }
 
-    // Show restart confirmation panel
+    // Show restart panel
     public void ShowRestartPanel()
     {
         HideAllPanels();
@@ -127,6 +134,21 @@ public class PauseMenuController : MonoBehaviour
     {
         HideAllPanels();
         if (settingsPanel) settingsPanel.SetActive(true);
+    }
+
+    // Reset all hover states on menu buttons
+    private void ResetAllButtonHoverStates()
+    {
+        if (menuButtonControllers != null)
+        {
+            foreach (var controller in menuButtonControllers)
+            {
+                if (controller != null && controller.gameObject.activeInHierarchy)
+                {
+                    controller.ForceResetHoverState();
+                }
+            }
+        }
     }
 
     // Hide all panels
