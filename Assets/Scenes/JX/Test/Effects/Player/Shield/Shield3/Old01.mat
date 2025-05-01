@@ -64,15 +64,18 @@ Material:
     m_Floats:
     - Vector1_44ead74e7eb1452aaf0366f5c9dcfea3: 84.6
     - Vector1_66e1813dce49453b9d978b14470b05c7: 30.75
+    - Vector1_a23eeb5da2a64541a0941a420d465615: 4
     - _AlphaDstBlend: 10
-    - _Disolve: 0.756
+    - _Disolve: 0.352
+    - _DisolveStartHeight: 1.03
     - _DstBlend: 10
     - _DstBlend2: 10
     - _QueueControl: 1
     - _RenderQueueType: 3
-    - _Scale: 2.18
+    - _Scale: 0.61
     m_Colors:
-    - Color_4344b865b07d428c9f7b0ae863f3619f: {r: 1.6529912, g: 3.409824, b: 38.937145, a: 0}
+    - Color_4344b865b07d428c9f7b0ae863f3619f: {r: 0.06359597, g: 0.13118707, b: 1.4980392, a: 0}
+    - Color_bfc578eca04d48a9a6b782710f0c4014: {r: 0, g: 0.32941175, b: 1.4980392, a: 0}
     - Vector2_4c87d13ea4d9494aa84c3320a263248e: {r: 8.77, g: 4.3, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

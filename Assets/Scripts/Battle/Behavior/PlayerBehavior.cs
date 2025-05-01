@@ -190,13 +190,8 @@ class PlayerBehavior : BaseBehavior
             var barrier = ActivateSkill(2, param.entity);
             foreach (BattleEntity entity in barrier)
             {
-                if (param.player.facingEast)
+                if (!param.player.facingEast)
                 {
-                    entity.position.x += 0.2f;
-                }
-                else
-                {
-                    entity.position.x -= 0.2f;
                     entity.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
                 }
             }
