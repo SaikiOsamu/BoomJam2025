@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour
     public BattleEntity player;
     public BattleEntity boss;
     public BattleEntity? timeExtender;
+    public BattleEntity? spaceCutter;
     public List<BattleEntity> entities = new List<BattleEntity>();
     public List<BattleEntity> projectors = new List<BattleEntity>();
     public Dictionary<BattleEntity, CollisionBattleEntity> collisionBattleEntities =
@@ -204,6 +205,10 @@ public class LevelManager : MonoBehaviour
             {
                 timeExtender = entity;
             }
+            else if (entity.isSpaceCutter)
+            {
+                spaceCutter = entity;
+            }
             else if (entity.isProjector)
             {
                 projectors.Add(entity);
@@ -282,6 +287,7 @@ public class LevelManager : MonoBehaviour
 
                 BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
                 startBossFight.isEnemy = true;
+                startBossFight.doesNotBeingCutByUltimate = true;
                 startBossFight.position = player.position + new Vector2(10, 0);
                 startBossFight.collideHandler = (param, other) =>
                 {
@@ -387,9 +393,40 @@ public class LevelManager : MonoBehaviour
                 collisionBattleEntity.projector.collideHandler(p, victim);
             }
         }
+        // Space cut hits everyone.
+        if (spaceCutter != null)
+        {
+            foreach (BattleEntity entity in entities)
+            {
+                if (!entity.isEnemy)
+                {
+                    continue;
+                }
+                BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
+                p.entity = spaceCutter;
+                p.entities = entities.AsReadOnly();
+                p.player = player;
+                p.timeDiff = delta * TimeCoefficient(spaceCutter);
+                if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT)
+                {
+                    p.bossFightCenter = bossFightCenter;
+                    p.bossFightSize = bossFightSize;
+                }
+                spaceCutter.collideHandler(p, entity);
+            }
+        }
         // Maybe mark dead
         foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
+            // Projectors just being cut down by space cutter.
+            if (spaceCutter != null)
+            {
+                if (entity.isProjector && entity.isEnemy && !entity.doesNotBeingCutByUltimate)
+                {
+                    entity.isAlive = false;
+                    continue;
+                }
+            }
             foreach (BattleStatus status in entity.statusInEffect)
             {
                 // Progress the time.
@@ -446,12 +483,25 @@ public class LevelManager : MonoBehaviour
             p.timeDiff = delta;
             timeExtender.selfDestruct(p);
         }
+        if (spaceCutter != null)
+        {
+            BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
+            p.entity = spaceCutter;
+            p.entities = entities.AsReadOnly();
+            p.player = player;
+            p.timeDiff = delta * TimeCoefficient(spaceCutter);
+            spaceCutter.selfDestruct(p);
+        }
         // Remove dead objects
         entities.RemoveAll(enemy => !enemy.isAlive);
         projectors.RemoveAll(proj => !proj.isAlive);
         if (!timeExtender?.isAlive ?? false)
         {
             timeExtender = null;
+        }
+        if (!spaceCutter?.isAlive ?? false)
+        {
+            spaceCutter = null;
         }
         // Add enemy
         if (enemySpawnCooldown > 0)
