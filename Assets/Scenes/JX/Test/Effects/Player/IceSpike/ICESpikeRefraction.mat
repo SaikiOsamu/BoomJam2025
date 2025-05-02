@@ -10,7 +10,7 @@ Material:
   m_Name: ICESpikeRefraction
   m_Shader: {fileID: -6465566751694194690, guid: 49ec4288c1a855143b13ffa17e77994a, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 49ec4288c1a855143b13ffa17e77994a, type: 3}
-  m_ModifiedSerializedProperties: 16
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT
@@ -64,7 +64,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DissoloveColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColor: {r: 0.1761748, g: 0.22371732, b: 0.3490566, a: 0}
+    - _FresnelColor: {r: 1.0692669, g: 1.3578191, b: 2.1185474, a: 0}
     - _RefractionColor: {r: 0.3241812, g: 0.39393097, b: 0.4433962, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

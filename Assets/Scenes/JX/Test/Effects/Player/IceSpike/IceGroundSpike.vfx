@@ -7233,7 +7233,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":0.37871772050857546,"g":0.47970911860466006,"b":0.7490195035934448,"a":0.0}'
+      m_SerializableObject: '{"r":1.071175456047058,"g":1.3568222522735596,"b":2.118546962738037,"a":0.0}'
     m_Space: -1
   m_Property:
     name: _FresnelColor
