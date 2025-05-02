@@ -64,7 +64,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DissoloveColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColor: {r: 0.1761748, g: 0.22371732, b: 0.3490566, a: 0}
+    - _FresnelColor: {r: 1.0692669, g: 1.3578191, b: 2.1185474, a: 0}
     - _RefractionColor: {r: 0.3241812, g: 0.39393097, b: 0.4433962, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
