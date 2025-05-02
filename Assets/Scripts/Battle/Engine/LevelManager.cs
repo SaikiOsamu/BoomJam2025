@@ -254,6 +254,7 @@ public class LevelManager : MonoBehaviour
         levelStage = LevelStage.LEVEL_STAGE_BOSS_FIGHT;
         boss = BattleEntity.FromPrefab(bossPrefabs[area - 1]);
         boss.isEnemy = true;
+        boss.isBoss = true;
         boss.position = player.position + new Vector2(25, 0);
         entities.Add(boss);
         RegisterObject(boss);
@@ -380,6 +381,11 @@ public class LevelManager : MonoBehaviour
                         break;
                     }
                 }
+                // Hidden resolution
+                if (victim.isHidden)
+                {
+                    continue;
+                }
                 BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                 p.entity = collisionBattleEntity.projector;
                 p.entities = entities.AsReadOnly();
@@ -494,6 +500,13 @@ public class LevelManager : MonoBehaviour
         }
         // Remove dead objects
         entities.RemoveAll(enemy => !enemy.isAlive);
+        foreach (var e in projectors)
+        {
+            if (!e.isAlive)
+            {
+                collisionBattleEntities.Remove(e);
+            }
+        }
         projectors.RemoveAll(proj => !proj.isAlive);
         if (!timeExtender?.isAlive ?? false)
         {
