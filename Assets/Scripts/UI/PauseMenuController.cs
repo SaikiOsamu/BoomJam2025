@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PauseMenuController : MonoBehaviour
 {
     [Header("Pause Menu")]
+    [SerializeField] private GameObject pauseMenuRoot;
     [SerializeField] private GameObject menuPausePanel;
 
     [Header("Panels")]
@@ -32,6 +33,7 @@ public class PauseMenuController : MonoBehaviour
     private void Awake()
     {
         // Ensure all panels are hidden on startup
+        pauseMenuRoot?.SetActive(false);
         if (menuPausePanel) menuPausePanel.SetActive(false);
         if (restartPanel) restartPanel.SetActive(false);
         if (controlsPanel) controlsPanel.SetActive(false);
@@ -95,7 +97,7 @@ public class PauseMenuController : MonoBehaviour
         else
         {
             // Hide all panels
-            HideAllPanels();
+            HideAllPanels(true);
 
             // Resume the game
             Time.timeScale = 1f;
@@ -109,6 +111,7 @@ public class PauseMenuController : MonoBehaviour
         HideAllPanels();
 
         // Show only main pause panel
+        pauseMenuRoot?.SetActive(true);
         if (menuPausePanel) menuPausePanel.SetActive(true);
 
         // Reset all hover states when returning to main menu
@@ -152,12 +155,16 @@ public class PauseMenuController : MonoBehaviour
     }
 
     // Hide all panels
-    private void HideAllPanels()
+    private void HideAllPanels(bool hideRoot = false)
     {
         if (menuPausePanel) menuPausePanel.SetActive(false);
         if (restartPanel) restartPanel.SetActive(false);
         if (controlsPanel) controlsPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
+        if (hideRoot)
+        {
+            pauseMenuRoot?.SetActive(false);
+        }
     }
 
     // Resume game (can be called by UI button)
