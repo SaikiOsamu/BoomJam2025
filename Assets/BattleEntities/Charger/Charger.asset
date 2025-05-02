@@ -18,7 +18,7 @@ MonoBehaviour:
   isProjector: 0
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 5095337469806169938, guid: 3368afc2e362247ce8f2fdcc8b3518c6, type: 3}
+  prefab: {fileID: 3606919426399483454, guid: eef60099f697dff4a8f07b42f8a796f3, type: 3}
   skills:
   - {fileID: 11400000, guid: 7261c515b5fa2af4681525668e4fb3ba, type: 2}
   life: 100
