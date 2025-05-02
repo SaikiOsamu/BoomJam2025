@@ -18,6 +18,7 @@ public enum BehaviorType
     GhostEnemy = 10,
     IronFist = 11,
     GrandWitch = 12,
+    Charger = 13,
     Naofu = 100,
     Rabbit = 200,
 }
