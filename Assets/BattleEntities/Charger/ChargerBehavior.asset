@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef9bb1ba4cb1e4f4993d43d77330d6e8, type: 3}
-  m_Name: YezhuBehavior 1
+  m_Name: ChargerBehavior
   m_EditorClassIdentifier: 
   behaviorType: 13
   moveAction:
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_Name: Skill 2
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 0229ff80-a589-4bfc-a4d2-9ace63d318ce
+      m_Id: 044f258d-8ddc-4e26-ab02-a62b536f0c6b
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -91,7 +91,7 @@ MonoBehaviour:
       m_Name: Skill 3
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 2564c35e-6bc7-425a-80bb-757d6667f830
+      m_Id: e35dcbe0-91a8-4b80-8405-b5cdd2a2ab13
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -103,7 +103,7 @@ MonoBehaviour:
       m_Name: Skill 4
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 8ce03616-8b97-4c7c-815e-15ffb39587da
+      m_Id: bc674569-5fac-4084-b0b2-0368e03d87b5
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -122,7 +122,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   grantingStatus: []
-  moveSpeed: 3
+  moveSpeed: 4
   maxDamageTargets: -1
   projectileDamage: 0
   projectileDamageEveryNSecond: -1

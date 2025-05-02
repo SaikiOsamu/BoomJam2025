@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: Yezhu
+  m_Name: PurificationPoint
   m_EditorClassIdentifier: 
-  id: 10004
-  entityName: "\u91CE\u732A"
+  id: 
+  entityName: 
   description: 
   isProjector: 0
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 3606919426399483454, guid: eef60099f697dff4a8f07b42f8a796f3, type: 3}
+  prefab: {fileID: 2757770327938398083, guid: 6f2507814ded3364ca60b0bf537ae95f, type: 3}
   skills:
-  - {fileID: 11400000, guid: 0eb425dcef88be64d9ff8f23c3d90196, type: 2}
+  - {fileID: 0}
   life: 100
   lifeMax: 100
   resilience: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 11400000, guid: 6ceea32754c40a14ea6ac00fe1a55aca, type: 2}
-  icon: {fileID: 21300000, guid: d6d25d7444b5349e0a7094a135ec0056, type: 3}
+  behavior: {fileID: 0}
+  icon: {fileID: 0}
   onSpawn: {fileID: 0}
   onDespawn: {fileID: 0}

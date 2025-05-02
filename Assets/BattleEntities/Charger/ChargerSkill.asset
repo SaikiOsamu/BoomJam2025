@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
-  m_Name: YezhuPingASkill
+  m_Name: ChargerSkill
   m_EditorClassIdentifier: 
   skillName: 
   description: 
   summoning:
-  - {fileID: 11400000, guid: fde413908bf84bd4bb8e50661a93cb04, type: 2}
-  cooldownSecond: 0
-  castSecond: 0
+  - {fileID: 11400000, guid: 43529fbd01ded4b47878f9c05f389633, type: 2}
+  cooldownSecond: 10
+  castSecond: 1
   godPowerConsumption: 0

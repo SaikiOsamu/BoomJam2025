@@ -28,6 +28,10 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
         text += "\nGod Power: " + player.godPower + " / " + player.godPowerMax;
         text += "\nArea: " + levelManager.area;
         text += "\nCleanse: " + levelManager.cleanse + " / " + levelManager.cleanseThreshold;
+        if (levelManager.boss != null)
+        {
+            text += "\nBoss: " + levelManager.boss.life + " / " + levelManager.boss.lifeMax;
+        }
         if (levelManager.levelStage == LevelStage.LEVEL_STAGE_WINNER)
         {
             text += "\nYOU WIN!";

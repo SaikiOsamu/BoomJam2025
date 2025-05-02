@@ -76,7 +76,7 @@ public class ObjectStatusUpdate : MonoBehaviour
     {
         if (isDying)
         {
-            deathCounter += Time.deltaTime * (isSlowed ? 0.2f: 1);
+            deathCounter += Time.deltaTime * (isSlowed ? 0.2f : 1);
             if (!audioSource.isPlaying && deathCounter > afterlifeTime)
             {
                 Destroy(gameObject);
@@ -111,18 +111,47 @@ public class ObjectStatusUpdate : MonoBehaviour
                     audioSource.Play();
                 }
             }
-            if (!entity.isBarrier)
+            Vector3 newPos = entity.position;
+            animator?.TrySetParam("is_ultimate", entity.isUltimate);
+            if (entity.isUltimate)
+            {
+                animator?.TrySetParam("is_moving", false);
+                animator?.TrySetParam("is_attacking", false);
+                animator?.TrySetParam("is_casting", false);
+            }
+            else
+            {
+                animator?.TrySetParam("is_attacking", entity.isAttacking);
+                animator?.TrySetParam("is_casting", entity.isCasting);
+                if (entity.isAttacking || entity.isCasting)
+                {
+                    animator?.TrySetParam("is_moving", false);
+                }
+                else
+                {
+                    animator?.TrySetParam("is_moving", !gameObject.transform.localPosition.Equals(newPos));
+                }
+            }
+            gameObject.transform.localPosition = entity.position;
+            gameObject.transform.localRotation = entity.rotation;
+            if (!entity.isBarrier && !entity.isBoss)
             {
                 foreach (var renderer in renderers)
                 {
                     renderer.flipX = !entity.facingEast;
                 }
             }
-            Vector3 newPos = entity.position;
-            animator?.TrySetParam("is_moving", !gameObject.transform.localPosition.Equals(newPos));
-            animator?.TrySetParam("is_attacking", entity.isAttacking);
-            gameObject.transform.localPosition = entity.position;
-            gameObject.transform.localRotation = entity.rotation;
+            else if (entity.isBoss)
+            {
+                if (entity.facingEast)
+                {
+                    transform.rotation = Quaternion.identity;
+                }
+                else
+                {
+                    transform.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
+                }
+            }
             if (!entity.isAlive)
             {
                 AudioClip despawnSound = entity.prefabCharacter?.onDespawn;
@@ -140,7 +169,8 @@ public class ObjectStatusUpdate : MonoBehaviour
                 {
                     renderer.enabled = false;
                 }
-                foreach (var p in particles) {
+                foreach (var p in particles)
+                {
                     var emission = p.emission;
                     emission.enabled = false;
                     var main = p.main;
@@ -195,15 +225,15 @@ public class ObjectStatusUpdate : MonoBehaviour
                 otherEntity = player;
             }
         }
-        if (otherEntity.isHidden)
-        {
-            return;
-        }
         if (otherEntity == null || otherEntity.isProjector)
         {
             return;
         }
         if (otherEntity.isEnemy == entity.isEnemy)
+        {
+            return;
+        }
+        if (otherEntity.isHidden)
         {
             return;
         }

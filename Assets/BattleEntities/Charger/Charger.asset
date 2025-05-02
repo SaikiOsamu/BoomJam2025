@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
-  m_Name: YezhuPingA
+  m_Name: Charger
   m_EditorClassIdentifier: 
-  id: 
-  entityName: 
+  id: 10004
+  entityName: "\u5927\u91CE\u732A"
   description: 
-  isProjector: 1
+  isProjector: 0
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 4136924778509204553, guid: 2639b14b63ef5574b872ead9bb4a1ba1, type: 3}
-  skills: []
+  prefab: {fileID: 3606919426399483454, guid: eef60099f697dff4a8f07b42f8a796f3, type: 3}
+  skills:
+  - {fileID: 11400000, guid: 7261c515b5fa2af4681525668e4fb3ba, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
@@ -30,7 +31,7 @@ MonoBehaviour:
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
-  behavior: {fileID: 0}
-  icon: {fileID: 0}
+  behavior: {fileID: 11400000, guid: 93c162eb92029ae48857ec9b0e5eb8df, type: 2}
+  icon: {fileID: 21300000, guid: e50d61632405f424496f7ae728856c50, type: 3}
   onSpawn: {fileID: 0}
   onDespawn: {fileID: 0}

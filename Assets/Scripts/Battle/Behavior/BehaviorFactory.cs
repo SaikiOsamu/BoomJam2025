@@ -49,6 +49,8 @@ public class BehaviorFactory
                 return new FloatingCannonBehavior(definitions);
             case BehaviorType.Naofu:
                 return new NaofuBehavior(definitions);
+            case BehaviorType.Charger:
+                return new ChargerBehavior(definitions);
             case BehaviorType.Rabbit:
                 return new RabbitBehavior(definitions);
             case BehaviorType.Cobra:
