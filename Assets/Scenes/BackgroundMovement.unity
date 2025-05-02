@@ -252,6 +252,7 @@ MonoBehaviour:
   bossFightSize: 20
   levelStage: 1
   nearPurificationPoint: 0
+  selectingAlly: 0
   bossFightCenter: {x: 0, y: 0}
   animalSelectionUI: {fileID: 1281362933}
   interactionAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -2774,7 +2775,7 @@ PrefabInstance:
       objectReference: {fileID: 1783840612}
     - target: {fileID: 4454667752639741455, guid: 74c49569df323654ead5cba8da1bdd3e, type: 3}
       propertyPath: allAnimals.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4454667752639741455, guid: 74c49569df323654ead5cba8da1bdd3e, type: 3}
       propertyPath: 'allAnimals.Array.data[0]'
@@ -2796,6 +2797,10 @@ PrefabInstance:
       propertyPath: 'allAnimals.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: 4961952e878e2a4429157f1c76929d57, type: 2}
+    - target: {fileID: 4454667752639741455, guid: 74c49569df323654ead5cba8da1bdd3e, type: 3}
+      propertyPath: 'allAnimals.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a48ac877c2245774d936fbcacbda49f3, type: 2}
     - target: {fileID: 4454667752639741455, guid: 74c49569df323654ead5cba8da1bdd3e, type: 3}
       propertyPath: animalButtons.Array.size
       value: 2
