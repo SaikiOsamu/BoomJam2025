@@ -45,14 +45,21 @@ public class LevelManager : MonoBehaviour
     public int cleanseRewardAlreadyGranted = 0;
     public int cleanse = 0;
     public int cleanseThreshold = 200;
+    public int purificationShown = 0;
+    public int purificationExpected1 = 0;
+    public int purificationExpected2 = 0;
     public float enemySpawnCooldownReset = 0.2f;
     public float bossFightSize = 20;
     public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+    public bool nearPurificationPoint = false;
+    public bool selectingAlly = false;
 
     [SerializeField]
     public Vector2 bossFightCenter = Vector2.zero;
     [SerializeField]
     private AnimalSelectionUI animalSelectionUI = null;
+    [SerializeField]
+    private InputActionReference interactionAction;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -62,6 +69,8 @@ public class LevelManager : MonoBehaviour
     private Character playerPrefab;
     [SerializeField]
     private Character floatingCannonPrefab;
+    [SerializeField]
+    private Character purificationPointPrefab;
     [SerializeField]
     private Character startBossFightPrefab;
     [SerializeField]
@@ -85,6 +94,15 @@ public class LevelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        purificationExpected1 = Random.Range(0, 200);
+        purificationExpected2 = Random.Range(0, 200);
+        if (purificationExpected1 > purificationExpected2)
+        {
+            int temp = purificationExpected1;
+            purificationExpected1 = purificationExpected2;
+            purificationExpected2 = temp;
+        }
+
         player = BattleEntity.FromPrefab(playerPrefab);
         player.dynamicSkills = playerDynamicSkills;
 
@@ -111,6 +129,7 @@ public class LevelManager : MonoBehaviour
         ally.position = player.position;
         entities.Add(ally);
         RegisterObject(ally);
+        selectingAlly = false;
     }
 
     void RegisterObject(BattleEntity entity)
@@ -260,10 +279,38 @@ public class LevelManager : MonoBehaviour
         RegisterObject(boss);
     }
 
+    void ShowPurificationPoint()
+    {
+        BattleEntity purificationPoint = BattleEntity.FromPrefab(purificationPointPrefab);
+        purificationPoint.position = player.position + new Vector2(10, 0);
+        purificationPoint.selfDestruct = param =>
+        {
+            if ((param.entity.position - player.position).magnitude < 2)
+            {
+                nearPurificationPoint = true;
+                if (interactionAction.action.triggered && !selectingAlly)
+                {
+                    player.godPowerMax -= 15;
+                    player.godPower = Math.Min(player.godPower, player.godPowerMax);
+                    param.entity.isAlive = false;
+                    animalSelectionUI.Show();
+                    selectingAlly = true;
+                }
+            }
+        };
+        entities.Add(purificationPoint);
+        RegisterObject(purificationPoint);
+        purificationShown += 1;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (levelStage == LevelStage.LEVEL_STAGE_WINNER)
+        {
+            return;
+        }
+        if (selectingAlly)
         {
             return;
         }
@@ -285,6 +332,14 @@ public class LevelManager : MonoBehaviour
                 levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
                 cleanse = 0;
                 cleanseRewardAlreadyGranted = 0;
+                purificationExpected1 = Random.Range(0, 200);
+                purificationExpected2 = Random.Range(0, 200);
+                if (purificationExpected1 > purificationExpected2)
+                {
+                    int temp = purificationExpected1;
+                    purificationExpected1 = purificationExpected2;
+                    purificationExpected2 = temp;
+                }
 
                 BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
                 startBossFight.isEnemy = true;
@@ -317,6 +372,7 @@ public class LevelManager : MonoBehaviour
             {
                 cleanseRewardAlreadyGranted += 1;
                 animalSelectionUI.Show();
+                selectingAlly = true;
             }
         }
         if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
@@ -421,6 +477,7 @@ public class LevelManager : MonoBehaviour
                 spaceCutter.collideHandler(p, entity);
             }
         }
+        nearPurificationPoint = false;
         // Maybe mark dead
         foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
@@ -479,6 +536,14 @@ public class LevelManager : MonoBehaviour
             {
                 cleanse += entity.cleanseWhenDefeated;
             }
+        }
+        if (cleanse > purificationExpected1 && purificationShown == 0)
+        {
+            ShowPurificationPoint();
+        }
+        if (cleanse > purificationExpected2 && purificationShown == 1)
+        {
+            ShowPurificationPoint();
         }
         if (timeExtender != null)
         {
