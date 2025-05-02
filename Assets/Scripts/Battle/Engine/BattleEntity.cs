@@ -47,6 +47,9 @@ public class BattleEntity
     public bool isAlive = true;
     public bool isEnemy = false;
     public bool isProjector = false;
+    public bool isBoss = false;
+    public bool isCasting = false;
+    public bool isUltimate = false;
     public bool isTimeExtender = false;
     public bool isSpaceCutter = false;
     public bool doesNotBeingCutByUltimate = false;

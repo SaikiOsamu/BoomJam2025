@@ -405,6 +405,7 @@ class GrandWitchBehavior : BaseBehavior
             ultimateCountdown = 60;
             param.entity.isHidden = true;
         }
+        param.entity.isUltimate = duringUltimate;
 
         for (int i = 0; i < 4; ++i)
         {
@@ -427,6 +428,7 @@ class GrandWitchBehavior : BaseBehavior
         // If already casting, continue.
         if (castingSkill >= 0)
         {
+            param.entity.isCasting = true;
             // For ultimate, this is different..
             if (duringUltimate)
             {
@@ -520,13 +522,13 @@ class GrandWitchBehavior : BaseBehavior
                         }
                         toSummon.moveHandler = behavior.Move;
                         toSummon.attackHandler = behavior.Attack;
-                        toSummon.selfDestruct = param =>
+                        toSummon.selfDestruct = p =>
                         {
-                            behavior.timeExisted += param.timeDiff;
+                            behavior.timeExisted += p.timeDiff;
                             // Self destruct if witch is gone.
                             if (!param.entity.isAlive)
                             {
-                                param.entity.isAlive = false;
+                                p.entity.isAlive = false;
                             }
                         };
                     }
@@ -572,13 +574,13 @@ class GrandWitchBehavior : BaseBehavior
                         }
                         toSummon.moveHandler = behavior.Move;
                         toSummon.attackHandler = behavior.Attack;
-                        toSummon.selfDestruct = param =>
+                        toSummon.selfDestruct = p =>
                         {
-                            behavior.timeExisted += param.timeDiff;
+                            behavior.timeExisted += p.timeDiff;
                             // Self destruct if witch is gone.
                             if (!param.entity.isAlive)
                             {
-                                param.entity.isAlive = false;
+                                p.entity.isAlive = false;
                             }
                         };
 
@@ -629,6 +631,10 @@ class GrandWitchBehavior : BaseBehavior
             }
             return result;
         }
+        else
+        {
+            param.entity.isCasting = false;
+        }
 
         // Use the skill if satisify condition and not in cooldown.
         if (skillCooldowns[1] <= 0)
@@ -657,6 +663,7 @@ class GrandWitchBehavior : BaseBehavior
 
         if ((param.player.position - param.entity.position).magnitude < meleeDistance && skillCooldowns[0] <= 0)
         {
+            param.entity.isAttacking = true;
             var entitiesSummoned = param.entity.GetSkillSummon(0, out float cooldown);
             foreach (BattleEntity toSummon in entitiesSummoned)
             {
@@ -668,6 +675,14 @@ class GrandWitchBehavior : BaseBehavior
                 {
                     toSummon.position.x -= 1.5f;
                 }
+                var originalSelfDestruct = toSummon.selfDestruct;
+                toSummon.selfDestruct = p => {
+                    originalSelfDestruct.Invoke(p);
+                    if (!p.entity.isAlive)
+                    {
+                        param.entity.isAttacking = false;
+                    }
+                };
                 result.Add(toSummon);
             }
             skillCooldowns[0] = cooldown;
