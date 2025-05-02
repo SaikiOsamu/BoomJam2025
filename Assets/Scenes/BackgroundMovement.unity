@@ -259,7 +259,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
   playerPrefab: {fileID: 11400000, guid: 99761945ae4f079499ead2040830690b, type: 2}
   floatingCannonPrefab: {fileID: 11400000, guid: 495dcc2447425fd4ba06b463feec8c58, type: 2}
-  purificationPointPrefab: {fileID: 0}
+  purificationPointPrefab: {fileID: 11400000, guid: 6f1910e7126811d4e91e7b3318b7eae0, type: 2}
   startBossFightPrefab: {fileID: 11400000, guid: 2b2396f6dfca8d64992b3006520dc2cf, type: 2}
   enemyPrefabs:
   - {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
