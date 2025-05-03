@@ -13,92 +13,79 @@ public class LoopingParallaxLayer : MonoBehaviour
     public Sprite snowLandSprite;
     public Sprite desertSprite;
 
+    
+
+    [Header("Follow Player (Optional)")]
+    public float followSpeed = 0.2f;     // Parallax scroll speed
+    public float offset = 0f;            // Offset between layer and player
     private Vector3 lastPlayerPos;
 
     public ThemeManager.Theme[] supportedThemes; // Set in Inspector or constructor
+
+    private bool initialized = false;
+
+    public void Initialize()
+    {
+        if (initialized) return;
+
+        // Do any one-time setup here (if needed)
+        // For example: calculating spriteWidth if a valid sprite is present
+        if (layerParts.Length > 0 && layerParts[0] != null && layerParts[0].sprite != null)
+        {
+            spriteWidth = layerParts[0].bounds.size.x;
+        }
+
+        initialized = true;
+    }
+
+
 
     void Start()
     {
         if (player != null)
             lastPlayerPos = player.position;
 
-        // Check for missing layer parts
-        if (layerParts.Length < 1)
+        if (gameObject.activeInHierarchy)
         {
-            Debug.LogWarning("Add at least one sprite to make wrapping work!");
-            enabled = false;
-            return;
+            Initialize();
         }
-
-        // If layer has a sprite, calculate sprite width
-        if (layerParts[0].sprite == null)
-        {
-            Debug.LogWarning($"{gameObject.name} - Missing sprite in layerParts[0], disabling.");
-            enabled = false;
-            return;
-        }
-
-        spriteWidth = layerParts[0].bounds.size.x;
     }
+
 
     void Update()
     {
         if (player == null || layerParts.Length == 0) return;
 
-        Vector3 delta = player.position - lastPlayerPos;
-        lastPlayerPos = player.position;
+        // Apply parallax movement to layers with an offset
+        float targetX = (player.position.x * followSpeed) + offset; // Adjust with offset
+        transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
 
-        // Clamp scrollSpeed to [0, 1] to avoid moving faster than player
-        float effectiveSpeed = Mathf.Clamp01(scrollSpeed);
+        WrapSprites();
+    }
 
-        // Move this layer with the player at a scaled speed
-        transform.position += Vector3.right * delta.x * effectiveSpeed;
 
+    void WrapSprites()
+    {
         float camX = Camera.main.transform.position.x;
 
-        // Handle the single sprite case and wrapping
-        if (layerParts.Length == 1)
+        foreach (var sr in layerParts)
         {
-            SpriteRenderer sr = layerParts[0];
+            if (sr == null) continue;
+
+            float currentWidth = sr.bounds.size.x;
             float diff = sr.transform.position.x - camX;
 
-            // Check if the sprite goes off-screen to the left or right
-            if (diff + sr.bounds.size.x < -sr.bounds.size.x)
+            if (diff + currentWidth < -currentWidth)
             {
-                sr.transform.position += Vector3.right * sr.bounds.size.x;
+                sr.transform.position += Vector3.right * currentWidth * layerParts.Length;
             }
-            else if (diff - sr.bounds.size.x > sr.bounds.size.x)
+            else if (diff - currentWidth > currentWidth)
             {
-                sr.transform.position -= Vector3.right * sr.bounds.size.x;
-            }
-        }
-        else
-        {
-            // Loop through each sprite in the layer and ensure seamless wrapping
-            foreach (var sr in layerParts)
-            {
-                if (sr == null) continue;
-
-                // Calculate the width of the current sprite
-                float currentSpriteWidth = sr.bounds.size.x;
-
-                // Calculate the offset needed for seamless wrapping
-                float diff = sr.transform.position.x - camX;
-
-                // Wrap left (when sprite goes out of the screen to the left)
-                if (diff + currentSpriteWidth < -currentSpriteWidth)
-                {
-                    sr.transform.position += Vector3.right * currentSpriteWidth * layerParts.Length;
-                }
-
-                // Wrap right (when sprite goes out of the screen to the right)
-                if (diff - currentSpriteWidth > currentSpriteWidth)
-                {
-                    sr.transform.position -= Vector3.right * currentSpriteWidth * layerParts.Length;
-                }
+                sr.transform.position -= Vector3.right * currentWidth * layerParts.Length;
             }
         }
     }
+
 
     public void SwitchTheme(ThemeManager.Theme theme)
     {
@@ -106,31 +93,35 @@ public class LoopingParallaxLayer : MonoBehaviour
 
         if (!themeSupported)
         {
-            gameObject.SetActive(false);
+            // Unsupported theme: hide visuals and skip logic
+            foreach (var part in layerParts)
+            {
+                if (part != null)
+                    part.enabled = false;
+            }
+
+            // Still keep script enabled to allow theme switching later
             return;
         }
 
-        gameObject.SetActive(true);
-
+        // Supported theme
         Sprite selected = theme == ThemeManager.Theme.Forest ? forestSprite :
                           theme == ThemeManager.Theme.SnowLand ? snowLandSprite :
                           desertSprite;
 
         bool isActive = selected != null;
 
-        // Switch sprite for all layer parts based on the selected theme
         foreach (var part in layerParts)
         {
             if (part == null) continue;
-            part.gameObject.SetActive(isActive);
-            if (isActive)
-                part.sprite = selected;
+            part.enabled = isActive;
+            part.sprite = isActive ? selected : null;
         }
 
-        // Update sprite width after switching theme to ensure wrapping logic works correctly
         if (isActive && layerParts.Length > 0 && layerParts[0].sprite != null)
         {
-            spriteWidth = layerParts[0].bounds.size.x;  // Update spriteWidth
+            spriteWidth = layerParts[0].bounds.size.x;
         }
     }
+
 }

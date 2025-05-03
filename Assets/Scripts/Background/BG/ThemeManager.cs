@@ -68,16 +68,18 @@ public class ThemeManager : MonoBehaviour
                 continue;
             }
 
-            try
-            {
-                layer.SwitchTheme(newTheme);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"Error switching theme on layer {layer.name}: {ex.Message}");
-            }
+            // Always keep the GameObject and script active
+            layer.gameObject.SetActive(true);
+            layer.enabled = true;
+
+            // Ensure Initialize is called once inside the layer
+            layer.Initialize();
+
+            // Switch visuals and logic depending on theme support
+            layer.SwitchTheme(newTheme);
         }
 
+        // Background sprite logic
         Sprite targetSprite = newTheme == Theme.Forest ? forestSprite :
                               newTheme == Theme.SnowLand ? snowLandSprite :
                               desertSprite;
@@ -94,6 +96,9 @@ public class ThemeManager : MonoBehaviour
             Debug.LogWarning("ThemeManager: Target background sprite is missing for this theme.");
         }
     }
+
+
+
 
 
     IEnumerator FadeBackground(Sprite newSprite)
