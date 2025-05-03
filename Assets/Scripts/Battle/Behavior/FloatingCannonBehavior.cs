@@ -111,6 +111,10 @@ class FloatingCannonBehavior : BaseBehavior
 
     private bool LazerAttack(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
     {
+        if (!param.entity.isAlive)
+        {
+            return false;
+        }
         if (lazerTime < 2.15)
         {
             return false;
