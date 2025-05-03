@@ -96,7 +96,7 @@ class FloatingCannonBehavior : BaseBehavior
     }
 
     float lazerTime = 0;
-    public int attack = 5;
+    public int attack = 50;
     public HashSet<BattleEntity> collidedObjects = new HashSet<BattleEntity>(ReferenceEqualityComparer.Instance);
 
     private void LazerUpdate(BattleEntity.EntityUpdateParams param)
