@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
+  m_Name: PlayerLightningFiringSkill
+  m_EditorClassIdentifier: 
+  skillName: Lightning Strike
+  description: 
+  summoning:
+  - {fileID: 11400000, guid: 6ae998a3b2b21b244b01d2de774a2f94, type: 2}
+  cooldownSecond: 0.5
+  castSecond: 0
+  godPowerConsumption: 0

@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7279078460510916831
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 13
+  hdPluginSubTargetMaterialVersions:
+    m_Keys: []
+    m_Values: 
+--- !u!114 &-5363488863087061860
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: OldShield
+  m_Shader: {fileID: -6465566751694194690, guid: 1f1dfdbf35a532b419e49414664e9f94, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 1f1dfdbf35a532b419e49414664e9f94, type: 3}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ENABLE_FOG_ON_TRANSPARENT
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    MotionVector: User
+    RenderType: Transparent
+  disabledShaderPasses:
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
+  - TransparentBackface
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - Vector1_274cf0cf93544067b87e754d0fc6f63d: 0.17
+    - Vector1_37096f4f227d42b39f4c2dabc41e8fc3: 0.45
+    - Vector1_44ead74e7eb1452aaf0366f5c9dcfea3: 2.6
+    - Vector1_66e1813dce49453b9d978b14470b05c7: 0.05
+    - Vector1_a23eeb5da2a64541a0941a420d465615: 4.34
+    - Vector1_b21be420593746ffbdfa5809ae9b9ca5: 0.4
+    - _AlphaDstBlend: 10
+    - _Disolve: 0
+    - _DisolveStartHeight: 0.84
+    - _DstBlend: 10
+    - _DstBlend2: 10
+    - _RenderQueueType: 3
+    - _Scale: 1.6
+    m_Colors:
+    - Color_4344b865b07d428c9f7b0ae863f3619f: {r: 2.0202348, g: 4.167382, b: 47.587776, a: 0}
+    - Color_bfc578eca04d48a9a6b782710f0c4014: {r: 0, g: 3.7268686, b: 16.94838, a: 0}
+    - Vector2_4c87d13ea4d9494aa84c3320a263248e: {r: 0.4, g: 4.3, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: IceStabBullet
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 9e9e5f0da8496444f9d7646e82b1ff87, type: 3}
+  prefab: {fileID: 4136924778509204553, guid: 2639b14b63ef5574b872ead9bb4a1ba1, type: 3}
   skills:
   - {fileID: 11400000, guid: efeffd7ace3841c43a228f3e079a9ed2, type: 2}
   life: 100
@@ -26,7 +27,11 @@ MonoBehaviour:
   resilienceMax: 0
   godPower: 100
   godPowerMax: 100
+  cleanseWhenDefeated: 1
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: ba680285c96723145b955b6ed6d9aac7, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

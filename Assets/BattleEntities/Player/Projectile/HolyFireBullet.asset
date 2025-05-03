@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: HolyFireBullet
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: 9180646de52f66243b39a62498312263, type: 3}
+  prefab: {fileID: 296695785426241201, guid: 3175720142416a349b5f77acd8657d02, type: 3}
   skills:
   - {fileID: 11400000, guid: 7b0668c48ca575640af7602ef2ee4ad8, type: 2}
   life: 100
@@ -26,7 +27,11 @@ MonoBehaviour:
   resilienceMax: 0
   godPower: 100
   godPowerMax: 100
+  cleanseWhenDefeated: 1
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 55cc72bef7b30c24c908da4da52fc188, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

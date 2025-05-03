@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 186e7a47a88e14d489eb4d517b1153d8, type: 3}
+  m_Name: WitchMeleeSummonSkill 2
+  m_EditorClassIdentifier: 
+  skillName: 
+  description: 
+  summoning:
+  - {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
+  - {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
+  - {fileID: 11400000, guid: 0c8154af6963803469372c0fa3317859, type: 2}
+  - {fileID: 11400000, guid: 254693db68f7b644591375d80373fecc, type: 2}
+  - {fileID: 11400000, guid: 254693db68f7b644591375d80373fecc, type: 2}
+  - {fileID: 11400000, guid: 6d488706b84cc234ba6b4a5f0f751f1d, type: 2}
+  - {fileID: 11400000, guid: 6d488706b84cc234ba6b4a5f0f751f1d, type: 2}
+  cooldownSecond: 0
+  castSecond: 0
+  godPowerConsumption: 0

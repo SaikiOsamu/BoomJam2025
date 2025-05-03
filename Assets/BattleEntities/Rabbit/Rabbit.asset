@@ -12,16 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier: 
-  entityName: 
+  id: 10006
+  entityName: "\u91CE\u5154/Hare"
   description: 
   isProjector: 0
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
   prefab: {fileID: 6782176509065335048, guid: d20704797be8d47dc89aa92d657e0da0, type: 3}
   skills:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6dd36f8ac1d35e245bd688342ecbbfd3, type: 2}
   life: 100
   lifeMax: 100
   resilience: 0
   resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  cleanseWhenDefeated: 1
+  godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 4d504c0ca24e64d8d9a0f59394a0e2ee, type: 2}
+  icon: {fileID: 21300000, guid: d9254979b253c481e80450165b99f3af, type: 3}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

@@ -67,7 +67,15 @@ class FloatingCannonBehavior : BaseBehavior
                 {
                     float diffx = toSummon.position.x - enemy.position.x;
                     float diffy = toSummon.position.y - enemy.position.y;
-                    float sine = Mathf.Asin(diffy / diffx);
+                    float sine;
+                    if (diffx != 0)
+                    {
+                        sine = Mathf.Asin(diffy / diffx);
+                    }
+                    else
+                    {
+                        sine = diffy > 0 ? -Mathf.PI / 2 : Mathf.PI / 2;
+                    }
                     if (diffx > 0)
                     {
                         sine += Mathf.PI;
@@ -94,7 +102,7 @@ class FloatingCannonBehavior : BaseBehavior
     private void LazerUpdate(BattleEntity.EntityUpdateParams param)
     {
         lazerTime += param.timeDiff;
-        if (lazerTime > 0.6)
+        if (lazerTime > 3.5)
         {
             param.entity.isAlive = false;
             isAttacking = false;
@@ -103,11 +111,11 @@ class FloatingCannonBehavior : BaseBehavior
 
     private bool LazerAttack(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
     {
-        if (lazerTime < 0.3)
+        if (lazerTime < 2.15)
         {
             return false;
         }
-        if (lazerTime < 0.5)
+        if (lazerTime < 2.85)
         {
             if (collidedObjects.Contains(theOtherEntity))
             {

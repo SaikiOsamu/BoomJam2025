@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static BattleEntity;
 using static UnityEngine.EventSystems.EventTrigger;
+using Random = UnityEngine.Random;
 
 internal class SkillCooldownAndActionPair
 {
@@ -76,6 +77,7 @@ class PlayerBehavior : BaseBehavior
             }
             foreach (BattleEntity toSummon in entitiesSummoned)
             {
+                toSummon.facingEast = entity.facingEast;
                 if (entity.facingEast)
                 {
                     toSummon.position.x += 0.4f;
@@ -123,6 +125,29 @@ class PlayerBehavior : BaseBehavior
                     result.AddRange(spreadLeft.Spread(param));
                     return result;
                 };
+            }
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(7, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Mark time extender ultimate.
+                e.isTimeExtender = true;
+            }
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(8, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                e.attackHandler = new LightningControllerBehavior().MaybeLightning;
+            }
+        }
+        if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(9, false).skillName))
+        {
+            foreach (BattleEntity e in result)
+            {
+                // Mark space cutter ultimate.
+                e.isSpaceCutter = true;
             }
         }
         return result;
@@ -176,18 +201,13 @@ class PlayerBehavior : BaseBehavior
                 skill.hasCasted = false;
             }
         }
-        if (barrierAction.triggered && onGround)
+        if (barrierAction.triggered && param.entity.position.y <= 0)
         {
             var barrier = ActivateSkill(2, param.entity);
             foreach (BattleEntity entity in barrier)
             {
-                if (param.player.facingEast)
+                if (!param.player.facingEast)
                 {
-                    entity.position.x += 0.2f;
-                }
-                else
-                {
-                    entity.position.x -= 0.2f;
                     entity.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
                 }
             }
@@ -204,7 +224,6 @@ class PlayerBehavior : BaseBehavior
         }
         return result;
     }
-    public bool onGround = true;
     public float jumpInitialSpeed = 7.5f;
     public float jumpCurrentSpeed = 0;
     public float jumpGravity = 9.8f;
@@ -216,24 +235,24 @@ class PlayerBehavior : BaseBehavior
         {
             param.entity.facingEast = moveValue.x > 0;
         }
-        if (jumpAction.triggered && onGround && !barrierAction.IsPressed())
+        if (jumpAction.triggered && param.entity.position.y <= 0 && !barrierAction.IsPressed())
         {
             jumpCurrentSpeed = jumpInitialSpeed;
-            onGround = false;
+            moveValue.y = jumpCurrentSpeed * param.timeDiff;
         }
-        if (!onGround)
+        if (param.entity.position.y > 0 || jumpCurrentSpeed > 0)
         {
             jumpCurrentSpeed -= jumpGravity * param.timeDiff;
             moveValue.y = jumpCurrentSpeed * param.timeDiff;
             if (param.entity.position.y + moveValue.y < 0)
             {
-                onGround = true;
                 moveValue.y = -param.entity.position.y;
             }
         }
         else
         {
             moveValue.y = 0;
+            jumpCurrentSpeed = 0;
         }
         if (barrierAction.IsPressed())
         {
@@ -276,6 +295,32 @@ public class BlinkBehavior : BaseBehavior
         TimedProjectionSelfDestructHandler = new TimedProjectionSelfDestructHandler(definitions.timeToLive);
     }
     bool blinked = false;
+
+    public override AttackDelegate AttackDelegate => SummonEnd;
+    bool summoned = false;
+    List<BattleEntity> SummonEnd(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (summoned)
+        {
+            return result;
+        }
+        summoned = true;
+        var entitiesSummoned = param.entity.GetSkillSummon(0, out _);
+        foreach (BattleEntity toSummon in entitiesSummoned)
+        {
+            if (param.entity.facingEast)
+            {
+                toSummon.position.x += blinkDistance;
+            }
+            else
+            {
+                toSummon.position.x -= blinkDistance;
+            }
+            result.Add(toSummon);
+        }
+        return result;
+    }
 
     public override SelfDestructDelegate SelfDestructDelegate => Update;
     public void Update(EntityUpdateParams param)
@@ -332,6 +377,33 @@ public class FireSpreadBehavior
             toSummon.attackHandler = behavior.Spread;
             result.Add(toSummon);
             spreadHandled = true;
+        }
+        return result;
+    }
+}
+
+public class LightningControllerBehavior
+{
+    public float cooldown = 0;
+
+    public List<BattleEntity> MaybeLightning(EntityUpdateParams param)
+    {
+        List<BattleEntity> result = new List<BattleEntity>();
+        if (cooldown > 0)
+        {
+            cooldown -= param.timeDiff;
+            return result;
+        }
+        var entitiesSummoned = param.entity.GetSkillSummon(0, out cooldown);
+        foreach (BattleEntity toSummon in entitiesSummoned)
+        {
+            // Random
+            if (Random.Range(0f, 1f) < 0.5)
+            {
+                break;
+            }
+            toSummon.position = new Vector2(param.player.position.x + Random.Range(-2f, 20f), 0);
+            result.Add(toSummon);
         }
         return result;
     }

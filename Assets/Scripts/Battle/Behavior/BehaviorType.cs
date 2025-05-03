@@ -15,6 +15,10 @@ public enum BehaviorType
     Blink = 7,
     Cobra = 8,
     Turtle = 9,
+    GhostEnemy = 10,
+    IronFist = 11,
+    GrandWitch = 12,
+    Charger = 13,
     Naofu = 100,
     Rabbit = 200,
 }

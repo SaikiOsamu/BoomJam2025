@@ -6,6 +6,7 @@ using UnityEngine;
 public class BattleStatus
 {
     public BattleStatusEffect status = null;
+    public Vector2 pullCenter = Vector2.zero;
     public bool pushBackFacingEast = true;
     public float damageToApply = 0;
     public float timeElapsed = 0;
@@ -24,6 +25,8 @@ public class BattleEntity
         public ReadOnlyCollection<BattleEntity> entities;
         public BattleEntity player;
         public float timeDiff;
+        public Vector2? bossFightCenter = null;
+        public float? bossFightSize = null;
     }
     public Character prefabCharacter = null;
     public Vector2 position = Vector2.zero;
@@ -44,8 +47,18 @@ public class BattleEntity
     public bool isAlive = true;
     public bool isEnemy = false;
     public bool isProjector = false;
+    public bool isBoss = false;
+    public bool isCasting = false;
+    public bool isUltimate = false;
+    public bool isTimeExtender = false;
+    public bool isSpaceCutter = false;
+    public bool doesNotBeingCutByUltimate = false;
+    public bool isAttacking = false;
     public bool projectorDestroiedOnContactWithBarrier = false;
     public bool isBarrier = false;
+    public int cleanseWhenDefeated = 0;
+    // Only affects collide.
+    public bool isHidden = false;
     public List<Skills> dynamicSkills = new List<Skills>();
     public List<BattleStatus> statusInEffect = new List<BattleStatus>();
     public MoveDelegate moveHandler = _ => Vector2.zero;
@@ -69,6 +82,7 @@ public class BattleEntity
         battleEntity.shieldMax = prefabCharacter.shieldMax;
         battleEntity.projectorDestroiedOnContactWithBarrier = prefabCharacter.projectorDestroiedOnContactWithBarrier;
         battleEntity.isBarrier = prefabCharacter.isBarrier;
+        battleEntity.cleanseWhenDefeated = prefabCharacter.cleanseWhenDefeated;
         if (prefabCharacter.behavior != null)
         {
             Behavior behavior = BehaviorFactory.GetBehavior(prefabCharacter.behavior);

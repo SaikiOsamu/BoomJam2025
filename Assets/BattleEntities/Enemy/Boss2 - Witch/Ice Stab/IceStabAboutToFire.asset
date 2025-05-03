@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
+  m_Name: IceStabAboutToFire
+  m_EditorClassIdentifier: 
+  id: 
+  entityName: 
+  description: 
+  isProjector: 1
+  projectorDestroiedOnContactWithBarrier: 0
+  isBarrier: 0
+  prefab: {fileID: 560128881120421882, guid: 2b44f51116594f241a85a3eb07c0198e, type: 3}
+  skills:
+  - {fileID: 11400000, guid: ee741edb927a44344b0c80f4360c774a, type: 2}
+  life: 100
+  lifeMax: 100
+  resilience: 0
+  resilienceMax: 0
+  godPower: 100
+  godPowerMax: 100
+  cleanseWhenDefeated: 1
+  godPowerRecoveryPerSecond: 0.1
+  shield: 0
+  shieldMax: 200
+  behavior: {fileID: 11400000, guid: 1f676a67567dd41419f3ad977c80d153, type: 2}
+  icon: {fileID: 0}

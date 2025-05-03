@@ -37,12 +37,20 @@ public class BehaviorFactory
                 return new BlinkBehavior(definitions);
             case BehaviorType.Enemy:
                 return new RangedEnemyBehavior(definitions);
+            case BehaviorType.GhostEnemy:
+                return new GhostEnemyBehavior(definitions);
+            case BehaviorType.IronFist:
+                return new IronFistBehavior(definitions);
+            case BehaviorType.GrandWitch:
+                return new GrandWitchBehavior(definitions);
             case BehaviorType.Bird:
                 return new BombBirdBehavior(definitions);
             case BehaviorType.FloatingCannon:
                 return new FloatingCannonBehavior(definitions);
             case BehaviorType.Naofu:
                 return new NaofuBehavior(definitions);
+            case BehaviorType.Charger:
+                return new ChargerBehavior(definitions);
             case BehaviorType.Rabbit:
                 return new RabbitBehavior(definitions);
             case BehaviorType.Cobra:

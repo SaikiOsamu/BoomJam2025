@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: DirtHaulerBullet2
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 1
   projectorDestroiedOnContactWithBarrier: 0
   isBarrier: 0
-  prefab: {fileID: 2757770327938398083, guid: d9269207ae682564da53adab4e2a0a0f, type: 3}
+  prefab: {fileID: 2888803781025962672, guid: 49ad29078ff2cc644b9c941a3924eb0a, type: 3}
   skills:
   - {fileID: 11400000, guid: b6a95cc6ad25717428c302e8700a1203, type: 2}
   life: 100
@@ -26,7 +27,11 @@ MonoBehaviour:
   resilienceMax: 0
   godPower: 100
   godPowerMax: 100
+  cleanseWhenDefeated: 1
   godPowerRecoveryPerSecond: 0.1
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: c8c205a41f048914bbb035f3726715d7, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

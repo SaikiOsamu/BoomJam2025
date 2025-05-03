@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RabbitBehavior : BaseBehavior
@@ -81,7 +82,12 @@ public class RabbitBehavior : BaseBehavior
                 int healAmount = Random.Range(minHeal, maxHeal + 1); 
                 player.life = Mathf.Min(player.life + healAmount, player.lifeMax);
 
-                Debug.Log($"兔子给玩家加了 {healAmount} 点血！");
+                var effect = param.entity.GetSkillSummon(0, out float cooldown);
+                foreach (BattleEntity toSummon in effect)
+                {
+                    toSummon.position = player.position;
+                    healed.Add(toSummon);
+                }
             }
         }
 

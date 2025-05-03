@@ -104,8 +104,17 @@ public class NaofuBehavior : BaseBehavior
                         float offset = param.entity.facingEast ? 0.1f : -0.1f;
                         return param.entity.position - bangding.entity.position + new Vector2(offset, 0);
                     };
-                    toSummon.selfDestruct = new TimedProjectionSelfDestructHandler(0.5f).Update;
+                    var destruct = new TimedProjectionSelfDestructHandler(1.5f);
+                    toSummon.selfDestruct = p =>
+                    {
+                        destruct.Update(p);
+                        if (!p.entity.isAlive)
+                        {
+                            param.entity.isAttacking = false;
+                        }
+                    };
                     toSummon.collideHandler = new AttackCollideHandler(-1).Update;
+                    param.entity.isAttacking = true;
                     result.Add(toSummon);
                 }
                 state = State.STATE_ATTACKING;
