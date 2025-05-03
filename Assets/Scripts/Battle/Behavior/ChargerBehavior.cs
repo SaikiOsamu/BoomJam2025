@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using static BattleEntity;
 
