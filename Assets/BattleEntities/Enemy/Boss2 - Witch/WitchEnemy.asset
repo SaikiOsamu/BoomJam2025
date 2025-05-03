@@ -32,8 +32,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c1736e5e2954a664a90df0661f384b76, type: 2}
   - {fileID: 11400000, guid: d320f10c232685f4a8d321ad510549c5, type: 2}
   - {fileID: 11400000, guid: 5d2199846c58baf4d9ade7920ea9bd3a, type: 2}
-  life: 100
-  lifeMax: 100
+  life: 7500
+  lifeMax: 7500
+  lifeHealPerSecond: 0
   resilience: 0
   resilienceMax: 0
   godPower: 100
@@ -44,3 +45,5 @@ MonoBehaviour:
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 1e8640b09120f574abef89d7bb0ea696, type: 2}
   icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

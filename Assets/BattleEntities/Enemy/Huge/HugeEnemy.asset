@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: HugeEnemy
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 0
@@ -21,8 +22,9 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 7bba71a4a40e5b542b14d66d7c4506f7, type: 2}
   - {fileID: 11400000, guid: 49eba1d65f63d004aad9bd15b5f96b77, type: 2}
-  life: 70
-  lifeMax: 100
+  life: 400
+  lifeMax: 400
+  lifeHealPerSecond: 0
   resilience: 0
   resilienceMax: 0
   godPower: 100
@@ -32,3 +34,6 @@ MonoBehaviour:
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: db548b9dfa97e824caeed52a6ff33415, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

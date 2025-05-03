@@ -22,8 +22,9 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: a8784f47911ee994d9ea9b8fb641d9d4, type: 2}
   - {fileID: 11400000, guid: 2eae5d7869c8fb041bddf9832bd5d554, type: 2}
-  life: 100
-  lifeMax: 100
+  life: 400
+  lifeMax: 400
+  lifeHealPerSecond: 0
   resilience: 0
   resilienceMax: 0
   godPower: 100
@@ -34,3 +35,5 @@ MonoBehaviour:
   shieldMax: 200
   behavior: {fileID: 0}
   icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}

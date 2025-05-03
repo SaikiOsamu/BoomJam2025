@@ -124,7 +124,7 @@ MonoBehaviour:
   grantingStatus: []
   moveSpeed: 3
   maxDamageTargets: -1
-  projectileDamage: 5
+  projectileDamage: 40
   projectileDamageEveryNSecond: -1
   timeToLive: 0.2
   godPowerDrainPerSecond: 0
