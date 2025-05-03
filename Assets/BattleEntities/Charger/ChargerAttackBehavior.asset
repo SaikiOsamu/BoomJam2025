@@ -121,10 +121,11 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  grantingStatus: []
+  grantingStatus:
+  - {fileID: 11400000, guid: 8c45080d8537bd847bc2a8d532ce74df, type: 2}
   moveSpeed: 0
   maxDamageTargets: -1
-  projectileDamage: 5000
+  projectileDamage: 75
   projectileDamageEveryNSecond: -1
   timeToLive: 1
   godPowerDrainPerSecond: 0

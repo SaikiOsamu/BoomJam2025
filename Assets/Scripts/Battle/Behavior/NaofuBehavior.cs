@@ -113,7 +113,7 @@ public class NaofuBehavior : BaseBehavior
                             param.entity.isAttacking = false;
                         }
                     };
-                    toSummon.collideHandler = new AttackCollideHandler(-1).Update;
+                    toSummon.collideHandler = new AttackCollideHandler(-1, 45).Update;
                     param.entity.isAttacking = true;
                     result.Add(toSummon);
                 }
