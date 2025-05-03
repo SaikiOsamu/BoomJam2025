@@ -122,7 +122,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 714601444611612194, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   grantingStatus: []
-  moveSpeed: 2
+  moveSpeed: 4
   maxDamageTargets: 0
   projectileDamage: 0
   projectileDamageEveryNSecond: -1

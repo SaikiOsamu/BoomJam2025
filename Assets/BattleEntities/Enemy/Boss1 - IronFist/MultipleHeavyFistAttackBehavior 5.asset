@@ -125,7 +125,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df51bfaebde07e641b051a93da1381dd, type: 2}
   moveSpeed: 2
   maxDamageTargets: -1
-  projectileDamage: 5
+  projectileDamage: 62
   projectileDamageEveryNSecond: -1
   timeToLive: 0.5
   godPowerDrainPerSecond: 0

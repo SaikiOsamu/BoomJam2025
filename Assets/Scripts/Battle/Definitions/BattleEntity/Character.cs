@@ -14,6 +14,7 @@ public class Character : ScriptableObject
     public List<Skills> skills;
     public int life = 100;
     public int lifeMax = 100;
+    public int lifeHealPerSecond = 0;
     public int resilience = 0;
     public int resilienceMax = 0;
     public int godPower = 100;

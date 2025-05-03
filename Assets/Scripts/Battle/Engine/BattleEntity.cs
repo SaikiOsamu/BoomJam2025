@@ -36,6 +36,7 @@ public class BattleEntity
     public float radius = 1;
     public int life = 100;
     public int lifeMax = 100;
+    public float lifeHealPerSecond = 0;
     public int resilience = 0;
     public int resilienceMax = 0;
     public int godPower = 100;
@@ -73,6 +74,7 @@ public class BattleEntity
         battleEntity.isProjector = prefabCharacter.isProjector;
         battleEntity.life = prefabCharacter.life;
         battleEntity.lifeMax = prefabCharacter.lifeMax;
+        battleEntity.lifeHealPerSecond = prefabCharacter.lifeHealPerSecond;
         battleEntity.resilience = prefabCharacter.resilience;
         battleEntity.resilienceMax = prefabCharacter.resilienceMax;
         battleEntity.godPower = prefabCharacter.godPower;

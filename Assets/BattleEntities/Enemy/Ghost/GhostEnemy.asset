@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c17535112dc74aaf6c015174f0345, type: 3}
   m_Name: GhostEnemy
   m_EditorClassIdentifier: 
+  id: 
   entityName: 
   description: 
   isProjector: 0
@@ -21,8 +22,9 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: a9e3b707160d8904f8c0a4a8ac5cb4f0, type: 2}
   - {fileID: 11400000, guid: df2aedc93fe1774418ecd8a9927fe8be, type: 2}
-  life: 70
-  lifeMax: 100
+  life: 250
+  lifeMax: 250
+  lifeHealPerSecond: 0
   resilience: 0
   resilienceMax: 0
   godPower: 100
@@ -32,3 +34,6 @@ MonoBehaviour:
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 567327b039e41624cbf7e5587cf01d7c, type: 2}
+  icon: {fileID: 0}
+  onSpawn: {fileID: 0}
+  onDespawn: {fileID: 0}
