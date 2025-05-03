@@ -366,10 +366,12 @@ public class FireSpreadBehavior
             if (facingEast)
             {
                 toSummon.position.x += 0.8f;
+                toSummon.rotation = Quaternion.AngleAxis(-25, new Vector3(0, 0, 1));
             }
             else
             {
                 toSummon.position.x -= 0.8f;
+                toSummon.rotation = Quaternion.AngleAxis(25, new Vector3(0, 0, 1));
             }
             FireSpreadBehavior behavior = new FireSpreadBehavior();
             behavior.spreadRemaining = spreadRemaining - 1;
