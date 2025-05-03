@@ -138,6 +138,11 @@ class FloatingCannonBehavior : BaseBehavior
 
     public Vector2 Move(EntityUpdateParams param)
     {
+        if (isAttacking)
+        {
+            return Vector2.zero;
+        }
+
         Vector2 moveValue = (param.player.position + new Vector2(0, 1) - param.entity.position).normalized
             * param.timeDiff * birdMoveSpeed;
 
