@@ -24,7 +24,7 @@ public class CameraPlayerStatusReverseUpdate : MonoBehaviour
         }
         if (levelManager.levelStage != LevelStage.LEVEL_STAGE_BOSS_FIGHT)
         {
-            target = new Vector3(player.position.x + 8, 0, -10);
+            target = new Vector3(player.position.x + 3, 0, -10);
             if ((transform.localPosition - target).magnitude < speed * Time.deltaTime)
             {
                 transform.localPosition = target;

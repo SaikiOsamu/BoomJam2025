@@ -122,8 +122,8 @@ public class LevelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        purificationExpected1 = Random.Range(0, 200);
-        purificationExpected2 = Random.Range(0, 200);
+        purificationExpected1 = Random.Range(0, cleanseThreshold);
+        purificationExpected2 = Random.Range(0, cleanseThreshold);
         if (purificationExpected1 > purificationExpected2)
         {
             int temp = purificationExpected1;

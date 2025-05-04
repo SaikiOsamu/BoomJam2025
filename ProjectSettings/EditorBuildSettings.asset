@@ -9,17 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ecc4cd9834e48e541aa4855e5cd959c2
   - enabled: 1
-    path: Assets/Scenes/TutorialScene.unity
-    guid: bad3a46a2cfd53747ba97226623b0b04
-  - enabled: 1
     path: Assets/Scenes/BackgroundMovement.unity
     guid: f198ee76f2b4b8f4ab9adb3ac863b193
   - enabled: 1
     path: Assets/Scenes/CreditsScene.unity
     guid: 49b13277d016c05469071216b18984e9
-  - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: 0cf23405beaafdd47bc6cef45a85504e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
