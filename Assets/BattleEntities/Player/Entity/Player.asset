@@ -30,14 +30,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9304b5535051f8468734c657e32a4eb, type: 2}
   - {fileID: 11400000, guid: d27b877e67f07e840830810f3b02cdcc, type: 2}
   - {fileID: 11400000, guid: 97cf26fa7f66a334f8c25ad6d96bc23c, type: 2}
-  life: 100
-  lifeMax: 100
+  life: 500
+  lifeMax: 500
+  lifeHealPerSecond: 5
   resilience: 0
   resilienceMax: 0
   godPower: 100
   godPowerMax: 100
   cleanseWhenDefeated: 1
-  godPowerRecoveryPerSecond: 3
+  godPowerRecoveryPerSecond: 10
   shield: 0
   shieldMax: 200
   behavior: {fileID: 11400000, guid: 2026490bab8be2241b20af87eea294f3, type: 2}
