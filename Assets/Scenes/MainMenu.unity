@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aed83ae4bcafcb409d67f8a378f984d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuRoot: {fileID: 135822228}
+  pauseMenuRoot: {fileID: 0}
   menuPausePanel: {fileID: 204538087}
   restartPanel: {fileID: 1161518293}
   controlsPanel: {fileID: 1942340584}
