@@ -507,6 +507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 101801384}
   - component: {fileID: 101801383}
+  - component: {fileID: 101801385}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -626,6 +627,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &101801385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101801382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64074560f0ba3c1448685220975df3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 0}
+  SFXSource: {fileID: 0}
+  Spring: {fileID: 8300000, guid: 9e2bcb54cedc3764ab062ab6cb23566a, type: 3}
+  Summer: {fileID: 8300000, guid: 990bd36d123f8644f924469939719fe8, type: 3}
+  Fall: {fileID: 8300000, guid: 958e09b5ede80424db1b2af5befbfe35, type: 3}
+  Winter: {fileID: 8300000, guid: b2a244ff872866e4cbe6ca0161a52397, type: 3}
+  BossFight: {fileID: 0}
+  Monster_moving_SFX: {fileID: 0}
+  Moving: {fileID: 8300000, guid: 6cc4b7df41340434bbb4cd26692f9c5e, type: 3}
 --- !u!1 &126034873
 GameObject:
   m_ObjectHideFlags: 0

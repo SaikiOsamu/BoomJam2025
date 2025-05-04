@@ -8,16 +8,12 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Clips")]
     public AudioClip Spring;
-    public AudioClip SpringR;
     public AudioClip Summer;
-    public AudioClip SummerR;
     public AudioClip Fall;
-    public AudioClip FallR;
     public AudioClip Winter;
-    public AudioClip WinterR;
     public AudioClip BossFight;
     public AudioClip Monster_moving_SFX;
-    public AudioClip SomeotherSFX;
+    public AudioClip Moving;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static AudioManager instance;
     private void Awake()
