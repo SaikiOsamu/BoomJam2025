@@ -22,7 +22,7 @@ public class PlayerStatusUpdate : MonoBehaviour
         animator.SetBool("is_moving", !transform.localPosition.Equals(newPos));
         animator.SetBool("is_in_air", newPos.y > 0.05);
         animator.SetBool("is_failing", newPos.y - transform.localPosition.y < 0);
-        transform.position = newPos;
+        transform.position = newPos + new Vector3(0, -3, 0);
 
         if (jumpSfxClip != null && newPos.y > 0.05)
         {
