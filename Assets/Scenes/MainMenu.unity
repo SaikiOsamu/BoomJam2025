@@ -295,8 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aed83ae4bcafcb409d67f8a378f984d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuRoot: {fileID: 0}
-  menuPausePanel: {fileID: 204538087}
+  pauseMenuRoot: {fileID: 793455372}
+  menuPausePanel: {fileID: 793455372}
   restartPanel: {fileID: 1161518293}
   controlsPanel: {fileID: 1942340584}
   settingsPanel: {fileID: 459775067}
@@ -5048,6 +5048,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757900159}
   m_CullTransparentMesh: 1
+--- !u!1 &793455372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 793455373}
+  m_Layer: 0
+  m_Name: temp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &793455373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793455372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &799192384
 GameObject:
   m_ObjectHideFlags: 0
@@ -5626,7 +5657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 016324efc4903124fabc9d705b53e398, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -10090,3 +10121,4 @@ SceneRoots:
   - {fileID: 994916641}
   - {fileID: 101801384}
   - {fileID: 42421639}
+  - {fileID: 793455373}

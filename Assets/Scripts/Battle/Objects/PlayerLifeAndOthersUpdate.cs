@@ -9,7 +9,9 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textMeshProUGUI;
     public Image currentLife;
-
+    public Image currentMana;
+    public GameObject LostScreen;
+    public GameObject WinScreen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,7 +27,11 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
         float playerslife = player.life;
         float playersmaxlife = player.lifeMax;
         float lifeleft = playerslife / playersmaxlife;
+        float currentM = player.godPower;
+        float maxMana = player.godPowerMax;
+        float ManaLeft = currentM / maxMana;
         currentLife.fillAmount = lifeleft;
+        currentMana.fillAmount = ManaLeft;
         if (player.shield > 0)
         {
             text += "\nShield: " + player.shield + " / " + player.shieldMax;
@@ -40,10 +46,13 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
         if (levelManager.levelStage == LevelStage.LEVEL_STAGE_WINNER)
         {
             text += "\nYOU WIN!";
+            WinScreen.SetActive(true);
         }
         if (levelManager.levelStage == LevelStage.LEVEL_STAGE_LOST)
         {
             text += "\nYou lose..";
+            LostScreen.SetActive(true);
+
         }
         textMeshProUGUI.text = text;
     }

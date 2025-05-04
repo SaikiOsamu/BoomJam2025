@@ -55,7 +55,20 @@ public class ThemeManager : MonoBehaviour
         currentTheme = currentTheme == Theme.Forest ? Theme.SnowLand :
         currentTheme == Theme.SnowLand ? Theme.Desert :
                         Theme.Forest;
-        ApplyTheme(currentTheme);
+        if(currentTheme == Theme.Forest)
+        {
+            AudioManager.instance.PlayMusic(AudioManager.instance.Spring);
+        }
+        else if(currentTheme == Theme.SnowLand)
+        {
+            AudioManager.instance.PlayMusic(AudioManager.instance.Winter);
+        }
+        else if (currentTheme == Theme.Desert)
+        {
+            AudioManager.instance.PlayMusic(AudioManager.instance.Fall);
+        }
+
+            ApplyTheme(currentTheme);
     }
 
     public void ApplyTheme(Theme newTheme)
