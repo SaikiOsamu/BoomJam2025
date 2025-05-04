@@ -83,6 +83,10 @@ public class LevelManager : MonoBehaviour
     private List<Character> animalAllyPrefabs;
     [SerializeField]
     private List<Skills> playerDynamicSkills;
+    [SerializeField]
+    private List<Skills> playerNormalSkills;
+    [SerializeField]
+    private List<Skills> playerUltimateSkills;
 
     float TimeCoefficient(BattleEntity entity)
     {
@@ -91,6 +95,28 @@ public class LevelManager : MonoBehaviour
             return 1.0f;
         }
         return 0.2f;
+    }
+
+    List<T> Sample<T>(int n, IEnumerable<T> from)
+    {
+        List<T> result = new List<T>();
+        foreach (var item in from)
+        {
+            if (result.Count < n)
+            {
+                result.Add(item);
+            }
+            else
+            {
+                int rng = Random.Range(0, n + 1);
+                if (rng == n)
+                {
+                    continue;
+                }
+                result[rng] = item;
+            }
+        }
+        return result;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -106,7 +132,16 @@ public class LevelManager : MonoBehaviour
         }
 
         player = BattleEntity.FromPrefab(playerPrefab);
-        player.dynamicSkills = playerDynamicSkills;
+        if (playerDynamicSkills.Count != 0)
+        {
+            player.dynamicSkills = playerDynamicSkills;
+        }
+        else
+        {
+            List<Skills> skill = new List<Skills>();
+            skill.AddRange(Sample(3, playerNormalSkills));
+            skill.AddRange(Sample(1, playerUltimateSkills));
+        }
 
         animalSelectionUI.selectAnimalPartnerDelegate = SpawnAnimalAlly;
 
@@ -382,9 +417,9 @@ public class LevelManager : MonoBehaviour
             levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
             area += 1;
             themeManager?.ApplyTheme(area == 2 ? ThemeManager.Theme.SnowLand : ThemeManager.Theme.Desert);
-            if (area == 3)
+            if (area == 4)
             {
-                // TODO: Win?
+                levelStage = LevelStage.LEVEL_STAGE_WINNER;
             }
         }
         float delta = Time.deltaTime;
