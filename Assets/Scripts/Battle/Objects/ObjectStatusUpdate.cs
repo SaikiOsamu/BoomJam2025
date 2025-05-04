@@ -132,7 +132,7 @@ public class ObjectStatusUpdate : MonoBehaviour
                     animator?.TrySetParam("is_moving", !gameObject.transform.localPosition.Equals(newPos));
                 }
             }
-            gameObject.transform.localPosition = entity.position;
+            gameObject.transform.localPosition = entity.position + new Vector2(0, -3);
             gameObject.transform.localRotation = entity.rotation;
             if (!entity.isBarrier && !entity.isBoss)
             {

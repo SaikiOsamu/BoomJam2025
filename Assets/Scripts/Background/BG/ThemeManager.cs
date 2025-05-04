@@ -58,7 +58,7 @@ public class ThemeManager : MonoBehaviour
         ApplyTheme(currentTheme);
     }
 
-    void ApplyTheme(Theme newTheme)
+    public void ApplyTheme(Theme newTheme)
     {
         foreach (var layer in parallaxLayers)
         {

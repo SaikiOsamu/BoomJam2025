@@ -150,6 +150,22 @@ class PlayerBehavior : BaseBehavior
                 e.isSpaceCutter = true;
             }
         }
+        if (skillIndex == 0 && !dynamic)
+        {
+            entity.isAttacking = true;
+            foreach (BattleEntity e in result)
+            {
+                var des = e.selfDestruct;
+                e.selfDestruct = p =>
+                {
+                    des(p);
+                    if (!p.entity.isAlive)
+                    {
+                        entity.isAttacking = false;
+                    }
+                };
+            }
+        }
         return result;
     }
 
