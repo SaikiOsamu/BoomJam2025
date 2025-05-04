@@ -59,6 +59,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private AnimalSelectionUI animalSelectionUI = null;
     [SerializeField]
+    private ThemeManager themeManager = null;
+    [SerializeField]
     private InputActionReference interactionAction;
 
     [SerializeField]
@@ -379,7 +381,8 @@ public class LevelManager : MonoBehaviour
         {
             levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
             area += 1;
-            if (area == 4)
+            themeManager?.ApplyTheme(area == 2 ? ThemeManager.Theme.SnowLand : ThemeManager.Theme.Desert);
+            if (area == 3)
             {
                 // TODO: Win?
             }

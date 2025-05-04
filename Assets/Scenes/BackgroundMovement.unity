@@ -255,6 +255,7 @@ MonoBehaviour:
   selectingAlly: 0
   bossFightCenter: {x: 0, y: 0}
   animalSelectionUI: {fileID: 1281362933}
+  themeManager: {fileID: 760231664}
   interactionAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   entityPrefab: {fileID: 5095337469806169938, guid: c4d3c19f39e3ad14685fac2f23cb8258, type: 3}
   projectilePrefab: {fileID: 2757770327938398083, guid: dbd5455f9e8e99949b7a5c3efd6b62aa, type: 3}
