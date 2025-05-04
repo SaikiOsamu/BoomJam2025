@@ -123,9 +123,9 @@ MonoBehaviour:
     m_Reference: {fileID: 0}
   grantingStatus:
   - {fileID: 11400000, guid: d3ff80049fca68e429489a8e3e400777, type: 2}
-  moveSpeed: 2
+  moveSpeed: 3
   maxDamageTargets: -1
-  projectileDamage: 5
+  projectileDamage: 40
   projectileDamageEveryNSecond: -1
   timeToLive: 3
   godPowerDrainPerSecond: 0

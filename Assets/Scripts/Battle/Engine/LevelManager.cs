@@ -45,14 +45,23 @@ public class LevelManager : MonoBehaviour
     public int cleanseRewardAlreadyGranted = 0;
     public int cleanse = 0;
     public int cleanseThreshold = 200;
+    public int purificationShown = 0;
+    public int purificationExpected1 = 0;
+    public int purificationExpected2 = 0;
     public float enemySpawnCooldownReset = 0.2f;
     public float bossFightSize = 20;
     public LevelStage levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
+    public bool nearPurificationPoint = false;
+    public bool selectingAlly = false;
 
     [SerializeField]
     public Vector2 bossFightCenter = Vector2.zero;
     [SerializeField]
     private AnimalSelectionUI animalSelectionUI = null;
+    [SerializeField]
+    private ThemeManager themeManager = null;
+    [SerializeField]
+    private InputActionReference interactionAction;
 
     [SerializeField]
     private GameObject entityPrefab;
@@ -63,6 +72,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Character floatingCannonPrefab;
     [SerializeField]
+    private Character purificationPointPrefab;
+    [SerializeField]
     private Character startBossFightPrefab;
     [SerializeField]
     private List<Character> enemyPrefabs;
@@ -72,6 +83,10 @@ public class LevelManager : MonoBehaviour
     private List<Character> animalAllyPrefabs;
     [SerializeField]
     private List<Skills> playerDynamicSkills;
+    [SerializeField]
+    private List<Skills> playerNormalSkills;
+    [SerializeField]
+    private List<Skills> playerUltimateSkills;
 
     float TimeCoefficient(BattleEntity entity)
     {
@@ -82,11 +97,51 @@ public class LevelManager : MonoBehaviour
         return 0.2f;
     }
 
+    List<T> Sample<T>(int n, IEnumerable<T> from)
+    {
+        List<T> result = new List<T>();
+        foreach (var item in from)
+        {
+            if (result.Count < n)
+            {
+                result.Add(item);
+            }
+            else
+            {
+                int rng = Random.Range(0, n + 1);
+                if (rng == n)
+                {
+                    continue;
+                }
+                result[rng] = item;
+            }
+        }
+        return result;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        purificationExpected1 = Random.Range(0, 200);
+        purificationExpected2 = Random.Range(0, 200);
+        if (purificationExpected1 > purificationExpected2)
+        {
+            int temp = purificationExpected1;
+            purificationExpected1 = purificationExpected2;
+            purificationExpected2 = temp;
+        }
+
         player = BattleEntity.FromPrefab(playerPrefab);
-        player.dynamicSkills = playerDynamicSkills;
+        if (playerDynamicSkills.Count != 0)
+        {
+            player.dynamicSkills = playerDynamicSkills;
+        }
+        else
+        {
+            List<Skills> skill = new List<Skills>();
+            skill.AddRange(Sample(3, playerNormalSkills));
+            skill.AddRange(Sample(1, playerUltimateSkills));
+        }
 
         animalSelectionUI.selectAnimalPartnerDelegate = SpawnAnimalAlly;
 
@@ -111,6 +166,7 @@ public class LevelManager : MonoBehaviour
         ally.position = player.position;
         entities.Add(ally);
         RegisterObject(ally);
+        selectingAlly = false;
     }
 
     void RegisterObject(BattleEntity entity)
@@ -254,15 +310,44 @@ public class LevelManager : MonoBehaviour
         levelStage = LevelStage.LEVEL_STAGE_BOSS_FIGHT;
         boss = BattleEntity.FromPrefab(bossPrefabs[area - 1]);
         boss.isEnemy = true;
+        boss.isBoss = true;
         boss.position = player.position + new Vector2(25, 0);
         entities.Add(boss);
         RegisterObject(boss);
+    }
+
+    void ShowPurificationPoint()
+    {
+        BattleEntity purificationPoint = BattleEntity.FromPrefab(purificationPointPrefab);
+        purificationPoint.position = player.position + new Vector2(10, 0);
+        purificationPoint.selfDestruct = param =>
+        {
+            if ((param.entity.position - player.position).magnitude < 2)
+            {
+                nearPurificationPoint = true;
+                if (interactionAction.action.triggered && !selectingAlly)
+                {
+                    player.godPowerMax -= 15;
+                    player.godPower = Math.Min(player.godPower, player.godPowerMax);
+                    param.entity.isAlive = false;
+                    animalSelectionUI.Show();
+                    selectingAlly = true;
+                }
+            }
+        };
+        entities.Add(purificationPoint);
+        RegisterObject(purificationPoint);
+        purificationShown += 1;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (levelStage == LevelStage.LEVEL_STAGE_WINNER)
+        {
+            return;
+        }
+        if (selectingAlly)
         {
             return;
         }
@@ -284,6 +369,14 @@ public class LevelManager : MonoBehaviour
                 levelStage = LevelStage.LEVEL_STAGE_CLEANSE_COMPLETED;
                 cleanse = 0;
                 cleanseRewardAlreadyGranted = 0;
+                purificationExpected1 = Random.Range(0, 200);
+                purificationExpected2 = Random.Range(0, 200);
+                if (purificationExpected1 > purificationExpected2)
+                {
+                    int temp = purificationExpected1;
+                    purificationExpected1 = purificationExpected2;
+                    purificationExpected2 = temp;
+                }
 
                 BattleEntity startBossFight = BattleEntity.FromPrefab(startBossFightPrefab);
                 startBossFight.isEnemy = true;
@@ -316,15 +409,17 @@ public class LevelManager : MonoBehaviour
             {
                 cleanseRewardAlreadyGranted += 1;
                 animalSelectionUI.Show();
+                selectingAlly = true;
             }
         }
         if (levelStage == LevelStage.LEVEL_STAGE_BOSS_FIGHT && !(boss?.isAlive ?? true))
         {
             levelStage = LevelStage.LEVEL_STAGE_DOING_CLEANSE;
             area += 1;
+            themeManager?.ApplyTheme(area == 2 ? ThemeManager.Theme.SnowLand : ThemeManager.Theme.Desert);
             if (area == 4)
             {
-                // TODO: Win?
+                levelStage = LevelStage.LEVEL_STAGE_WINNER;
             }
         }
         float delta = Time.deltaTime;
@@ -380,6 +475,11 @@ public class LevelManager : MonoBehaviour
                         break;
                     }
                 }
+                // Hidden resolution
+                if (victim.isHidden)
+                {
+                    continue;
+                }
                 BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
                 p.entity = collisionBattleEntity.projector;
                 p.entities = entities.AsReadOnly();
@@ -415,6 +515,7 @@ public class LevelManager : MonoBehaviour
                 spaceCutter.collideHandler(p, entity);
             }
         }
+        nearPurificationPoint = false;
         // Maybe mark dead
         foreach (BattleEntity entity in entities.Concat(projectors).Prepend(player))
         {
@@ -474,6 +575,14 @@ public class LevelManager : MonoBehaviour
                 cleanse += entity.cleanseWhenDefeated;
             }
         }
+        if (cleanse > purificationExpected1 && purificationShown == 0)
+        {
+            ShowPurificationPoint();
+        }
+        if (cleanse > purificationExpected2 && purificationShown == 1)
+        {
+            ShowPurificationPoint();
+        }
         if (timeExtender != null)
         {
             BattleEntity.EntityUpdateParams p = new BattleEntity.EntityUpdateParams();
@@ -494,6 +603,13 @@ public class LevelManager : MonoBehaviour
         }
         // Remove dead objects
         entities.RemoveAll(enemy => !enemy.isAlive);
+        foreach (var e in projectors)
+        {
+            if (!e.isAlive)
+            {
+                collisionBattleEntities.Remove(e);
+            }
+        }
         projectors.RemoveAll(proj => !proj.isAlive);
         if (!timeExtender?.isAlive ?? false)
         {

@@ -25,21 +25,25 @@ class AttackCollideHandler
         this.damageEvery = damageEvery;
     }
 
-    public bool Update(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
+    public void ToggleTime(float timeDiff)
     {
-        if (!param.entity.isAlive)
-        {
-            return false;
-        }
         if (damageEvery > 0)
         {
-            damageLastDealt += param.timeDiff;
+            damageLastDealt += timeDiff;
             if (damageLastDealt > damageEvery)
             {
                 damageLastDealt = 0;
                 alreadyDamagedObjects += collidedObjects.Count;
                 collidedObjects.Clear();
             }
+        }
+    }
+
+    public bool Update(BattleEntity.EntityUpdateParams param, BattleEntity theOtherEntity)
+    {
+        if (!param.entity.isAlive)
+        {
+            return false;
         }
         if (collidedObjects.Contains(theOtherEntity))
         {

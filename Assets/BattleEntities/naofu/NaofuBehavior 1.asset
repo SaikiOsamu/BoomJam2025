@@ -73,6 +73,42 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
+  skill2Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 2
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: e5e28369-68fa-4b51-8389-17e47cd9b540
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  skill3Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 3
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b087cdf0-bced-4130-a229-240c13f09e2e
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  skill4Action:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Skill 4
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 1bb46b1c-47bb-4cb0-a610-d39e844b0ec4
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   barrierAction:
     m_UseReference: 0
     m_Action:
@@ -85,9 +121,13 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  moveSpeed: 3
+  grantingStatus: []
+  moveSpeed: 2.5
   maxDamageTargets: -1
   projectileDamage: 0
+  projectileDamageEveryNSecond: -1
   timeToLive: 1
   godPowerDrainPerSecond: 0
   attackDistance: 0
+  doSkillWhenDisappear: 0
+  disappearSkillPositionOffset: {x: 0, y: 0}

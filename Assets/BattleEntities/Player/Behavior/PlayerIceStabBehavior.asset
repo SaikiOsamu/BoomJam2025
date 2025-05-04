@@ -122,9 +122,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   grantingStatus: []
-  moveSpeed: 2
+  moveSpeed: 5
   maxDamageTargets: 1
-  projectileDamage: 5000
+  projectileDamage: 80
   projectileDamageEveryNSecond: -1
   timeToLive: 0.5
   godPowerDrainPerSecond: 0

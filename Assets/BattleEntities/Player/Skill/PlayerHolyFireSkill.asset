@@ -16,6 +16,6 @@ MonoBehaviour:
   description: 
   summoning:
   - {fileID: 11400000, guid: e7ce19c373bf86f41989cdfb0b2582a2, type: 2}
-  cooldownSecond: 0.5
-  castSecond: 1
-  godPowerConsumption: 15
+  cooldownSecond: 10
+  castSecond: 2
+  godPowerConsumption: 25

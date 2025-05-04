@@ -59,7 +59,7 @@ class PlayerBehavior : BaseBehavior
     private List<BattleEntity> ActivateSkill(int skillIndex, BattleEntity entity, bool dynamic = false)
     {
         List<BattleEntity> result = new List<BattleEntity>();
-        if (skillCooldown[skillIndex] > 0)
+        if (skillCooldown[skillIndex + (dynamic ? 15 : 0)] > 0)
         {
             return result;
         }
@@ -88,7 +88,7 @@ class PlayerBehavior : BaseBehavior
                 }
                 result.Add(toSummon);
             }
-            skillCooldown[skillIndex] = cooldown;
+            skillCooldown[skillIndex + (dynamic ? 15 : 0)] = cooldown;
         }
         if (entity.GetSkill(skillIndex, dynamic).skillName.Equals(entity.GetSkill(1, false).skillName))
         {
@@ -148,6 +148,22 @@ class PlayerBehavior : BaseBehavior
             {
                 // Mark space cutter ultimate.
                 e.isSpaceCutter = true;
+            }
+        }
+        if (skillIndex == 0 && !dynamic)
+        {
+            entity.isAttacking = true;
+            foreach (BattleEntity e in result)
+            {
+                var des = e.selfDestruct;
+                e.selfDestruct = p =>
+                {
+                    des(p);
+                    if (!p.entity.isAlive)
+                    {
+                        entity.isAttacking = false;
+                    }
+                };
             }
         }
         return result;
@@ -366,10 +382,12 @@ public class FireSpreadBehavior
             if (facingEast)
             {
                 toSummon.position.x += 0.8f;
+                toSummon.rotation = Quaternion.AngleAxis(-25, new Vector3(0, 0, 1));
             }
             else
             {
                 toSummon.position.x -= 0.8f;
+                toSummon.rotation = Quaternion.AngleAxis(25, new Vector3(0, 0, 1));
             }
             FireSpreadBehavior behavior = new FireSpreadBehavior();
             behavior.spreadRemaining = spreadRemaining - 1;
