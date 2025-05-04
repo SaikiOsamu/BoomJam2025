@@ -1,13 +1,14 @@
 using TMPro;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
-
+using UnityEngine.UI;
 public class PlayerLifeAndOthersUpdate : MonoBehaviour
 {
     [SerializeField]
     private GameObject root;
     [SerializeField]
     private TextMeshProUGUI textMeshProUGUI;
+    public Image currentLife;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +22,10 @@ public class PlayerLifeAndOthersUpdate : MonoBehaviour
         var levelManager = root.GetComponentInParent<LevelManager>();
         var player = levelManager.player;
         string text = "Life: " + player.life + " / " + player.lifeMax;
+        float playerslife = player.life;
+        float playersmaxlife = player.lifeMax;
+        float lifeleft = playerslife / playersmaxlife;
+        currentLife.fillAmount = lifeleft;
         if (player.shield > 0)
         {
             text += "\nShield: " + player.shield + " / " + player.shieldMax;
